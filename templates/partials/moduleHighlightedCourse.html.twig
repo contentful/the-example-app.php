@@ -1,0 +1,33 @@
+{#
+ * Template: partials/moduleHighlightedCourse.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry course
+ #}
+
+ <div class="module module-higlighted-course">
+    <div class="module-higlighted-course__wrapper" style="background-image: url('{{ course.getImage().getFile().getUrl() }}');">
+        <div class="module-higlighted-course__overlay"></div>
+
+        <div class="module-higlighted-course__content">
+            {% if course.getCategories() %}
+                <div class="module-higlighted-course__categories">
+                    {% for category in course.getCategories() %}
+                        <a href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}" class="module-higlighted-course__category">{{ category.getTitle() }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <h2 class="module-higlighted-course__title">
+                <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}">{{ course.getTitle() }}</a>
+            </h2>
+
+            <div class="module-higlighted-course__description-wrapper">
+                <p>{{ course.getShortDescription()|markdown }}</p>
+            </div>
+
+            <div class="module-higlighted-course__link-wrapper">
+                <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}" class="module-higlighted-course__link">{{ 'viewCourseLabel'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>

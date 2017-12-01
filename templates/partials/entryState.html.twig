@@ -1,0 +1,17 @@
+{#
+ * Template: partials/entryState.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry entry
+ #}
+
+{% if entry.draft %}
+    <div class="pill pill--draft">
+        {{ 'draftLabel'|trans }}
+    </div>
+{% endif %}
+
+{% if entry.pendingChanges %}
+    <div class="pill pill--draft">
+        {{ 'pendingChangesLabel'|trans }}
+    </div>
+{% endif %}

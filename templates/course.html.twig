@@ -1,0 +1,108 @@
+{#
+ * Template: course.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry      course
+ * @param Contentful\Delivery\DynamicEntry|null lesson
+ * @param Contentful\Delivery\DynamicEntry[]    lessons
+ * @param Contentful\Delivery\DynamicEntry|null nextLesson
+ * @param string[]                              visitedLessons
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% set title = lesson ? (course.getTitle() ~ ' | ' ~ lesson.getTitle()) : course.getTitle() %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="layout-no-sidebar">
+        {% include 'partials/breadcrumb.html.twig' with {} only %}
+    </div>
+
+    <div class="layout-sidebar">
+        <section class="layout-sidebar__sidebar">
+            <div class="layout-sidebar__sidebar-header">
+                <h2 class="layout-sidebar__sidebar-title">{{ 'tableOfContentsLabel'|trans }}</h2>
+            </div>
+
+            <div class="layout-sidebar__sidebar-content">
+                <div class="table-of-contents">
+                    <div class="table-of-contents__list">
+                        <div class="table-of-contents__item">
+                            <a
+                                href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}"
+                                class="table-of-contents__link {{ course.getId() in visitedLessons ? 'visited' : '' }} {{ not lesson ? 'active' : '' }}"
+                                >{{ 'courseOverviewLabel'|trans }}</a>
+                        </div>
+
+                        {% for courseLesson in course.getLessons() %}
+                            <div class="table-of-contents__item">
+                                <a
+                                    href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: courseLesson.getSlug()}) ~ state.queryString }}"
+                                    class="table-of-contents__link {{ courseLesson.getId() in visitedLessons ? 'visited' : '' }} {{ lesson and courseLesson.getId() == lesson.getId() ? 'active' : '' }}"
+                                    >{{ courseLesson.getTitle() }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="layout-sidebar__content">
+            {% if lesson %}
+                {% include 'partials/lesson.html.twig' with {
+                    course: course,
+                    lesson: lesson,
+                    nextLesson: nextLesson
+                } only %}
+            {% else %}
+                <div class="course">
+                    <h1 class="course__title">{{ title }}</h1>
+
+                    {% include 'partials/editorialFeatures.html.twig' with {entry: course, state: state} only %}
+
+                    <div class="course__overview">
+                        <h3 class="course__overview-title">{{ 'overviewLabel'|trans }}</h3>
+
+                        {% if course.getDuration() %}
+                            <div class="course__overview-item">
+                                <svg class="course__overview-icon">
+                                    <use xlink:href="{{ asset('icons/icons.svg#duration') }}"></use>
+                                </svg>
+
+                                <div class="course__overview-value">
+                                    {{ 'durationLabel'|trans ~ ': ' ~ course.getDuration() ~ ' ' ~ 'minutesLabel'|trans }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if course.getSkillLevel() %}
+                            <div class="course__overview-item">
+                                <svg class="course__overview-icon">
+                                    <use xlink:href="{{ asset('icons/icons.svg#skill-level') }}"></use>
+                                </svg>
+
+                                <div class="course__overview-value">
+                                    {{ 'skillLevelLabel'|trans ~ ': ' ~ (course.getSkillLevel() ~ 'Label')|trans }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="course__overview-cta-wrapper">
+                            <a
+                                href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: course.getLessons()[0].getSlug()}) ~ state.queryString }}"
+                                class="course__overview-cta cta"
+                                >{{ 'startCourseLabel'|trans }}</a>
+                        </div>
+                    </div>
+
+                    <div class="course__description">
+                        {{ course.getDescription()|markdown }}
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

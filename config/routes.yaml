@@ -1,0 +1,35 @@
+courses:
+    path:     /courses
+    defaults: { _controller: App\Controller\CoursesController }
+
+categories:
+    path:     /courses/categories
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, permanent: true, route: courses }
+
+category:
+    path:     /courses/categories/{categorySlug}
+    defaults: { _controller: App\Controller\CoursesController }
+
+course:
+    path:     /courses/{courseSlug}
+    defaults: { _controller: App\Controller\CourseController, lessonSlug: null }
+
+lessons:
+    path:     /courses/{courseSlug}/lessons
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, permanent: true, route: course, lessonSlug: null }
+
+lesson:
+    path:     /courses/{courseSlug}/lessons/{lessonSlug}
+    defaults: { _controller: App\Controller\CourseController }
+
+settings:
+    path:     /settings
+    defaults: { _controller: App\Controller\SettingsController }
+
+imprint:
+    path:     /imprint
+    defaults: { _controller: App\Controller\ImprintController }
+
+landing_page:
+    path:     /{landingPageSlug}
+    defaults: { _controller: App\Controller\LandingPageController, landingPageSlug: home }

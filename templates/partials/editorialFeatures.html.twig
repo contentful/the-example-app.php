@@ -1,0 +1,31 @@
+{#
+ * Template: partials/editorialFeatures.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry entry
+ #}
+
+{% if state.hasEditorialFeaturesEnabled %}
+    <div class="editorial-features">
+        {% if state.api == 'cpa' and (entry.draft or entry.pendingChanges) %}
+            <div class="editorial-features__item">
+                {% include 'partials/entryState.html.twig' with {entry: entry} only %}
+            </div>
+        {% endif %}
+
+        <div class="editorial-features__item">
+            <a
+                href="https://app.contentful.com/spaces/{{ state.spaceId }}/entries/{{ entry.getId() }}"
+                class="editorial-features__text"
+                target="_blank"
+                rel="noopener"
+            >{{ 'editInTheWebAppLabel'|trans }}</a>
+
+            <div class="editorial-features__hint-wrapper">
+                <svg class="editorial-features__hint-icon">
+                    <use xlink:href="{{ asset('/icons/icons.svg#info') }}" />
+                    <div class="editorial-features__hint-message">{{ 'editorialFeaturesHint'|trans }}</div>
+                </svg>
+            </div>
+        </div>
+    </div>
+{% endif %}

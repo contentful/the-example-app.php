@@ -1,0 +1,12 @@
+{
+  "name": "The Example App",
+  "description": "This is \"The Example App\", a reference for building your own applications using Contentful.",
+  "keywords": [
+    "contentful",
+    "example"
+  ],
+  "website": "https://www.contentful.com/",
+  "repository": "https://github.com/contentful/the-example-app.php",
+  "logo": "https://the-example-app-php.herokuapp.com/images/logo-the-example-app-php.svg",
+  "success_url": "/"
+}

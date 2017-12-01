@@ -1,0 +1,137 @@
+{#
+ * Template: settings.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry space
+ * @param Symfony/Component/Form/FormView  form
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% set title = 'settingsLabel'|trans %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% form_theme form _self %}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <div class="form-item__error-wrapper">
+                <svg class="form-item__error-icon">
+                    <use xlink:href="{{ asset('icons/icons.svg#error') }}"></use>
+                </svg>
+
+                <div class="form-item__error-message">
+                    {{ error.message|trans }}
+                </div>
+            </div>
+        {%- endfor -%}
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{% block body %}
+    <div class="layout-centered-small">
+        {% include 'partials/breadcrumb.html.twig' with {} only %}
+
+        <h1>{{ title }}</h1>
+
+        <p>{{ 'settingsIntroLabel'|trans }}</p>
+
+        {% for message in app.flashes('success') %}
+            <div class="status-block status-block--success">
+                <svg class="status-block__icon status-block__icon--success">
+                    <use xlink:href="{{ asset('icons/icons.svg#success') }}"></use>
+                </svg>
+
+                <div class="status-block__content">
+                    <div class="status-block__title">
+                        {{ message|trans }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if not form.vars.valid %}
+            <div class="status-block status-block--error">
+                <svg class="status-block__icon status-block__icon--error">
+                    <use xlink:href="{{ asset('icons/icons.svg#error') }}"></use>
+                </svg>
+
+                <div class="status-block__content">
+                    <div class="status-block__title">
+                        {{ 'errorOcurredTitleLabel'|trans }}
+                    </div>
+
+                    <div class="status-block__message">
+                        {{ 'errorOcurredMessageLabel'|trans }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if space and form.vars.valid %}
+            <div class="status-block status-block--info">
+                <svg class="status-block__icon status-block__icon--info">
+                    <use xlink:href="{{ asset('icons/icons.svg#info') }}"></use>
+                </svg>
+
+                <div class="status-block__content">
+                    <div class="status-block__message">
+                        {{ 'connectedToSpaceLabel'|trans }} "{{ space.getName() }}"
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+            <div class="form-item">
+                {{ form_label(form.spaceId, 'spaceIdLabel') }}
+                {{ form_widget(form.spaceId) }}
+                {{ form_errors(form.spaceId) }}
+
+                <div class="form-item__help-text">
+                    {{ 'spaceIdHelpText'|trans }}
+                </div>
+            </div>
+
+            <div class="form-item">
+                {{ form_label(form.deliveryToken, 'cdaAccessTokenLabel') }}
+                {{ form_widget(form.deliveryToken) }}
+                {{ form_errors(form.deliveryToken) }}
+
+                <div class="form-item__help-text">
+                    {{ 'contentDeliveryApiHelpText'|trans }}
+                    &nbsp;
+                    <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/" target="_blank" rel="noopener">Content Delivery API</a>
+                </div>
+            </div>
+
+            <div class="form-item">
+                {{ form_label(form.previewToken, 'cpaAccessTokenLabel') }}
+                {{ form_widget(form.previewToken) }}
+                {{ form_errors(form.previewToken) }}
+
+                <div class="form-item__help-text">
+                    {{ 'contentPreviewApiHelpText'|trans }}
+                    &nbsp;
+                    <a href="https://www.contentful.com/developers/docs/references/content-preview-api/" target="_blank" rel="noopener">Content Preview API</a>
+                </div>
+            </div>
+
+            <div class="form-item">
+                {{ form_widget(form.editorialFeatures) }}
+                {{ form_label(form.editorialFeatures, 'enableEditorialFeaturesLabel') }}
+
+                <div class="form-item__help-text">
+                    {{ 'enableEditorialFeaturesHelpText'|trans }}
+                </div>
+            </div>
+
+            <div class="form-item">
+                <input type="submit" value="{{ 'saveSettingsButtonLabel'|trans }}" class="cta" />
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="">
+    <body>
+      <trans-unit id="defaultTitle">
+        <source>defaultTitle</source>
+        <target>The Example App</target>
+      </trans-unit>
+      <trans-unit id="whatIsThisApp">
+        <source>whatIsThisApp</source>
+        <target>Hilfe</target>
+      </trans-unit>
+      <trans-unit id="metaDescription">
+        <source>metaDescription</source>
+        <target>Dies ist die Beispielanwendung, eine Anwendung die Ihnen hilft Ihre eigene Anwendung mit Contentful zu bauen.</target>
+      </trans-unit>
+      <trans-unit id="metaTwitterCard">
+        <source>metaTwitterCard</source>
+        <target>Dies ist die Beispielanwendung, eine Anwendung die Ihnen hilft Ihre eigene Anwendung mit Contentful zu bauen.</target>
+      </trans-unit>
+      <trans-unit id="metaImageAlt">
+        <source>metaImageAlt</source>
+        <target>Dies ist die Beispielanwendung, eine Anwendung die Ihnen hilft Ihre eigene Anwendung mit Contentful zu bauen.</target>
+      </trans-unit>
+      <trans-unit id="metaImageDescription">
+        <source>metaImageDescription</source>
+        <target>Dies ist die Beispielanwendung, eine Anwendung die Ihnen hilft Ihre eigene Anwendung mit Contentful zu bauen.</target>
+      </trans-unit>
+      <trans-unit id="viewOnGithub">
+        <source>viewOnGithub</source>
+        <target>Auf GitHub ansehen</target>
+      </trans-unit>
+      <trans-unit id="apiSwitcherHelp">
+        <source>apiSwitcherHelp</source>
+        <target>Ansehen des veröffentlichten und unveröffentlichten Inhalts durch Wechsel von Delivery und Preview APIs.</target>
+      </trans-unit>
+      <trans-unit id="contentDeliveryApiLabel">
+        <source>contentDeliveryApiLabel</source>
+        <target>Content Delivery API</target>
+      </trans-unit>
+      <trans-unit id="contentDeliveryApiHelp">
+        <source>contentDeliveryApiHelp</source>
+        <target>Diese API zeigt veröffentlichte Inhalte</target>
+      </trans-unit>
+      <trans-unit id="contentPreviewApiLabel">
+        <source>contentPreviewApiLabel</source>
+        <target>Content Preview API</target>
+      </trans-unit>
+      <trans-unit id="contentPreviewApiHelp">
+        <source>contentPreviewApiHelp</source>
+        <target>Diese API zeigt unveröffentlichte Inhalte und Änderungen</target>
+      </trans-unit>
+      <trans-unit id="locale">
+        <source>locale</source>
+        <target>Sprache</target>
+      </trans-unit>
+      <trans-unit id="localeQuestion">
+        <source>localeQuestion</source>
+        <target>Sie arbeiten mit verschiedenen Sprachen? Dann können Sie die Sprache für Anfragen an die Content Delivery API definieren.</target>
+      </trans-unit>
+      <trans-unit id="settingsLabel">
+        <source>settingsLabel</source>
+        <target>Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="logoAlt">
+        <source>logoAlt</source>
+        <target>Die Beispielanwendung für Contentful</target>
+      </trans-unit>
+      <trans-unit id="homeLabel">
+        <source>homeLabel</source>
+        <target>Startseite</target>
+      </trans-unit>
+      <trans-unit id="coursesLabel">
+        <source>coursesLabel</source>
+        <target>Kurse</target>
+      </trans-unit>
+      <trans-unit id="lessonsLabel">
+        <source>lessonsLabel</source>
+        <target>Lektionen</target>
+      </trans-unit>
+      <trans-unit id="footerDisclaimer">
+        <source>footerDisclaimer</source>
+        <target>Powered by Contentful. Diese Website und deren Materialien existieren nur für Demonstrationszwecken. Sie können diese benutzen, um den Inhalt ihres Contentful Kontos anzusehen.</target>
+      </trans-unit>
+      <trans-unit id="imprintLabel">
+        <source>imprintLabel</source>
+        <target>Impressum</target>
+      </trans-unit>
+      <trans-unit id="contactUsLabel">
+        <source>contactUsLabel</source>
+        <target>Kontakt</target>
+      </trans-unit>
+      <trans-unit id="modalTitle">
+        <source>modalTitle</source>
+        <target>Ein Beispiel für Entwickler, die Contentful benutzen.</target>
+      </trans-unit>
+      <trans-unit id="modalIntro">
+        <source>modalIntro</source>
+        <target>Dies ist "The Example App" in node.js. Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalSpaceIntro">
+        <source>modalSpaceIntro</source>
+        <target>Den Inhalt dieser Anwendung können Sie selbst bearbeiten. Dafür müssen Sie den "The Example App" space in Ihren Contentful Account importieren. Anleitung hierzu gibt es</target>
+      </trans-unit>
+      <trans-unit id="modalSpaceLinkLabel">
+        <source>modalSpaceLinkLabel</source>
+        <target>hier</target>
+      </trans-unit>
+      <trans-unit id="modalCTALabel">
+        <source>modalCTALabel</source>
+        <target>Gut, verstanden.</target>
+      </trans-unit>
+      <trans-unit id="editorialFeaturesHint">
+        <source>editorialFeaturesHint</source>
+        <target>Bearbeiten Sie diesen Eintrag in unserer Web App. Sie müssen sich eingelogged haben und Zugang zum Space haben, um diese Funktion nutzen zu können.</target>
+      </trans-unit>
+      <trans-unit id="draftLabel">
+        <source>draftLabel</source>
+        <target>Entwurf</target>
+      </trans-unit>
+      <trans-unit id="pendingChangesLabel">
+        <source>pendingChangesLabel</source>
+        <target>Änderungen vorbehalten</target>
+      </trans-unit>
+      <trans-unit id="lessonModuleErrorTitle">
+        <source>lessonModuleErrorTitle</source>
+        <target>⚠️ Ungültiges Lektionsmodul</target>
+      </trans-unit>
+      <trans-unit id="lessonModuleErrorBody">
+        <source>lessonModuleErrorBody</source>
+        <target>Konnte den Typ nicht erkennen: </target>
+      </trans-unit>
+      <trans-unit id="nextLessonLabel">
+        <source>nextLessonLabel</source>
+        <target>Nächste Lektion ansehen</target>
+      </trans-unit>
+      <trans-unit id="imageErrorTitle">
+        <source>imageErrorTitle</source>
+        <target>⚠️ Bild fehlt</target>
+      </trans-unit>
+      <trans-unit id="viewCourseLabel">
+        <source>viewCourseLabel</source>
+        <target>Kurs ansehen</target>
+      </trans-unit>
+      <trans-unit id="categoriesWelcomeLabel">
+        <source>categoriesWelcomeLabel</source>
+        <target>Willkommen zur folgenden Kategorie: </target>
+      </trans-unit>
+      <trans-unit id="sitemapWelcomeLabel">
+        <source>sitemapWelcomeLabel</source>
+        <target>Willkommen zur folgenden Kategorie: </target>
+      </trans-unit>
+      <trans-unit id="tableOfContentsLabel">
+        <source>tableOfContentsLabel</source>
+        <target>Inhalt</target>
+      </trans-unit>
+      <trans-unit id="courseOverviewLabel">
+        <source>courseOverviewLabel</source>
+        <target>Kurs Übersicht</target>
+      </trans-unit>
+      <trans-unit id="overviewLabel">
+        <source>overviewLabel</source>
+        <target>Übersicht</target>
+      </trans-unit>
+      <trans-unit id="durationLabel">
+        <source>durationLabel</source>
+        <target>Dauer</target>
+      </trans-unit>
+      <trans-unit id="minutesLabel">
+        <source>minutesLabel</source>
+        <target>min</target>
+      </trans-unit>
+      <trans-unit id="skillLevelLabel">
+        <source>skillLevelLabel</source>
+        <target>Schwierigkeit</target>
+      </trans-unit>
+      <trans-unit id="startCourseLabel">
+        <source>startCourseLabel</source>
+        <target>Kurs beginnen</target>
+      </trans-unit>
+      <trans-unit id="categoriesLabel">
+        <source>categoriesLabel</source>
+        <target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="allCoursesLabel">
+        <source>allCoursesLabel</source>
+        <target>Alle Kurse</target>
+      </trans-unit>
+      <trans-unit id="somethingWentWrongLabel">
+        <source>somethingWentWrongLabel</source>
+        <target>Hmm, etwas ging schief.</target>
+      </trans-unit>
+      <trans-unit id="tryLabel">
+        <source>tryLabel</source>
+        <target>Versuchen Sie</target>
+      </trans-unit>
+      <trans-unit id="contentModelChangedErrorLabel">
+        <source>contentModelChangedErrorLabel</source>
+        <target>Überprüfen Sie, ob das Content Model verändert wurde.</target>
+      </trans-unit>
+      <trans-unit id="draftOrPublishedErrorLabel">
+        <source>draftOrPublishedErrorLabel</source>
+        <target>Überprüfen Sie, ob es nicht veröffentlichte Änderungen gibt.</target>
+      </trans-unit>
+      <trans-unit id="localeContentErrorLabel">
+        <source>localeContentErrorLabel</source>
+        <target>Überprüfen Sie, ob es Inhalt für diese Sprache gibt.</target>
+      </trans-unit>
+      <trans-unit id="verifyCredentialsErrorLabel">
+        <source>verifyCredentialsErrorLabel</source>
+        <target>Überprüfen Sie, ob die Zugangsdaten richtig und nicht abgelaufen sind.</target>
+      </trans-unit>
+      <trans-unit id="stackTraceErrorLabel">
+        <source>stackTraceErrorLabel</source>
+        <target>Schauen Sie sich den folgenden Stack Trace an</target>
+      </trans-unit>
+      <trans-unit id="errorLabel">
+        <source>errorLabel</source>
+        <target>Fehler</target>
+      </trans-unit>
+      <trans-unit id="stackTraceLabel">
+        <source>stackTraceLabel</source>
+        <target>Stack Trace</target>
+      </trans-unit>
+      <trans-unit id="companyLabel">
+        <source>companyLabel</source>
+        <target>Firma</target>
+      </trans-unit>
+      <trans-unit id="officeLabel">
+        <source>officeLabel</source>
+        <target>Büro in Berlin</target>
+      </trans-unit>
+      <trans-unit id="germanyLabel">
+        <source>germanyLabel</source>
+        <target>Deutschland</target>
+      </trans-unit>
+      <trans-unit id="registrationCourtLabel">
+        <source>registrationCourtLabel</source>
+        <target>Amtsgericht</target>
+      </trans-unit>
+      <trans-unit id="managingDirectorLabel">
+        <source>managingDirectorLabel</source>
+        <target>Verwalter</target>
+      </trans-unit>
+      <trans-unit id="vatNumberLabel">
+        <source>vatNumberLabel</source>
+        <target>Steuernummer</target>
+      </trans-unit>
+      <trans-unit id="settingsIntroLabel">
+        <source>settingsIntroLabel</source>
+        <target>Um Inhalt von unseren APIs zu bekommen, müssen Anwendungen von Kunden sich authentifizieren, sowohl mit der Space ID als auch dem Access Token.</target>
+      </trans-unit>
+      <trans-unit id="changesSavedLabel">
+        <source>changesSavedLabel</source>
+        <target>Änderungen erfolgreich gespeichert!</target>
+      </trans-unit>
+      <trans-unit id="errorOcurredTitleLabel">
+        <source>errorOcurredTitleLabel</source>
+        <target>Fehler aufgetreten</target>
+      </trans-unit>
+      <trans-unit id="errorOcurredMessageLabel">
+        <source>errorOcurredMessageLabel</source>
+        <target>Einige Fehler sind aufgetreten. Bitte schauen Sie sich die Fehlermeldungen neben den Feldern an.</target>
+      </trans-unit>
+      <trans-unit id="connectedToSpaceLabel">
+        <source>connectedToSpaceLabel</source>
+        <target>Verbunden mit Space </target>
+      </trans-unit>
+      <trans-unit id="spaceIdLabel">
+        <source>spaceIdLabel</source>
+        <target>Space ID</target>
+      </trans-unit>
+      <trans-unit id="spaceIdHelpText">
+        <source>spaceIdHelpText</source>
+        <target>Die Space Id ist eine eindeutige Identifizierung für Ihren Space.</target>
+      </trans-unit>
+      <trans-unit id="accessTokenLabel">
+        <source>accessTokenLabel</source>
+        <target>Access Token</target>
+      </trans-unit>
+      <trans-unit id="cdaAccessTokenLabel">
+        <source>cdaAccessTokenLabel</source>
+        <target>Content Delivery API Access Token</target>
+      </trans-unit>
+      <trans-unit id="cpaAccessTokenLabel">
+        <source>cpaAccessTokenLabel</source>
+        <target>Content Preview API Access Token</target>
+      </trans-unit>
+      <trans-unit id="contentDeliveryApiHelpText">
+        <source>contentDeliveryApiHelpText</source>
+        <target>Schauen Sie sich veröffentlichten Inhalt mit dieser API an.</target>
+      </trans-unit>
+      <trans-unit id="contentPreviewApiHelpText">
+        <source>contentPreviewApiHelpText</source>
+        <target>Schauen Sie sich unveröffentlichten Inhalt mit dieser API an. (z.B. Inhalt im Zustand “Entwurf”).</target>
+      </trans-unit>
+      <trans-unit id="enableEditorialFeaturesLabel">
+        <source>enableEditorialFeaturesLabel</source>
+        <target>Editoriale Funktionen aktivieren.</target>
+      </trans-unit>
+      <trans-unit id="enableEditorialFeaturesHelpText">
+        <source>enableEditorialFeaturesHelpText</source>
+        <target>Aktivieren, um Bearbeitung und weitere kontextabhängige Helfer zu aktivieren. Damit dies funktioniert, müssen sie Zugang zu dem Space haben.</target>
+      </trans-unit>
+      <trans-unit id="saveSettingsButtonLabel">
+        <source>saveSettingsButtonLabel</source>
+        <target>Einstellungen Speichern</target>
+      </trans-unit>
+      <trans-unit id="fieldIsRequiredLabel">
+        <source>fieldIsRequiredLabel</source>
+        <target>Diese Feld ist notwendig.</target>
+      </trans-unit>
+      <trans-unit id="deliveryKeyInvalidLabel">
+        <source>deliveryKeyInvalidLabel</source>
+        <target>Ihr Delivery API Zugangsschlüssel ist ungültig.</target>
+      </trans-unit>
+      <trans-unit id="spaceOrTokenInvalid">
+        <source>spaceOrTokenInvalid</source>
+        <target>Dieser Space existiert nicht, oder Ihr Access Token kommt nicht von diesem Space.</target>
+      </trans-unit>
+      <trans-unit id="previewKeyInvalidLabel">
+        <source>previewKeyInvalidLabel</source>
+        <target>Ihr Preview API Zugangsschlüssel ist ungültig.</target>
+      </trans-unit>
+      <trans-unit id="beginnerLabel">
+        <source>beginnerLabel</source>
+        <target>Anfänger</target>
+      </trans-unit>
+      <trans-unit id="intermediateLabel">
+        <source>intermediateLabel</source>
+        <target>Fortgeschrittener</target>
+      </trans-unit>
+      <trans-unit id="advancedLabel">
+        <source>advancedLabel</source>
+        <target>Experte</target>
+      </trans-unit>
+      <trans-unit id="editInTheWebAppLabel">
+        <source>editInTheWebAppLabel</source>
+        <target>In der web app bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="error404Route">
+        <source>error404Route</source>
+        <target>Ein nicht unterstützter HTTP Route</target>
+      </trans-unit>
+      <trans-unit id="currentLocaleLabel">
+        <source>currentLocaleLabel</source>
+        <target>Deutsch (Deutschland)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

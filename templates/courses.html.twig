@@ -1,0 +1,62 @@
+{#
+ * Template: course.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry[]    courses
+ * @param Contentful\Delivery\DynamicEntry[]    categories
+ * @param Contentful\Delivery\DynamicEntry|null currentCategory
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% set title = (currentCategory ? currentCategory.getTitle() : 'allCoursesLabel'|trans) ~ ' (' ~ courses|length ~ ')' %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="layout-no-sidebar">
+        {% include 'partials/breadcrumb.html.twig' with {} only %}
+    </div>
+
+    <div class="layout-sidebar">
+        <section class="layout-sidebar__sidebar">
+            <div class="layout-sidebar__sidebar-header">
+                <h2 class="layout-sidebar__sidebar-title">{{ 'categoriesLabel'|trans }}</h2>
+            </div>
+
+            <div class="layout-sidebar__sidebar-content">
+                <div class="sidebar-menu">
+                    <ul class="sidebar-menu__list">
+                        <li class="sidebar-menu__item">
+                            <a href="{{ path('courses') ~ state.queryString }}" class="sidebar-menu__link {{ currentCategory ? '' : 'active' }}">{{ 'allCoursesLabel'|trans }}</a>
+                        </li>
+
+                        {% for category in categories %}
+                            <li class="sidebar-menu__item">
+                                <a
+                                    href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}"
+                                    class="sidebar-menu__link {{ currentCategory and category.getId() == currentCategory.getId() ? 'active' : '' }}"
+                                    >{{ category.getTitle() }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="layout-sidebar__content">
+            <div class="courses">
+                <h1>{{ title }}</h1>
+
+                <div class="grid-list">
+                    {% for course in courses %}
+                        <div class="grid-list__item">
+                            {% include 'partials/courseCard.html.twig' with {course: course} only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

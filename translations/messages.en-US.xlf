@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="">
+    <body>
+      <trans-unit id="defaultTitle">
+        <source>defaultTitle</source>
+        <target>The Example App</target>
+      </trans-unit>
+      <trans-unit id="whatIsThisApp">
+        <source>whatIsThisApp</source>
+        <target>Help</target>
+      </trans-unit>
+      <trans-unit id="metaDescription">
+        <source>metaDescription</source>
+        <target>This is "The Example App", a reference for building your own applications using Contentful.</target>
+      </trans-unit>
+      <trans-unit id="metaTwitterCard">
+        <source>metaTwitterCard</source>
+        <target>This is "The Example App", a reference for building your own applications using Contentful.</target>
+      </trans-unit>
+      <trans-unit id="metaImageAlt">
+        <source>metaImageAlt</source>
+        <target>This is "The Example App", a reference for building your own applications using Contentful.</target>
+      </trans-unit>
+      <trans-unit id="metaImageDescription">
+        <source>metaImageDescription</source>
+        <target>This is "The Example App", a reference for building your own applications using Contentful.</target>
+      </trans-unit>
+      <trans-unit id="viewOnGithub">
+        <source>viewOnGithub</source>
+        <target>View on GitHub</target>
+      </trans-unit>
+      <trans-unit id="apiSwitcherHelp">
+        <source>apiSwitcherHelp</source>
+        <target>View the published or draft content by simply switching between the Deliver and Preview APIs.</target>
+      </trans-unit>
+      <trans-unit id="contentDeliveryApiLabel">
+        <source>contentDeliveryApiLabel</source>
+        <target>Content Delivery API</target>
+      </trans-unit>
+      <trans-unit id="contentDeliveryApiHelp">
+        <source>contentDeliveryApiHelp</source>
+        <target>This API fetches published content from the Content Delivery API</target>
+      </trans-unit>
+      <trans-unit id="contentPreviewApiLabel">
+        <source>contentPreviewApiLabel</source>
+        <target>Content Preview API</target>
+      </trans-unit>
+      <trans-unit id="contentPreviewApiHelp">
+        <source>contentPreviewApiHelp</source>
+        <target>This API fetches un-published content from the Content Preview API</target>
+      </trans-unit>
+      <trans-unit id="locale">
+        <source>locale</source>
+        <target>Locale</target>
+      </trans-unit>
+      <trans-unit id="localeQuestion">
+        <source>localeQuestion</source>
+        <target>Working with multiple languages? You can query the Content Delivery API for a specific locale.</target>
+      </trans-unit>
+      <trans-unit id="settingsLabel">
+        <source>settingsLabel</source>
+        <target>Settings</target>
+      </trans-unit>
+      <trans-unit id="logoAlt">
+        <source>logoAlt</source>
+        <target>Contentful Example App</target>
+      </trans-unit>
+      <trans-unit id="homeLabel">
+        <source>homeLabel</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="coursesLabel">
+        <source>coursesLabel</source>
+        <target>Courses</target>
+      </trans-unit>
+      <trans-unit id="lessonsLabel">
+        <source>lessonsLabel</source>
+        <target>Lessons</target>
+      </trans-unit>
+      <trans-unit id="footerDisclaimer">
+        <source>footerDisclaimer</source>
+        <target>Powered by Contentful. This website and the materials found on it are for demo purposes. You can use this to preview the content created on your Contentful account.</target>
+      </trans-unit>
+      <trans-unit id="imprintLabel">
+        <source>imprintLabel</source>
+        <target>Imprint</target>
+      </trans-unit>
+      <trans-unit id="contactUsLabel">
+        <source>contactUsLabel</source>
+        <target>Contact us</target>
+      </trans-unit>
+      <trans-unit id="modalTitle">
+        <source>modalTitle</source>
+        <target>A reference for developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalIntro">
+        <source>modalIntro</source>
+        <target>This is "The Example App" in node.js. While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalSpaceIntro">
+        <source>modalSpaceIntro</source>
+        <target>You can also edit the content in the app by cloning the Contentful space to your own Contentful account by following the instructions</target>
+      </trans-unit>
+      <trans-unit id="modalSpaceLinkLabel">
+        <source>modalSpaceLinkLabel</source>
+        <target>here</target>
+      </trans-unit>
+      <trans-unit id="modalCTALabel">
+        <source>modalCTALabel</source>
+        <target>Ok, got it.</target>
+      </trans-unit>
+      <trans-unit id="editorialFeaturesHint">
+        <source>editorialFeaturesHint</source>
+        <target>Edit this entry in our web app. You have to be logged in and have access to the connected space to use this feature.</target>
+      </trans-unit>
+      <trans-unit id="draftLabel">
+        <source>draftLabel</source>
+        <target>draft</target>
+      </trans-unit>
+      <trans-unit id="pendingChangesLabel">
+        <source>pendingChangesLabel</source>
+        <target>pending changes</target>
+      </trans-unit>
+      <trans-unit id="lessonModuleErrorTitle">
+        <source>lessonModuleErrorTitle</source>
+        <target>⚠️ Invalid lesson module</target>
+      </trans-unit>
+      <trans-unit id="lessonModuleErrorBody">
+        <source>lessonModuleErrorBody</source>
+        <target>Could not determine type of</target>
+      </trans-unit>
+      <trans-unit id="nextLessonLabel">
+        <source>nextLessonLabel</source>
+        <target>Go to the next lesson</target>
+      </trans-unit>
+      <trans-unit id="imageErrorTitle">
+        <source>imageErrorTitle</source>
+        <target>⚠️ Image missing</target>
+      </trans-unit>
+      <trans-unit id="viewCourseLabel">
+        <source>viewCourseLabel</source>
+        <target>view course</target>
+      </trans-unit>
+      <trans-unit id="categoriesWelcomeLabel">
+        <source>categoriesWelcomeLabel</source>
+        <target>Welcome to</target>
+      </trans-unit>
+      <trans-unit id="sitemapWelcomeLabel">
+        <source>sitemapWelcomeLabel</source>
+        <target>Welcome to</target>
+      </trans-unit>
+      <trans-unit id="tableOfContentsLabel">
+        <source>tableOfContentsLabel</source>
+        <target>Table of contents</target>
+      </trans-unit>
+      <trans-unit id="courseOverviewLabel">
+        <source>courseOverviewLabel</source>
+        <target>Course overview</target>
+      </trans-unit>
+      <trans-unit id="overviewLabel">
+        <source>overviewLabel</source>
+        <target>Overview</target>
+      </trans-unit>
+      <trans-unit id="durationLabel">
+        <source>durationLabel</source>
+        <target>Duration</target>
+      </trans-unit>
+      <trans-unit id="minutesLabel">
+        <source>minutesLabel</source>
+        <target>min</target>
+      </trans-unit>
+      <trans-unit id="skillLevelLabel">
+        <source>skillLevelLabel</source>
+        <target>Skill level</target>
+      </trans-unit>
+      <trans-unit id="startCourseLabel">
+        <source>startCourseLabel</source>
+        <target>Start course</target>
+      </trans-unit>
+      <trans-unit id="categoriesLabel">
+        <source>categoriesLabel</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="allCoursesLabel">
+        <source>allCoursesLabel</source>
+        <target>All courses</target>
+      </trans-unit>
+      <trans-unit id="somethingWentWrongLabel">
+        <source>somethingWentWrongLabel</source>
+        <target>Oops, something went wrong</target>
+      </trans-unit>
+      <trans-unit id="tryLabel">
+        <source>tryLabel</source>
+        <target>Try</target>
+      </trans-unit>
+      <trans-unit id="contentModelChangedErrorLabel">
+        <source>contentModelChangedErrorLabel</source>
+        <target>Check if the content model has changed</target>
+      </trans-unit>
+      <trans-unit id="draftOrPublishedErrorLabel">
+        <source>draftOrPublishedErrorLabel</source>
+        <target>Check the selection has content in draft or published state (for Preview or Delivery)</target>
+      </trans-unit>
+      <trans-unit id="localeContentErrorLabel">
+        <source>localeContentErrorLabel</source>
+        <target>Check if there's any content for this locale</target>
+      </trans-unit>
+      <trans-unit id="verifyCredentialsErrorLabel">
+        <source>verifyCredentialsErrorLabel</source>
+        <target>Verify credentials are correct and up to date</target>
+      </trans-unit>
+      <trans-unit id="stackTraceErrorLabel">
+        <source>stackTraceErrorLabel</source>
+        <target>Check the stack trace below</target>
+      </trans-unit>
+      <trans-unit id="errorLabel">
+        <source>errorLabel</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="stackTraceLabel">
+        <source>stackTraceLabel</source>
+        <target>Stack trace</target>
+      </trans-unit>
+      <trans-unit id="companyLabel">
+        <source>companyLabel</source>
+        <target>Company</target>
+      </trans-unit>
+      <trans-unit id="officeLabel">
+        <source>officeLabel</source>
+        <target>Office Berlin</target>
+      </trans-unit>
+      <trans-unit id="germanyLabel">
+        <source>germanyLabel</source>
+        <target>Germany</target>
+      </trans-unit>
+      <trans-unit id="registrationCourtLabel">
+        <source>registrationCourtLabel</source>
+        <target>Registration Court</target>
+      </trans-unit>
+      <trans-unit id="managingDirectorLabel">
+        <source>managingDirectorLabel</source>
+        <target>Managing Director</target>
+      </trans-unit>
+      <trans-unit id="vatNumberLabel">
+        <source>vatNumberLabel</source>
+        <target>VAT Number</target>
+      </trans-unit>
+      <trans-unit id="settingsIntroLabel">
+        <source>settingsIntroLabel</source>
+        <target>To query and get content using the APIs, client applications need to authenticate with both the Space ID and an access token.</target>
+      </trans-unit>
+      <trans-unit id="changesSavedLabel">
+        <source>changesSavedLabel</source>
+        <target>Changes saved successfully!</target>
+      </trans-unit>
+      <trans-unit id="errorOcurredTitleLabel">
+        <source>errorOcurredTitleLabel</source>
+        <target>Error occurred</target>
+      </trans-unit>
+      <trans-unit id="errorOcurredMessageLabel">
+        <source>errorOcurredMessageLabel</source>
+        <target>Some errors occurred. Please check the error messages next to the fields.</target>
+      </trans-unit>
+      <trans-unit id="connectedToSpaceLabel">
+        <source>connectedToSpaceLabel</source>
+        <target>Connected to space</target>
+      </trans-unit>
+      <trans-unit id="spaceIdLabel">
+        <source>spaceIdLabel</source>
+        <target>Space ID</target>
+      </trans-unit>
+      <trans-unit id="spaceIdHelpText">
+        <source>spaceIdHelpText</source>
+        <target>The Space ID is a unique identifier for your space.</target>
+      </trans-unit>
+      <trans-unit id="accessTokenLabel">
+        <source>accessTokenLabel</source>
+        <target>access token</target>
+      </trans-unit>
+      <trans-unit id="cdaAccessTokenLabel">
+        <source>cdaAccessTokenLabel</source>
+        <target>Content Delivery API access token</target>
+      </trans-unit>
+      <trans-unit id="cpaAccessTokenLabel">
+        <source>cpaAccessTokenLabel</source>
+        <target>Content Preview API access token</target>
+      </trans-unit>
+      <trans-unit id="contentDeliveryApiHelpText">
+        <source>contentDeliveryApiHelpText</source>
+        <target>View published content using this API.</target>
+      </trans-unit>
+      <trans-unit id="contentPreviewApiHelpText">
+        <source>contentPreviewApiHelpText</source>
+        <target>Preview unpublished content using this API (i.e. content with “Draft” status).</target>
+      </trans-unit>
+      <trans-unit id="enableEditorialFeaturesLabel">
+        <source>enableEditorialFeaturesLabel</source>
+        <target>Enable editorial features</target>
+      </trans-unit>
+      <trans-unit id="enableEditorialFeaturesHelpText">
+        <source>enableEditorialFeaturesHelpText</source>
+        <target>Enable to display an edit link and other contextual helpers for authors. You need to have access to the connected space to make this work.</target>
+      </trans-unit>
+      <trans-unit id="saveSettingsButtonLabel">
+        <source>saveSettingsButtonLabel</source>
+        <target>Save settings</target>
+      </trans-unit>
+      <trans-unit id="fieldIsRequiredLabel">
+        <source>fieldIsRequiredLabel</source>
+        <target>This field is required</target>
+      </trans-unit>
+      <trans-unit id="deliveryKeyInvalidLabel">
+        <source>deliveryKeyInvalidLabel</source>
+        <target>Your Delivery API key is invalid.</target>
+      </trans-unit>
+      <trans-unit id="spaceOrTokenInvalid">
+        <source>spaceOrTokenInvalid</source>
+        <target>This space does not exist or your access token is not associated with your space.</target>
+      </trans-unit>
+      <trans-unit id="previewKeyInvalidLabel">
+        <source>previewKeyInvalidLabel</source>
+        <target>Your Preview API key is invalid.</target>
+      </trans-unit>
+      <trans-unit id="beginnerLabel">
+        <source>beginnerLabel</source>
+        <target>Beginner</target>
+      </trans-unit>
+      <trans-unit id="intermediateLabel">
+        <source>intermediateLabel</source>
+        <target>Intermediate</target>
+      </trans-unit>
+      <trans-unit id="advancedLabel">
+        <source>advancedLabel</source>
+        <target>Advanced</target>
+      </trans-unit>
+      <trans-unit id="editInTheWebAppLabel">
+        <source>editInTheWebAppLabel</source>
+        <target>Edit in the web app</target>
+      </trans-unit>
+      <trans-unit id="error404Route">
+        <source>error404Route</source>
+        <target>a non supported route</target>
+      </trans-unit>
+      <trans-unit id="currentLocaleLabel">
+        <source>currentLocaleLabel</source>
+        <target>English (United States)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

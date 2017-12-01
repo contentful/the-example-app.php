@@ -1,0 +1,41 @@
+{#
+ * Template: landingPage.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry landingPage
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% set title = landingPage.getTitle() %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if landingPage.getSlug() != 'home' %}
+        <div class="layout-centered">
+            {% include 'partials/breadcrumb.html.twig' with {} only %}
+        </div>
+    {% endif %}
+
+    <div class="layout-centered">
+        {% include 'partials/editorialFeatures.html.twig' with {entry: landingPage} only %}
+    </div>
+
+    <div class="modules-container">
+        {% for module in landingPage.getContentModules() %}
+            {% if module.getContentType().getId() == 'layoutCopy' %}
+                {% include 'partials/moduleCopy.html.twig' with {module: module} only %}
+            {% endif %}
+
+            {% if module.getContentType().getId() == 'layoutHeroImage' %}
+                {% include 'partials/moduleHeroImage.html.twig' with {module: module} only %}
+            {% endif %}
+
+            {% if module.getContentType().getId() == 'layoutHighlightedCourse' %}
+                {% include 'partials/moduleHighlightedCourse.html.twig' with {module: module, course: module.getCourse()} only %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

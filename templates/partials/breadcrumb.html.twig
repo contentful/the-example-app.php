@@ -1,0 +1,15 @@
+{#
+ * Template: partials/breadcrumb.html.twig
+ *
+ * @param App\Service\Breadcrumb breadcrumb
+ #}
+
+<nav class="breadcrumb">
+    <ul>
+        {% for item in breadcrumb.items %}
+            <li>
+                <a href="{{ item.url }}">{{ item.label }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

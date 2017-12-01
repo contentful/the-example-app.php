@@ -1,0 +1,44 @@
+{#
+ * Template: partials/imprint.html.twig
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% set title = 'imprintLabel'|trans %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="layout-centered">
+        {% include 'partials/breadcrumb.html.twig' with {} only %}
+
+        <h1>{{ title }}</h1>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>{{ 'companyLabel'|trans }}</th>
+                    <td>Contentful GmbH</td>
+                </tr>
+                <tr>
+                    <th>{{ 'officeLabel'|trans }}</th>
+                    <td>Ritterstr. 12-14 <br /> 10969 Berlin <br /> {{ 'germanyLabel'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'registrationCourtLabel'|trans }}</th>
+                    <td>Berlin-Charlottenburg HRB 155607 B</td>
+                </tr>
+                <tr>
+                    <th>{{ 'managingDirectorLabel'|trans }}</th>
+                    <td>Sascha Konietzke</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vatNumberLabel'|trans }}</th>
+                    <td>DE275148225</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

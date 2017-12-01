@@ -1,0 +1,19 @@
+{#
+ * Template: partials/lessonModuleImage.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry module
+ #}
+
+ <div class="lesson-module lesson-module-image">
+    {% if module.getImage() and module.getImage().getFile() and module.getImage().getFile().getUrl() %}
+        <figure class="lesson-module-image__figure">
+            <img src="{{ module.getImage().getFile().getUrl() }}" alt="{{ module.getImage().getTitle() }}" class="lesson-module-image__image" />
+
+            {% if module.getCaption() %}
+                <figcaption class="lesson-module-image__caption">{{ module.getCaption() }}</figcaption>
+            {% endif %}
+        </figure>
+    {% else %}
+        <h3>{{ 'imageErrorTitle'|trans }}</h3>
+    {% endif %}
+</div>

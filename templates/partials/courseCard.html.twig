@@ -1,0 +1,30 @@
+{#
+ * Template: partials/courseCard.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry course
+ #}
+
+<div class="course-card">
+    <div class="course-card__categories">
+        {% if course.getCategories() %}
+            {% for category in course.getCategories() %}
+                <div class="course-card__category">
+                    <a href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}">{{ category.getTitle() }}</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <h2 class="course-card__title">
+        <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}">{{ course.getTitle() }}</a>
+        {% if state.api == 'cpa' and (course.draft or course.pendingChanges) %}
+            {% include 'partials/entryState.html.twig' with {entry: course} only %}
+        {% endif %}
+    </h2>
+
+    <p class="course-card__description">{{ course.getShortDescription() }}</p>
+
+    <div class="course-card__link-wrapper">
+        <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}" class="course-card__link">{{ 'viewCourseLabel'|trans }}</a>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+{#
+ * Template: partials/lesson.html.twig
+ *
+ * @param Contentful\Delivery\DynamicEntry course
+ * @param Contentful\Delivery\DynamicEntry lesson
+ * @param Contentful\Delivery\DynamicEntry nextLesson
+ #}
+
+<div class="lesson">
+    <h1 class="lesson__title">{{ lesson.getTitle() }}</h1>
+
+    {% include 'partials/editorialFeatures.html.twig' with {entry: lesson} only %}
+
+    <div class="lesson__modules">
+        {% for module in lesson.getModules() %}
+            {% if module.getContentType() %}
+                {% if module.getContentType().getId() == 'lessonCodeSnippets' %}
+                    {% include 'partials/lessonCodeSnippets.html.twig' with {module: module} only %}
+                {% endif %}
+
+                {% if module.getContentType().getId() == 'lessonCopy' %}
+                    {% include 'partials/lessonModuleCopy.html.twig' with {module: module} only %}
+                {% endif %}
+
+                {% if module.getContentType().getId() == 'lessonImage' %}
+                    {% include 'partials/lessonModuleImage.html.twig' with {module: module} only %}
+                {% endif %}
+            {% else %}
+                <h2>{{ 'lessonModuleErrorTitle'|trans }}</h2>
+                <p>
+                    <span>{{ 'lessonModuleErrorBody'|trans }}</span>
+                    <strong>{{ module.getId() }}</strong>
+                </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if nextLesson %}
+        <a href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: nextLesson.getSlug()}) ~ state.queryString }}" class="lesson__cta cta">{{ 'nextLessonLabel'|trans }}</a>
+    {% endif %}
+</div>
