@@ -19,6 +19,7 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
+        "ext-zip": "*",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
         "symfony/dotenv": "^4.0",
