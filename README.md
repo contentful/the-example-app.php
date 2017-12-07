@@ -87,6 +87,37 @@ Final Step:
 
 Open [http://localhost:8000?enable_editorial_features](http://localhost:8000?enable_editorial_features) and take a look around. This URL flag adds an “Edit” button in the app on every editable piece of content which will take you back to Contentful web app where you can make changes. It also adds “Draft” and “Pending Changes” status indicators to all content if relevant.
 
+
+## Use Docker
+You can also run this app as a Docker container:
+
+Step 1: Clone the repo
+
+```bash
+git clone https://github.com/contentful/the-example-app.php.git
+```
+
+Step 2: Build the Docker images
+
+```bash
+docker-compose build
+```
+
+Step 3: Run the Docker containers locally:
+
+```bash
+docker-compose up
+```
+
+If you created your own Contentful space, you can use it by overriding the following environment variables in the `docker-compose` file:
+
+```bash
+environment:
+ - CONTENTFUL_SPACE_ID=<SPACE_ID>
+ - CONTENTFUL_DELIVERY_TOKEN=<DELIVERY_ACCESS_TOKEN>
+ - CONTENTFUL_PREVIEW_TOKEN=<PREVIEW_ACCESS_TOKEN>
+```
+
 ## Deploy to Heroku
 
 You can also deploy this app to Heroku:
