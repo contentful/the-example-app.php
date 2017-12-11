@@ -204,36 +204,7 @@
                 </div>
             </main>
 
-            <section class="modal" id="about-this-modal">
-                <div class="modal__overlay close"></div>
-
-                <div class="modal__wrapper">
-                    <h1 class="modal__title">{{ 'modalTitle'|trans }}</h1>
-
-                    <div class="modal__content">
-                        <p>
-                            {{ 'modalIntro'|trans }}&nbsp;
-                            <a href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">GitHub</a>.
-                        </p>
-                        <p>
-                            {{ 'modalSpaceIntro'|trans }}&nbsp;
-                            <a href="https://github.com/contentful/content-models/tree/master/the-example-app" target="_blank" rel="noopener">{{ 'modalSpaceLinkLabel'|trans }}</a>.
-                        </p>
-                    </div>
-
-                    <div class="modal__cta-wrapper">
-                        <a class="modal__cta close" href="#">{{ 'modalCTALabel'|trans }}</a>
-                    </div>
-
-                    <div class="modal__close-wrapper">
-                        <a class="modal__close-button close" href="#">
-                            <svg>
-                                <use xlink:href="{{ asset('icons/icons.svg#cross') }}"></use>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </section>
+            {% include 'partials/modal.html.twig' with {} only %}
 
             <script src="{{ asset('scripts/index.js') }}"></script>
 

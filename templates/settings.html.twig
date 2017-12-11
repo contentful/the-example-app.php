@@ -72,16 +72,54 @@
         {% endif %}
 
         {% if space and form.vars.valid %}
-            <div class="status-block status-block--info">
-                <svg class="status-block__icon status-block__icon--info">
+            <div class='status-block status-block--info'>
+                <svg class='status-block__icon status-block__icon--info'>
                     <use xlink:href="{{ asset('icons/icons.svg#info') }}"></use>
                 </svg>
 
-                <div class="status-block__content">
-                    <div class="status-block__message">
-                        {{ 'connectedToSpaceLabel'|trans }} "{{ space.getName() }}"
+                {% if state.usesDefaultCredentials %}
+                    <div class="status-block__content">
+                        <div class="status-block__message">
+                            <p>
+                                <em>{{ 'usingServerCredentialsLabel'|trans }}</em>
+                            </p>
+                            <p>
+                                <strong>{{ 'connectedToSpaceLabel'|trans }}:</strong><br />
+                                {{ space.getName() }} ({{ space.getId() }})
+                            </p>
+                            <p>
+                                <strong>{{ 'credentialSourceLabel'|trans }}:</strong><br />
+                                {{ 'loadedFromLocalFileLabel'|trans }} <a href="https://github.com/contentful/the-example-app.php/blob/master/config/services.yaml" target="_blank" rel="noopener">services.yaml</a>
+                            </p>
+                            <p>
+                                <em>{{ 'overrideConfigLabel'|trans }}</em>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div class="status-block__content">
+                        <div class="status-block__message">
+                            <p>
+                                <em>{{ 'usingSessionCredentialsLabel'|trans }}</em>
+                            </p>
+                            <p>
+                                <strong>{{ 'connectedToSpaceLabel'|trans }}:</strong><br />
+                                {{ space.getName() }} ({{ space.getId() }})
+                            </p>
+
+                            <form method="post" action="{{ path('reset') }}">
+                                <p>
+                                    <strong>{{ 'applicationCredentialsLabel'|trans }}:</strong><br />
+                                    <button type="submit">{{ 'resetCredentialsLabel'|trans }}</button><br />
+                                    <a class="status-block__sharelink" href="{{ url('landing_page') ~ state.shareableLinkQuery }}">{{ 'copyLinkLabel'|trans }}</a>
+                                </p>
+                            </form>
+                            <p>
+                                <em>{{ 'overrideConfigLabel'|trans }}</em>
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
 

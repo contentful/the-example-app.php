@@ -6,7 +6,7 @@
 
 {% if state.hasEditorialFeaturesEnabled %}
     <div class="editorial-features">
-        {% if state.api == 'cpa' and (entry.draft or entry.pendingChanges) %}
+        {% if state.hasEditorialFeaturesLink %}
             <div class="editorial-features__item">
                 {% include 'partials/entryState.html.twig' with {entry: entry} only %}
             </div>

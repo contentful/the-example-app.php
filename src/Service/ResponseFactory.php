@@ -46,6 +46,11 @@ class ResponseFactory
     private $cookies = [];
 
     /**
+     * @var bool
+     */
+    private $clearSettingsCookie = false;
+
+    /**
      * @param Environment           $twig
      * @param UrlGeneratorInterface $urlGenerator
      * @param int                   $cookieLifetime
@@ -68,6 +73,14 @@ class ResponseFactory
             \json_encode($value),
             \time() + $this->cookieLifetime
         );
+    }
+
+    /**
+     * Removes the settings cookie.
+     */
+    public function clearSettingsCookie(): void
+    {
+        $this->clearSettingsCookie = true;
     }
 
     /**
@@ -118,6 +131,10 @@ class ResponseFactory
     {
         foreach ($this->cookies as $cookie) {
             $response->headers->setCookie($cookie);
+        }
+
+        if ($this->clearSettingsCookie) {
+            $response->headers->clearCookie(Contentful::COOKIE_SETTINGS_NAME);
         }
 
         return $response;

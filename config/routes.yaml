@@ -22,6 +22,11 @@ lesson:
     path:     /courses/{courseSlug}/lessons/{lessonSlug}
     defaults: { _controller: App\Controller\CourseController }
 
+reset:
+    path:     /settings/reset
+    defaults: { _controller: App\Controller\ResetController }
+    methods:  [ POST ]
+
 settings:
     path:     /settings
     defaults: { _controller: App\Controller\SettingsController }

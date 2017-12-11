@@ -48,7 +48,7 @@ class HttpsSubscriber implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
-        if ($request->getScheme() == 'https') {
+        if ($request->getScheme() == 'https' || $request->server->get('REMOTE_ADDR') == '127.0.0.1') {
             return;
         }
 

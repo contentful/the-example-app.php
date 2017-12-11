@@ -56,6 +56,15 @@
     "symfony/debug": {
         "version": "v4.0.1"
     },
+    "symfony/debug-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "de31e687f3964939abd1f66817bd96ed34bc2eee"
+        }
+    },
     "symfony/dependency-injection": {
         "version": "v4.0.1"
     },

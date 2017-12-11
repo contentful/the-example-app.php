@@ -16,7 +16,6 @@ use Contentful\Delivery\DynamicEntry;
 use Contentful\Delivery\Query;
 use Contentful\Delivery\Space;
 use Contentful\Exception\ApiException;
-use Contentful\Exception\NotFoundException;
 
 /**
  * Contentful class.
@@ -52,19 +51,49 @@ class Contentful
     private $state;
 
     /**
+     * @var string
+     */
+    private $cacheDir;
+
+    /**
+     * A map of methods for accessing linked entries
+     * based on the entry content type.
+     *
+     * @var string[]
+     */
+    private $linkedEntriesMethods = [
+        'layout' => 'getContentModules',
+        'course' => 'getLessons',
+        'lesson' => 'getModules',
+    ];
+
+    /**
      * @param State  $state
      * @param string $cacheDir
      */
     public function __construct(State $state, string $cacheDir)
     {
         $this->state = $state;
-        $options = ['cacheDir' => $cacheDir.'/contentful'];
+        $this->cacheDir = $cacheDir.'/contentful';
 
-        $this->client = $this->state->isDeliveryApi()
-            ? new Client($this->state->getDeliveryToken(), $this->state->getSpaceId(), false, $this->state->getLocale(), $options)
-            : new Client($this->state->getPreviewToken(), $this->state->getSpaceId(), true, $this->state->getLocale(), $options);
-
+        $this->client = $this->createClient($this->state->isDeliveryApi());
         $this->client->setApplication(Kernel::APP_NAME, Kernel::APP_VERSION);
+    }
+
+    /**
+     * @param bool $deliveryApi
+     *
+     * @return Client
+     */
+    private function createClient(bool $deliveryApi): Client
+    {
+        return new Client(
+            $deliveryApi ? $this->state->getDeliveryToken() : $this->state->getPreviewToken(),
+            $this->state->getSpaceId(),
+            !$deliveryApi,
+            $this->state->getLocale(),
+            ['cacheDir' => $this->cacheDir]
+        );
     }
 
     /**
@@ -84,39 +113,6 @@ class Contentful
         $client = new Client($token, $spaceId, !$deliveryApi);
         $client->setApplication('the-example-app.php', Kernel::APP_VERSION);
         $client->getSpace();
-    }
-
-    /**
-     * Attaches to an entry metadata about its state.
-     * The entry will have two extra fields defined:
-     * - draft: whether the entry has not been published yet
-     * - pendingChanges: whether the entry has already been published,
-     *     but some changes have been made in the meanwhile.
-     *
-     * @param DynamicEntry $entry
-     *
-     * @return DynamicEntry
-     */
-    private function attachEntryState(DynamicEntry $entry): DynamicEntry
-    {
-        $entry->draft = false;
-        $entry->pendingChanges = false;
-
-        if ($this->state->hasEditorialFeaturesEnabled() && $this->state->getApi() == self::API_PREVIEW) {
-            $deliveryClient = new Client($this->state->getDeliveryToken(), $this->state->getSpaceId(), false, $this->state->getLocale());
-
-            try {
-                $publishedEntry = $deliveryClient->getEntry($entry->getId());
-
-                if ($entry->getUpdatedAt() != $publishedEntry->getUpdatedAt()) {
-                    $entry->pendingChanges = true;
-                }
-            } catch (NotFoundException $exception) {
-                $entry->draft = true;
-            }
-        }
-
-        return $entry;
     }
 
     /**
@@ -157,41 +153,49 @@ class Contentful
             ->setContentType('course')
             ->setLocale($this->state->getLocale())
             ->orderBy('-sys.createdAt')
-            ->setInclude(6);
+            ->setInclude(2);
 
         if ($category) {
             $query->where('fields.categories.sys.id', $category->getId());
         }
 
-        $courses = $this->client->getEntries($query);
+        $courses = $this->client->getEntries($query)->getItems();
 
-        return array_map([$this, 'attachEntryState'], $courses->getItems());
+        if ($this->state->hasEditorialFeaturesLink()) {
+            $this->computeState($courses, 1);
+        }
+
+        return $courses;
     }
 
     /**
      * Finds a course using its slug.
      * We use the collection endpoint, so we can prefetch linked entries
      * by using the include parameter.
+     * Depending on the page, we can choose whether we can go as deep as
+     * the lesson modules when working out the entry state.
      *
      * @param string $slug
+     * @param bool   $includeLessonModules
      *
      * @return DynamicEntry|null
      */
-    public function findCourse(string $slug): ?DynamicEntry
+    public function findCourse(string $slug, bool $includeLessonModules): ?DynamicEntry
     {
         $query = (new Query())
             ->where('fields.slug', $slug)
             ->setContentType('course')
             ->setLocale($this->state->getLocale())
-            ->setInclude(6);
+            ->setInclude(3)
+            ->setLimit(1);
 
-        $courses = $this->client->getEntries($query);
+        $course = $this->client->getEntries($query)->getItems()[0] ?? null;
 
-        if (!count($courses)) {
-            return null;
+        if ($course && $this->state->hasEditorialFeaturesLink()) {
+            $this->computeState([$course], $includeLessonModules ? 3 : 2);
         }
 
-        return $this->attachEntryState($courses[0]);
+        return $course;
     }
 
     /**
@@ -209,14 +213,139 @@ class Contentful
             ->where('fields.slug', $slug)
             ->setContentType('layout')
             ->setLocale($this->state->getLocale())
-            ->setInclude(6);
+            ->setInclude(3)
+            ->setLimit(1);
 
-        $landingPages = $this->client->getEntries($query);
+        $landingPage = $this->client->getEntries($query)->getItems()[0] ?? null;
 
-        if (!count($landingPages)) {
-            return null;
+        if ($landingPage && $this->state->hasEditorialFeaturesLink()) {
+            $this->computeState([$landingPage], 2);
         }
 
-        return $this->attachEntryState($landingPages[0]);
+        return $landingPage;
+    }
+
+    /**
+     * @param DynamicEntry[] $entries
+     * @param int            $depth
+     *
+     * @return void
+     */
+    private function computeState(array $entries, int $depth): void
+    {
+        $deliveryEntries = $this->fetchDeliveryEntries($entries);
+
+        foreach ($entries as $entry) {
+            $this->attachEntryState($entry, $deliveryEntries, $depth);
+        }
+    }
+
+    /**
+     * Extracts the meaningful IDs fro the given preview entries (including nested ones),
+     * and then queries the Delivery API in order to get a list with the corresponding,
+     * published entries.
+     *
+     * @param DynamicEntry[] $entries
+     *
+     * @return DynamicEntry[]
+     */
+    private function fetchDeliveryEntries(array $entries): array
+    {
+        $ids = $this->extractIdsForComparison($entries);
+        $query = (new Query())
+            ->setInclude(0)
+            ->where('sys.id', $ids, 'in');
+
+        $entries = [];
+        foreach ($this->createClient(true)->getEntries($query) as $entry) {
+            $entries[$entry->getId()] = $entry;
+        }
+
+        return $entries;
+    }
+
+    /**
+     * Given an array of entries, it will extract all IDs including from the nested ones.
+     *
+     * @param DynamicEntry[] $entries
+     *
+     * @return string[]
+     */
+    private function extractIdsForComparison(array $entries): array
+    {
+        $ids = [];
+
+        foreach ($entries as $entry) {
+            $ids[] = $entry->getId();
+            $method = $this->linkedEntriesMethods[$entry->getContentType()->getId()] ?? null;
+
+            if (!$method) {
+                continue;
+            }
+
+            foreach ($entry->$method() as $linkedEntry) {
+                $ids += \array_merge($ids, $this->extractIdsForComparison([$linkedEntry]));
+            }
+        }
+
+        return \array_unique($ids);
+    }
+
+    /**
+     * Attaches to an entry metadata about its state.
+     * This is done by comparing it to another entry, which was loaded
+     * from the Delivery API.
+     * The entry will have two extra fields defined:
+     * - draft: whether the entry has not been published yet
+     * - pendingChanges: whether the entry has already been published,
+     *     but some changes have been made in the meanwhile.
+     *
+     * @param DynamicEntry   $previewEntry
+     * @param DynamicEntry[] $deliveryEntries An array where the entry ID is used as key
+     * @param int            $depth
+     *
+     * @return void
+     */
+    private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries, int $depth = 1): void
+    {
+        // Bail early if we've reached the limit of configured nesting.
+        if ($depth == 0) {
+            return;
+        }
+
+        $previewEntry->draft = false;
+        $previewEntry->pendingChanges = false;
+
+        $deliveryEntry = $deliveryEntries[$previewEntry->getId()] ?? null;
+
+        // If no entry is found, it means it's hasn't been published yet.
+        if (!$deliveryEntry) {
+            $previewEntry->draft = true;
+        }
+
+        // Different updatedAt values mean the entry has been updated since its last publishing.
+        if ($deliveryEntry && $previewEntry->getUpdatedAt() != $deliveryEntry->getUpdatedAt()) {
+            $previewEntry->pendingChanges = true;
+        }
+
+        // We need a static methods map for accessing related entries.
+        // If we don't have a method configured for the current content type, let's bail.
+        if (!isset($this->linkedEntriesMethods[$previewEntry->getContentType()->getId()])) {
+            return;
+        }
+
+        $method = $this->linkedEntriesMethods[$previewEntry->getContentType()->getId()];
+        $linkedPreviewEntries = $previewEntry->$method();
+
+        foreach ($linkedPreviewEntries as $index => $linkedPreviewEntry) {
+            $this->attachEntryState($linkedPreviewEntry, $deliveryEntries, $depth - 1);
+
+            // State bubbles up: if a child entry is in draft state,
+            // we mark the parent as being in draft too. Same with pending changes.
+            // We use the null coalescing operator because if we've reached the maximum nesting,
+            // $linkedPreviewEntry will not have the properties "draft" and "pendingChanges" set.
+            $previewEntry->draft = $previewEntry->draft || ($linkedPreviewEntry->draft ?? false);
+            $previewEntry->pendingChanges = $previewEntry->pendingChanges || ($linkedPreviewEntry->pendingChanges ?? false);
+        }
     }
 }

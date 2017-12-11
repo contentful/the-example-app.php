@@ -3,10 +3,32 @@
   "description": "This is \"The Example App\", a reference for building your own applications using Contentful.",
   "keywords": [
     "contentful",
-    "example"
+    "example",
+    "symfony"
   ],
   "website": "https://www.contentful.com/",
   "repository": "https://github.com/contentful/the-example-app.php",
   "logo": "https://the-example-app-php.herokuapp.com/images/logo-the-example-app-php.svg",
-  "success_url": "/"
+  "success_url": "/",
+  "env": {
+    "APP_ENV": {
+      "description": "The Symfony environment to use.",
+      "value": "prod",
+    },
+    "CONTENTFUL_SPACE_ID": {
+      "description": "The default space ID.",
+      "value": "qz0n5cdakyl9",
+      "required": false
+    },
+    "CONTENTFUL_DELIVERY_TOKEN": {
+      "description": "The default token for the Content Delivery API.",
+      "value": "580d5944194846b690dd89b630a1cb98a0eef6a19b860ef71efc37ee8076ddb8",
+      "required": false
+    },
+    "CONTENTFUL_PREVIEW_TOKEN": {
+      "description": "The default token for the Content Preview API.",
+      "value": "e8fc39d9661c7468d0285a7ff949f7a23539dd2e686fcb7bd84dc01b392d698b",
+      "required": false
+    }
+  }
 }

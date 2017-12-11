@@ -1,0 +1,73 @@
+{#
+ * Template: partials/modal.html.twig
+ #}
+
+ <section class="modal" id="about-this-modal">
+     <div class="modal__overlay close"></div>
+     <div class="modal__wrapper">
+         <h1 class="modal__title">{{ 'modalTitlePhp'|trans }}</h1>
+         <div class="modal__content">
+             <p>
+                 {{ 'modalIntroPhp'|trans }}
+                 <a href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">Github</a>.
+             </p>
+             <p>
+                 {{ 'modalSpaceIntro'|trans }}
+                 <a href="https://github.com/contentful/content-models/blob/master/the-example-app/README.md " target="_blank" rel="noopener">{{ 'modalSpaceLinkLabel'|trans }}</a>.
+             </p>
+
+             <p>{{ 'modalPlatforms'|trans }}</p>
+             <ul>
+                 <li>
+                     <img src="{{ asset('images/nodejs-icon.svg') }}" /><br />
+                     <a href="https://the-example-app-nodejs.herokuapp.com/" rel="noopener" target="_blank">{{ 'hostedLabel'|trans }}</a> <br />
+                     <a href="https://github.com/contentful/the-example-app.nodejs" rel="noopener" target="_blank">GitHub</a>
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/dotnet.svg') }}" /><br />
+                     <a href="https://the-example-app-csharp.herokuapp.com/" rel="noopener" target="_blank">{{ 'hostedLabel'|trans }}</a> <br />
+                     <a href="https://github.com/contentful/the-example-app.csharp" rel="noopener" target="_blank">GitHub</a>
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/ruby.svg') }}" /><br />
+                     <a href="https://the-example-app-rb.herokuapp.com/" rel="noopener" target="_blank">{{ 'hostedLabel'|trans }}</a> <br />
+                     <a href="https://github.com/contentful/the-example-app.rb" rel="noopener" target="_blank">GitHub</a>
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/php.svg') }}" /><br />
+                     <a href="https://the-example-app-php.herokuapp.com/" rel="noopener" target="_blank">{{ 'hostedLabel'|trans }}</a> <br />
+                     <a href="https://github.com/contentful/the-example-app.php" rel="noopener" target="_blank">GitHub</a>
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/python.svg') }}" /><br />
+                     <a href="https://the-example-app-py.herokuapp.com/" rel="noopener" target="_blank">{{ 'hostedLabel'|trans }}</a> <br />
+                     <a href="https://github.com/contentful/the-example-app.py" rel="noopener" target="_blank">GitHub</a>
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/swift.svg') }}" class="inactive" /><br />
+                     {{ 'comingSoonLabel'|trans }}
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/java.svg') }}" class="inactive" /><br />
+                     {{ 'comingSoonLabel'|trans }}
+                 </li>
+                 <li>
+                     <img src="{{ asset('images/android-icon.svg') }}" class="inactive" /><br />
+                     {{ 'comingSoonLabel'|trans }}
+                 </li>
+             </ul>
+         </div>
+
+         <div class="modal__cta-wrapper">
+             <a class="modal__cta close" href="#">{{ 'modalCTALabel'|trans }}</a>
+         </div>
+
+         <div class="modal__close-wrapper">
+             <a class="modal__close-button close" href="#">
+                 <svg>
+                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/icons/icons.svg#cross"></use>
+                 </svg>
+             </a>
+         </div>
+     </div>
+ </section>
