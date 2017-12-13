@@ -91,15 +91,16 @@ class DeepLinkSubscriber implements EventSubscriberInterface
             [
                 'spaceId' => $parameters['space_id'],
                 'deliveryToken' => $parameters['delivery_token'],
-                'previewToken' => $parameters['delivery_token'],
-                'editorialFeatures' => false,
+                'previewToken' => $parameters['preview_token'],
+                'editorialFeatures' => isset($parameters['enable_editorial_features']),
             ]
         );
 
         unset(
             $parameters['space_id'],
             $parameters['delivery_token'],
-            $parameters['preview_token']
+            $parameters['preview_token'],
+            $parameters['enable_editorial_features']
         );
 
         return $parameters;

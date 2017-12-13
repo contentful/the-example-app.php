@@ -16,16 +16,16 @@ class LandingPageControllerTest extends AppWebTestCase
     {
         $this->visit('GET', '/');
 
-        $this->assertPageContains('.module-higlighted-course__title', 'Hello world');
-        $this->assertPageContains('.module-higlighted-course__link-wrapper', 'view course');
+        $this->assertPageContains('.module-highlighted-course__title', 'Hello Contentful');
+        $this->assertPageContains('.module-highlighted-course__link-wrapper', 'view course');
     }
 
     public function testHomepageGerman()
     {
         $this->visit('GET', '/?locale=de-DE');
 
-        $this->assertPageContains('.module-higlighted-course__title', 'Hallo Welt');
-        $this->assertPageContains('.module-higlighted-course__link-wrapper', 'Kurs ansehen');
+        $this->assertPageContains('.module-highlighted-course__title', 'Hallo Contentful');
+        $this->assertPageContains('.module-highlighted-course__link-wrapper', 'Kurs ansehen');
     }
 
     public function test404Page()

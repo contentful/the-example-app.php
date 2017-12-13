@@ -55,5 +55,11 @@ class SettingsControllerTest extends AppWebTestCase
         $this->crawler = $this->client->followRedirect();
 
         $this->assertPageContains('.status-block--success .status-block__title', 'Changes saved successfully!');
+
+        $this->assertPageContainsAttr('.status-block__message form', 'action', '/settings/reset');
+        $this->assertPageContains('.status-block__message form button', 'Reset credentials to default');
+
+        $this->assertPageContainsAttr('.status-block__sharelink', 'href', 'http://localhost/?space_id=cfexampleapi&delivery_token=b4c0n73n7fu1&preview_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50&api=cda&locale=en-US&enable_editorial_features');
+        $this->assertPageContains('.status-block__sharelink', 'Copy session deeplink to clipboard');
     }
 }
