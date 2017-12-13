@@ -60,7 +60,7 @@ class CourseControllerTest extends AppWebTestCase
         $this->visit('GET', '/courses/hello-world/lessons', 301);
 
         $this->assertInstanceOf(RedirectResponse::class, $this->response);
-        $this->assertEquals('http://localhost/courses/hello-world', $this->response->getTargetUrl());
+        $this->assertSame('http://localhost/courses/hello-world', $this->response->getTargetUrl());
     }
 
     public function testLessonPage()
@@ -81,7 +81,7 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContains('.lesson__cta', 'Go to the next lesson');
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
-        $this->assertEquals('visitedLessons', $visitedLessonsCookie->getName());
+        $this->assertSame('visitedLessons', $visitedLessonsCookie->getName());
         $this->assertCount(1, json_decode($visitedLessonsCookie->getValue()));
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }
@@ -111,7 +111,7 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContainsAttr('.lesson__cta', 'href', '/courses/hello-world/lessons/content-model?locale=de-DE');
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
-        $this->assertEquals('visitedLessons', $visitedLessonsCookie->getName());
+        $this->assertSame('visitedLessons', $visitedLessonsCookie->getName());
         $this->assertCount(1, json_decode($visitedLessonsCookie->getValue()));
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }

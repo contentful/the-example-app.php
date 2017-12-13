@@ -34,7 +34,7 @@ class CoursesControllerTest extends AppWebTestCase
         $this->visit('GET', '/courses/categories', 301);
 
         $this->assertInstanceOf(RedirectResponse::class, $this->response);
-        $this->assertEquals('http://localhost/courses', $this->response->getTargetUrl());
+        $this->assertSame('http://localhost/courses', $this->response->getTargetUrl());
     }
 
     public function testCategoryPage()

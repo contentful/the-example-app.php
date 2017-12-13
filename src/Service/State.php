@@ -236,7 +236,7 @@ class State
      */
     public function isDeliveryApi(): bool
     {
-        return $this->api == Contentful::API_DELIVERY;
+        return $this->api === Contentful::API_DELIVERY;
     }
 
     /**
@@ -276,7 +276,7 @@ class State
      */
     public function hasEditorialFeaturesLink(): bool
     {
-        return $this->editorialFeatures && $this->api == 'cpa';
+        return $this->editorialFeatures && $this->api === 'cpa';
     }
 
     /**

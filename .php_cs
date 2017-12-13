@@ -1,16 +1,10 @@
 <?php
 
-$fileHeaderComment = <<< COMMENT
-This file is part of the contentful/the-example-app package..
-
-@copyright 2017 Contentful GmbH
-@license   MIT
-COMMENT;
-
 $finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__)
-    ->exclude('src')
-    ->exclude('tests')
+    ->in('config')
+    ->in('src')
+    ->in('public')
+    ->in('tests')
 ;
 
 return PhpCsFixer\Config::create()
@@ -19,7 +13,6 @@ return PhpCsFixer\Config::create()
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both'],
         'linebreak_after_opening_tag' => true,
         'mb_str_functions' => true,
         'no_php4_constructor' => true,

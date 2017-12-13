@@ -20,23 +20,23 @@ class StateTest extends TestCase
     {
         $state = new State(null, 'defaultSpaceId', 'defaultDeliveryToken', 'defaultPreviewToken', 'en-US', ['en-US', 'de-DE']);
 
-        $this->assertEquals([
+        $this->assertSame([
             'spaceId' => 'defaultSpaceId',
             'deliveryToken' => 'defaultDeliveryToken',
             'previewToken' => 'defaultPreviewToken',
             'editorialFeatures' => false,
         ], $state->getSettings());
-        $this->assertEquals('defaultSpaceId', $state->getSpaceId());
-        $this->assertEquals('defaultDeliveryToken', $state->getDeliveryToken());
-        $this->assertEquals('defaultPreviewToken', $state->getPreviewToken());
+        $this->assertSame('defaultSpaceId', $state->getSpaceId());
+        $this->assertSame('defaultDeliveryToken', $state->getDeliveryToken());
+        $this->assertSame('defaultPreviewToken', $state->getPreviewToken());
         $this->assertFalse($state->hasEditorialFeaturesEnabled());
         $this->assertFalse($state->usesCookieCredentials());
-        $this->assertEquals('cda', $state->getApi());
-        $this->assertEquals('Content Delivery API', $state->getApiLabel());
+        $this->assertSame('cda', $state->getApi());
+        $this->assertSame('Content Delivery API', $state->getApiLabel());
         $this->assertTrue($state->isDeliveryApi());
-        $this->assertEquals('en-US', $state->getLocale());
-        $this->assertEquals(['en-US', 'de-DE'], $state->getAvailableLocales());
-        $this->assertEquals('', $state->getQueryString());
+        $this->assertSame('en-US', $state->getLocale());
+        $this->assertSame(['en-US', 'de-DE'], $state->getAvailableLocales());
+        $this->assertSame('', $state->getQueryString());
     }
 
     public function testGettersWithCookieAndQueryParameters()
@@ -51,22 +51,22 @@ class StateTest extends TestCase
 
         $state = new State($request, 'defaultSpaceId', 'defaultDeliveryToken', 'defaultPreviewToken', 'en-US', ['en-US', 'de-DE']);
 
-        $this->assertEquals([
+        $this->assertSame([
             'spaceId' => 'cookieSpaceId',
             'deliveryToken' => 'cookieDeliveryToken',
             'previewToken' => 'cookiePreviewToken',
             'editorialFeatures' => true,
         ], $state->getSettings());
-        $this->assertEquals('cookieSpaceId', $state->getSpaceId());
-        $this->assertEquals('cookieDeliveryToken', $state->getDeliveryToken());
-        $this->assertEquals('cookiePreviewToken', $state->getPreviewToken());
+        $this->assertSame('cookieSpaceId', $state->getSpaceId());
+        $this->assertSame('cookieDeliveryToken', $state->getDeliveryToken());
+        $this->assertSame('cookiePreviewToken', $state->getPreviewToken());
         $this->assertTrue($state->hasEditorialFeaturesEnabled());
         $this->assertTrue($state->usesCookieCredentials());
-        $this->assertEquals('cpa', $state->getApi());
-        $this->assertEquals('Content Preview API', $state->getApiLabel());
+        $this->assertSame('cpa', $state->getApi());
+        $this->assertSame('Content Preview API', $state->getApiLabel());
         $this->assertFalse($state->isDeliveryApi());
-        $this->assertEquals('de-DE', $state->getLocale());
-        $this->assertEquals(['en-US', 'de-DE'], $state->getAvailableLocales());
-        $this->assertEquals('?api=cpa&locale=de-DE', $state->getQueryString());
+        $this->assertSame('de-DE', $state->getLocale());
+        $this->assertSame(['en-US', 'de-DE'], $state->getAvailableLocales());
+        $this->assertSame('?api=cpa&locale=de-DE', $state->getQueryString());
     }
 }

@@ -22,7 +22,7 @@ class AppExtensionTest extends TestCase
     {
         $extension = new AppExtension();
 
-        $this->assertEquals($html, $extension->convertToHtml($markdown));
+        $this->assertSame($html, $extension->convertToHtml($markdown));
     }
 
     public static function markdownProvider()
