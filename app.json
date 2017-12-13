@@ -13,7 +13,7 @@
   "env": {
     "APP_ENV": {
       "description": "The Symfony environment to use.",
-      "value": "prod",
+      "value": "prod"
     },
     "CONTENTFUL_SPACE_ID": {
       "description": "The default space ID.",

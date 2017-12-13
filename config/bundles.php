@@ -1,11 +1,12 @@
 <?php
 
-/*
- * This file is part of the contentful/the-example-app package..
+/**
+ * This file is part of the contentful/the-example-app package.
  *
  * @copyright 2017 Contentful GmbH
  * @license   MIT
  */
+declare(strict_types=1);
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],

@@ -17,7 +17,7 @@
             <meta name="description" content="{{ 'metaDescription'|trans }}" />
             <meta name="twitter:card" content="{{ 'metaTwitterCard'|trans }}" />
 
-            <meta property="og:title" content="{{ block('page_title') }} — The Example App">
+            <meta property="og:title" content="{{ block('page_title')|trim }} — The Example App">
             <meta property="og:type" content="article" />
             {% if app.request.get('_route') %}
                 <meta property="og:url" content="{{ path(app.request.get('_route'), app.request.get('_route_params')) ~ state.queryString }}" />

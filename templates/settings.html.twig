@@ -125,8 +125,8 @@
 
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
             <div class="form-item">
-                {{ form_label(form.spaceId, 'spaceIdLabel') }}
-                {{ form_widget(form.spaceId) }}
+                {{ form_label(form.spaceId, 'spaceIdLabel', {id: 'input-space-id'}) }}
+                {{ form_widget(form.spaceId, {id: 'input-space-id'}) }}
                 {{ form_errors(form.spaceId) }}
 
                 <div class="form-item__help-text">
@@ -135,8 +135,8 @@
             </div>
 
             <div class="form-item">
-                {{ form_label(form.deliveryToken, 'cdaAccessTokenLabel') }}
-                {{ form_widget(form.deliveryToken) }}
+                {{ form_label(form.deliveryToken, 'cdaAccessTokenLabel', {id: 'input-delivery-token'}) }}
+                {{ form_widget(form.deliveryToken, {id: 'input-delivery-token'}) }}
                 {{ form_errors(form.deliveryToken) }}
 
                 <div class="form-item__help-text">
@@ -147,8 +147,8 @@
             </div>
 
             <div class="form-item">
-                {{ form_label(form.previewToken, 'cpaAccessTokenLabel') }}
-                {{ form_widget(form.previewToken) }}
+                {{ form_label(form.previewToken, 'cpaAccessTokenLabel', {id: 'input-preview-token'}) }}
+                {{ form_widget(form.previewToken, {id: 'input-preview-token'}) }}
                 {{ form_errors(form.previewToken) }}
 
                 <div class="form-item__help-text">
@@ -159,8 +159,8 @@
             </div>
 
             <div class="form-item">
-                {{ form_widget(form.editorialFeatures) }}
-                {{ form_label(form.editorialFeatures, 'enableEditorialFeaturesLabel') }}
+                {{ form_widget(form.editorialFeatures, {id: 'input-editorial-features'}) }}
+                {{ form_label(form.editorialFeatures, 'enableEditorialFeaturesLabel', {id: 'input-editorial-features'}) }}
 
                 <div class="form-item__help-text">
                     {{ 'enableEditorialFeaturesHelpText'|trans }}
