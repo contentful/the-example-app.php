@@ -32,6 +32,11 @@
                 <li>{{ 'stackTraceErrorLabel'|trans }}</li>
             </ul>
 
+            <h2>{{ 'errorLabel'|trans }}</h2>
+            <pre class="error__stack-trace">
+                <code class="shell">{{ exception.message }}</code>
+            </pre>
+
             <h2>{{ 'stackTraceLabel'|trans }}</h2>
             <pre class="error__stack-trace">
                 <code class="shell">
