@@ -150,7 +150,7 @@ class EntryStateChecker
         // Different updatedAt values mean the entry has been updated since its last publishing.
         // We format the values to remove milliseconds in order to ignore slight discrepancies.
         $previewUpdatedAt = $previewEntry->getUpdatedAt()->format('Y-m-d H:i:s');
-        $deliveryUpdatedAt = $deliveryEntry->getUpdatedAt()->format('Y-m-d H:i:s');
+        $deliveryUpdatedAt = $deliveryEntry ? $deliveryEntry->getUpdatedAt()->format('Y-m-d H:i:s') : null;
         if ($deliveryEntry && $previewUpdatedAt !== $deliveryUpdatedAt) {
             $previewEntry->pendingChanges = true;
         }
