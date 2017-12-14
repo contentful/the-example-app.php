@@ -67,7 +67,7 @@ class EntryStateChecker
     }
 
     /**
-     * Extracts the meaningful IDs fro the given preview entries (including nested ones),
+     * Extracts the meaningful IDs for the given preview entries (including nested ones),
      * and then queries the Delivery API in order to get a list with the corresponding,
      * published entries.
      *
