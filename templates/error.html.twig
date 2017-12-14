@@ -1,3 +1,10 @@
+{#
+ * Template: error.html.twig
+ *
+ * @param \Exception exception
+ #}
+
+
 {% extends 'base.html.twig' %}
 
 {% block page_title %}
@@ -11,36 +18,28 @@
             <h2>{{ 'tryLabel'|trans }}:</h2>
 
             <ul>
-                {% if message is defined %}
-                    <li>{{ message|trans }}</li>
-                {% else %}
-                    {% if exception.statusCode == 404 %}
-                        <li>{{ 'error404Route'|trans }}</li>
-                        <li>{{ 'draftOrPublishedErrorLabel'|trans }}</li>
-                    {% endif %}
-                    {% if exception.statusCode == 400 %}
-                        <li>{{ 'contentModelChangedErrorLabel'|trans }}</li>
-                    {% endif %}
-                    {% if exception.statusCode == 401 %}
-                        <li>{{ 'verifyCredentialsErrorLabel'|trans }}</li>
-                        <li>{{ 'localeContentErrorLabel'|trans }}</li>
-                    {% endif %}
+                {% if exception.statusCode == 404 %}
+                    <li>{{ 'error404Route'|trans }}</li>
+                    <li>{{ 'draftOrPublishedErrorLabel'|trans }}</li>
                 {% endif %}
-                {% if exception is defined %}
-                    <li>{{ 'stackTraceErrorLabel'|trans }}</li>
+                {% if exception.statusCode == 400 %}
+                    <li>{{ 'contentModelChangedErrorLabel'|trans }}</li>
                 {% endif %}
+                {% if exception.statusCode == 401 %}
+                    <li>{{ 'verifyCredentialsErrorLabel'|trans }}</li>
+                    <li>{{ 'localeContentErrorLabel'|trans }}</li>
+                {% endif %}
+                <li>{{ 'stackTraceErrorLabel'|trans }}</li>
             </ul>
 
-            {% if exception is defined %}
-                <h2>{{ 'stackTraceLabel'|trans }}</h2>
-                <pre class="error__stack-trace">
-                    <code class="shell">
-                        {%- for index, trace in exception.trace -%}
-                        {{ '#' ~ index ~ ' ' ~ trace.file ~ '(' ~ trace.line ~ ') ' ~ trace.short_class ~ '::' ~ trace.function ~ '(...)' ~ "\n" }}
-                        {%- endfor -%}
-                    </code>
-                </pre>
-            {% endif %}
+            <h2>{{ 'stackTraceLabel'|trans }}</h2>
+            <pre class="error__stack-trace">
+                <code class="shell">
+                    {%- for index, trace in exception.trace -%}
+                    {{ '#' ~ index ~ ' ' ~ trace.file ~ '(' ~ trace.line ~ ') ' ~ trace.short_class ~ '::' ~ trace.function ~ '(...)' ~ "\n" }}
+                    {%- endfor -%}
+                </code>
+            </pre>
         </div>
     </div>
 {% endblock %}
