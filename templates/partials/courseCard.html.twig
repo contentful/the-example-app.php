@@ -17,7 +17,7 @@
 
     <h2 class="course-card__title">
         <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}">{{ course.getTitle() }}</a>
-        {% if state.api == 'cpa' and (course.draft or course.pendingChanges) %}
+        {% if state.hasEditorialFeaturesLink %}
             {% include 'partials/entryState.html.twig' with {entry: course} only %}
         {% endif %}
     </h2>
