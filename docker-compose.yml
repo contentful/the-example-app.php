@@ -1,0 +1,23 @@
+version: '2'
+services:
+  php:
+    build: .
+    ports:
+      - "9000:9000"
+    # environment:
+    #   - CONTENTFUL_SPACE_ID=<SPACE_ID>
+    #   - CONTENTFUL_DELIVERY_TOKEN=<DELIVERY_ACCESS_TOKEN>
+    #   - CONTENTFUL_PREVIEW_TOKEN=<PREVIEW_ACCESS_TOKEN>
+    volumes:
+      - ./public/:/var/www/symfony/public
+      - ./logs/symfony:/var/www/symfony/var/logs:cached
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "3000:80"
+    links:
+      - php
+    volumes_from:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx:cached
