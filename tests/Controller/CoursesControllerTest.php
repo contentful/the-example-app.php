@@ -70,8 +70,8 @@ class CoursesControllerTest extends AppWebTestCase
         $this->visit('GET', '/courses/categories/getting-started?locale=de-DE');
 
         $this->assertPageContainsAttr('.header__logo-link', 'href', '/?locale=de-DE');
-        $this->assertPageContains('h1', 'Getting started');
+        $this->assertPageContains('h1', 'Einstiegskurs');
         $this->assertPageContains('.layout-sidebar__sidebar-title', 'Kategorien');
-        $this->assertPageContains('.sidebar-menu__link.active', 'Getting started');
+        $this->assertPageContains('.sidebar-menu__link.active', 'Einstiegskurs');
     }
 }
