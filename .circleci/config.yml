@@ -7,14 +7,28 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo apt-get install -y libzip-dev
-      - run: sudo docker-php-ext-install zip
-      - run: sudo docker-php-ext-install pcntl
-      - run: sudo composer self-update
-      - run: composer install -n --prefer-dist
-      - run: php bin/phpunit
       - run:
-          name: Run e2e tests
+          name: Install required libraries
+          command: |
+            sudo apt-get install -y libzip-dev
+            sudo docker-php-ext-install zip
+            sudo docker-php-ext-install pcntl
+      - run:
+          name: Install dependencies
+          command: |
+            sudo composer self-update
+            composer install -n --prefer-dist
+      - run:
+          name: Syntax tests
+          command: |
+            wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
+            chmod a+x php-cs-fixer
+            ./php-cs-fixer fix --dry-run
+      - run:
+          name: Unit tests
+          command: php bin/phpunit
+      - run:
+          name: E2E tests
           command: |
             git clone https://github.com/contentful/the-example-app-e2e-tests.git ./tests-e2e
             cd tests-e2e
