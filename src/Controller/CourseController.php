@@ -43,7 +43,7 @@ class CourseController
         string $courseSlug,
         ?string $lessonSlug
     ): Response {
-        $course = $contentful->findCourse($courseSlug, $lessonSlug !== null);
+        $course = $contentful->findCourse($courseSlug, null !== $lessonSlug);
         if (!$course) {
             throw new NotFoundHttpException();
         }

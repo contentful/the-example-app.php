@@ -133,7 +133,7 @@ class EntryStateChecker
     private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries, int $depth = 1): void
     {
         // Bail early if we've reached the limit of configured nesting.
-        if ($depth === 0) {
+        if (0 === $depth) {
             return;
         }
 

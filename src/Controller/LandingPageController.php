@@ -30,7 +30,7 @@ class LandingPageController
     public function __invoke(ResponseFactory $responseFactory, Contentful $contentful, string $landingPageSlug): Response
     {
         $landingPage = $contentful->findLandingPage($landingPageSlug);
-        if ($landingPage === null) {
+        if (null === $landingPage) {
             throw new NotFoundHttpException();
         }
 

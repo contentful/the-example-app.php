@@ -52,7 +52,7 @@ class ClientFactory
      */
     public function createClient(string $api, string $spaceId = null, string $accessToken = null): Client
     {
-        if ($api !== Contentful::API_DELIVERY && $api !== Contentful::API_PREVIEW) {
+        if (Contentful::API_DELIVERY !== $api && Contentful::API_PREVIEW !== $api) {
             throw new \InvalidArgumentException(sprintf(
                 'Trying to instantiate a client for unknown API: %s.',
                 $api
@@ -61,7 +61,7 @@ class ClientFactory
 
         $spaceId = $spaceId ?: $this->state->getSpaceId();
         $accessToken = $accessToken ?: (
-            $api === Contentful::API_DELIVERY
+            Contentful::API_DELIVERY === $api
                 ? $this->state->getDeliveryToken()
                 : $this->state->getPreviewToken()
         );
@@ -69,7 +69,7 @@ class ClientFactory
         $client = new Client(
             $accessToken,
             $spaceId,
-            $api === Contentful::API_PREVIEW,
+            Contentful::API_PREVIEW === $api,
             $this->state->getLocale(),
             ['cacheDir' => $this->cacheDir]
         );
