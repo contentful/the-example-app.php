@@ -49,6 +49,26 @@
             <div class="courses">
                 <h1>{{ title }}</h1>
 
+                {% if state.hasEditorialFeaturesEnabled %}
+                    <div class="editorial-features">
+                        <div class="editorial-features__item">
+                            <a
+                                href="https://app.contentful.com/spaces/{{ state.spaceId }}/entries/?contentTypeId=course"
+                                class="editorial-features__text"
+                                target="_blank"
+                                rel="noopener"
+                            >{{ 'editInTheWebAppLabel'|trans }}</a>
+
+                            <div class="editorial-features__hint-wrapper">
+                                <svg class="editorial-features__hint-icon">
+                                    <use xlink:href="{{ asset('/icons/icons.svg#info') }}" />
+                                    <div class="editorial-features__hint-message">{{ 'editorialFeaturesHint'|trans }}</div>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="grid-list">
                     {% for course in courses %}
                         <div class="grid-list__item">

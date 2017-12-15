@@ -91,15 +91,16 @@ class DeepLinkSubscriber implements EventSubscriberInterface
             [
                 'spaceId' => $parameters['space_id'],
                 'deliveryToken' => $parameters['delivery_token'],
-                'previewToken' => $parameters['delivery_token'],
-                'editorialFeatures' => false,
+                'previewToken' => $parameters['preview_token'],
+                'editorialFeatures' => isset($parameters['enable_editorial_features']),
             ]
         );
 
         unset(
             $parameters['space_id'],
             $parameters['delivery_token'],
-            $parameters['delivery_token']
+            $parameters['preview_token'],
+            $parameters['enable_editorial_features']
         );
 
         return $parameters;
@@ -119,8 +120,8 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         $queryParameters = $request->query->all();
 
         try {
-            $this->contentful->validateCredentials($queryParameters['spaceId'], $queryParameters['delivery_token']);
-            $this->contentful->validateCredentials($queryParameters['spaceId'], $queryParameters['preview_token'], false);
+            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['delivery_token']);
+            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['preview_token'], false);
         } catch (ApiException $exception) {
             $exception = FlattenException::create(
                 $exception,

@@ -1,0 +1,12 @@
+{
+  "baseUrl": "http://localhost:8000",
+  "fixturesFolder": false,
+  "integrationFolder": "./tests-e2e/specs",
+  "supportFile": false,
+  "env": {
+    "LANGUAGE": "PHP",
+    "CONTENTFUL_SPACE_ID": "qz0n5cdakyl9",
+    "CONTENTFUL_DELIVERY_TOKEN": "580d5944194846b690dd89b630a1cb98a0eef6a19b860ef71efc37ee8076ddb8",
+    "CONTENTFUL_PREVIEW_TOKEN": "e8fc39d9661c7468d0285a7ff949f7a23539dd2e686fcb7bd84dc01b392d698b"
+  }
+}

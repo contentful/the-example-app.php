@@ -16,16 +16,16 @@ class CourseControllerTest extends AppWebTestCase
 {
     public function testCoursePage()
     {
-        $this->visit('GET', '/courses/hello-world');
+        $this->visit('GET', '/courses/hello-contentful');
 
         $this->assertBreadcrumb([
             ['Home', '/'],
             ['Courses', '/courses'],
-            ['Hello world', '/courses/hello-world'],
+            ['Hello Contentful', '/courses/hello-contentful'],
         ]);
 
         $this->assertPageContains('.layout-sidebar__sidebar-title', 'Table of contents');
-        $this->assertPageContains('.course__title', 'Hello world');
+        $this->assertPageContains('.course__title', 'Hello Contentful');
         $this->assertPageContains('.course__overview-cta', 'Start course');
         $this->assertPageContains('.table-of-contents__link.active', 'Course overview');
     }
@@ -37,43 +37,43 @@ class CourseControllerTest extends AppWebTestCase
 
     public function testCoursePageEditorialFeatures()
     {
-        $this->visit('GET', '/courses/hello-world?enable_editorial_features');
+        $this->visit('GET', '/courses/hello-contentful?enable_editorial_features');
 
         $this->assertPageContainsAttr('.header__logo-link', 'href', '/?enable_editorial_features');
-        $this->assertPageContainsAttr('.course__overview-cta', 'href', '/courses/hello-world/lessons/architecture?enable_editorial_features');
-        $this->assertPageContains('.course .editorial-features__item a', 'Edit in the web app');
+        $this->assertPageContainsAttr('.course__overview-cta', 'href', '/courses/hello-contentful/lessons/architecture?enable_editorial_features');
+        $this->assertPageContains('.course .editorial-features__item a', 'Edit in the Contentful Web App');
     }
 
     public function testCoursePageGerman()
     {
-        $this->visit('GET', '/courses/hello-world?locale=de-DE');
+        $this->visit('GET', '/courses/hello-contentful?locale=de-DE');
 
         $this->assertPageContainsAttr('.header__logo-link', 'href', '/?locale=de-DE');
         $this->assertPageContains('.layout-sidebar__sidebar-title', 'Inhalt');
-        $this->assertPageContains('.course__title', 'Hallo Welt');
+        $this->assertPageContains('.course__title', 'Hallo Contentful');
         $this->assertPageContains('.course__overview-cta', 'Kurs beginnen');
         $this->assertPageContains('.table-of-contents__link.active', 'Kurs Übersicht');
     }
 
     public function testLessonsPage()
     {
-        $this->visit('GET', '/courses/hello-world/lessons', 301);
+        $this->visit('GET', '/courses/hello-contentful/lessons', 301);
 
         $this->assertInstanceOf(RedirectResponse::class, $this->response);
-        $this->assertEquals('http://localhost/courses/hello-world', $this->response->getTargetUrl());
+        $this->assertSame('http://localhost/courses/hello-contentful', $this->response->getTargetUrl());
     }
 
     public function testLessonPage()
     {
         $requestTime = \time();
-        $this->visit('GET', '/courses/hello-world/lessons/architecture');
+        $this->visit('GET', '/courses/hello-contentful/lessons/architecture');
 
         $this->assertBreadcrumb([
             ['Home', '/'],
             ['Courses', '/courses'],
-            ['Hello world', '/courses/hello-world'],
-            ['Lessons', '/courses/hello-world'],
-            ['Architecture', '/courses/hello-world/lessons/architecture'],
+            ['Hello Contentful', '/courses/hello-contentful'],
+            ['Lessons', '/courses/hello-contentful'],
+            ['Architecture', '/courses/hello-contentful/lessons/architecture'],
         ]);
 
         $this->assertPageContains('.lesson__title', 'Architecture');
@@ -81,37 +81,37 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContains('.lesson__cta', 'Go to the next lesson');
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
-        $this->assertEquals('visitedLessons', $visitedLessonsCookie->getName());
+        $this->assertSame('visitedLessons', $visitedLessonsCookie->getName());
         $this->assertCount(1, json_decode($visitedLessonsCookie->getValue()));
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }
 
     public function testLesson404Page()
     {
-        $this->visit('GET', '/courses/hello-world/lessons/wrong-lesson', 404);
+        $this->visit('GET', '/courses/hello-contentful/lessons/wrong-lesson', 404);
     }
 
     public function testLessonPageEditorialFeatures()
     {
-        $this->visit('GET', '/courses/hello-world/lessons/architecture?enable_editorial_features');
+        $this->visit('GET', '/courses/hello-contentful/lessons/architecture?enable_editorial_features');
 
         $this->assertPageContainsAttr('.header__logo-link', 'href', '/?enable_editorial_features');
-        $this->assertPageContains('.lesson .editorial-features__item a', 'Edit in the web app');
+        $this->assertPageContains('.lesson .editorial-features__item a', 'Edit in the Contentful Web App');
     }
 
     public function testLessonPageGerman()
     {
         $requestTime = \time();
-        $this->visit('GET', '/courses/hello-world/lessons/architecture?locale=de-DE');
+        $this->visit('GET', '/courses/hello-contentful/lessons/architecture?locale=de-DE');
 
         $this->assertPageContainsAttr('.header__logo-link', 'href', '/?locale=de-DE');
         $this->assertPageContains('.lesson__title', 'Architektur');
         $this->assertPageContains('.table-of-contents__link.active', 'Architektur');
         $this->assertPageContains('.lesson__cta', 'Nächste Lektion ansehen');
-        $this->assertPageContainsAttr('.lesson__cta', 'href', '/courses/hello-world/lessons/content-model?locale=de-DE');
+        $this->assertPageContainsAttr('.lesson__cta', 'href', '/courses/hello-contentful/lessons/content-model?locale=de-DE');
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
-        $this->assertEquals('visitedLessons', $visitedLessonsCookie->getName());
+        $this->assertSame('visitedLessons', $visitedLessonsCookie->getName());
         $this->assertCount(1, json_decode($visitedLessonsCookie->getValue()));
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }

@@ -61,7 +61,7 @@
                 <div class="course">
                     <h1 class="course__title">{{ title }}</h1>
 
-                    {% include 'partials/editorialFeatures.html.twig' with {entry: course, state: state} only %}
+                    {% include 'partials/editorialFeatures.html.twig' with {entry: course} only %}
 
                     <div class="course__overview">
                         <h3 class="course__overview-title">{{ 'overviewLabel'|trans }}</h3>

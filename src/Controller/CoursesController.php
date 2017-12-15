@@ -62,7 +62,7 @@ class CoursesController
     private function findCategory(array $categories, ?string $categorySlug): ?DynamicEntry
     {
         foreach ($categories as $category) {
-            if ($category->getSlug() == $categorySlug) {
+            if ($category->getSlug() === $categorySlug) {
                 return $category;
             }
         }

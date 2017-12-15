@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class AppWebTestCase extends WebTestCase
 {
@@ -37,7 +36,7 @@ abstract class AppWebTestCase extends WebTestCase
         $this->crawler = $this->client->request($method, $url);
         $this->response = $this->client->getResponse();
 
-        $this->assertEquals($statusCode, $this->response->getStatusCode());
+        $this->assertSame($statusCode, $this->response->getStatusCode());
     }
 
     /**
@@ -58,7 +57,7 @@ abstract class AppWebTestCase extends WebTestCase
      */
     protected function assertPageContainsAttr(string $selector, string $attr, string $expected)
     {
-        return $this->assertEquals($expected, $this->crawler->filter($selector)->attr($attr));
+        return $this->assertSame($expected, $this->crawler->filter($selector)->attr($attr));
     }
 
     /**
@@ -69,8 +68,8 @@ abstract class AppWebTestCase extends WebTestCase
         $this->crawler->filter('.breadcrumb a')->each(function (Crawler $item, int $index) use ($breadcrumb) {
             $currentBreadcrumb = $breadcrumb[$index];
 
-            $this->assertEquals($item->text(), $currentBreadcrumb[0]);
-            $this->assertEquals($item->attr('href'), $currentBreadcrumb[1]);
+            $this->assertSame($item->text(), $currentBreadcrumb[0]);
+            $this->assertSame($item->attr('href'), $currentBreadcrumb[1]);
         });
     }
 

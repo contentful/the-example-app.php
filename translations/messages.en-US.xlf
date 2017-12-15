@@ -92,15 +92,75 @@
       </trans-unit>
       <trans-unit id="modalTitle">
         <source>modalTitle</source>
-        <target>A reference for developers using Contentful</target>
+        <target>A reference for Node.js developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitleDotnet">
+        <source>modalTitleDotnet</source>
+        <target>A reference for .NET developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitleRuby">
+        <source>modalTitleRuby</source>
+        <target>A reference for Ruby developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitlePhp">
+        <source>modalTitlePhp</source>
+        <target>A reference for PHP developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitlePython">
+        <source>modalTitlePython</source>
+        <target>A reference for Python developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitleSwift">
+        <source>modalTitleSwift</source>
+        <target>A reference for Swift developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitleAndroid">
+        <source>modalTitleAndroid</source>
+        <target>A reference for Android developers using Contentful</target>
+      </trans-unit>
+      <trans-unit id="modalTitleJava">
+        <source>modalTitleJava</source>
+        <target>A reference for Java developers using Contentful</target>
       </trans-unit>
       <trans-unit id="modalIntro">
         <source>modalIntro</source>
-        <target>This is "The Example App" in node.js. While building your own apps with Contentful, you can reference this app's code, found on</target>
+        <target>This is "The Node.js Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroDotnet">
+        <source>modalIntroDotnet</source>
+        <target>This is "The .NET Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroRuby">
+        <source>modalIntroRuby</source>
+        <target>This is "The Ruby Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroPhp">
+        <source>modalIntroPhp</source>
+        <target>This is "The PHP Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroPython">
+        <source>modalIntroPython</source>
+        <target>This is "The Python Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroSwift">
+        <source>modalIntroSwift</source>
+        <target>This is "The Swift Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroAndroid">
+        <source>modalIntroAndroid</source>
+        <target>This is "The Android Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
+      </trans-unit>
+      <trans-unit id="modalIntroJava">
+        <source>modalIntroJava</source>
+        <target>This is "The Java Example App". While building your own apps with Contentful, you can reference this app's code, found on</target>
       </trans-unit>
       <trans-unit id="modalSpaceIntro">
         <source>modalSpaceIntro</source>
         <target>You can also edit the content in the app by cloning the Contentful space to your own Contentful account by following the instructions</target>
+      </trans-unit>
+      <trans-unit id="modalPlatforms">
+        <source>modalPlatforms</source>
+        <target>This app is also available in the following platforms and languages:</target>
       </trans-unit>
       <trans-unit id="modalSpaceLinkLabel">
         <source>modalSpaceLinkLabel</source>
@@ -112,7 +172,7 @@
       </trans-unit>
       <trans-unit id="editorialFeaturesHint">
         <source>editorialFeaturesHint</source>
-        <target>Edit this entry in our web app. You have to be logged in and have access to the connected space to use this feature.</target>
+        <target>Edit this entry in the Contentful web app. You have to be logged in and have access to the connected space to use this feature.</target>
       </trans-unit>
       <trans-unit id="draftLabel">
         <source>draftLabel</source>
@@ -264,7 +324,7 @@
       </trans-unit>
       <trans-unit id="connectedToSpaceLabel">
         <source>connectedToSpaceLabel</source>
-        <target>Connected to space</target>
+        <target>Connected space</target>
       </trans-unit>
       <trans-unit id="spaceIdLabel">
         <source>spaceIdLabel</source>
@@ -288,11 +348,11 @@
       </trans-unit>
       <trans-unit id="contentDeliveryApiHelpText">
         <source>contentDeliveryApiHelpText</source>
-        <target>View published content using this API.</target>
+        <target>View published content using this token.</target>
       </trans-unit>
       <trans-unit id="contentPreviewApiHelpText">
         <source>contentPreviewApiHelpText</source>
-        <target>Preview unpublished content using this API (i.e. content with “Draft” status).</target>
+        <target>Preview unpublished content using this token (i.e. content with “Draft” status).</target>
       </trans-unit>
       <trans-unit id="enableEditorialFeaturesLabel">
         <source>enableEditorialFeaturesLabel</source>
@@ -336,15 +396,75 @@
       </trans-unit>
       <trans-unit id="editInTheWebAppLabel">
         <source>editInTheWebAppLabel</source>
-        <target>Edit in the web app</target>
+        <target>Edit in the Contentful Web App</target>
       </trans-unit>
       <trans-unit id="error404Route">
         <source>error404Route</source>
-        <target>a non supported route</target>
+        <target>Verify that you are trying to reach a supported route</target>
       </trans-unit>
       <trans-unit id="currentLocaleLabel">
         <source>currentLocaleLabel</source>
         <target>English (United States)</target>
+      </trans-unit>
+      <trans-unit id="hostedLabel">
+        <source>hostedLabel</source>
+        <target>Hosted</target>
+      </trans-unit>
+      <trans-unit id="comingSoonLabel">
+        <source>comingSoonLabel</source>
+        <target>Coming soon</target>
+      </trans-unit>
+      <trans-unit id="credentialSourceLabel">
+        <source>credentialSourceLabel</source>
+        <target>Credentials source</target>
+      </trans-unit>
+      <trans-unit id="readMoreLabel">
+        <source>readMoreLabel</source>
+        <target>Read more</target>
+      </trans-unit>
+      <trans-unit id="credentialsLocationLabel">
+        <source>credentialsLocationLabel</source>
+        <target>Your credentials are currently loaded from</target>
+      </trans-unit>
+      <trans-unit id="overwriteCredentialsLabel">
+        <source>overwriteCredentialsLabel</source>
+        <target>They can be overwritten by changing them below or using query string parameters.</target>
+      </trans-unit>
+      <trans-unit id="copyLinkLabel">
+        <source>copyLinkLabel</source>
+        <target>Copy session deeplink to clipboard</target>
+      </trans-unit>
+      <trans-unit id="resetCredentialsLabel">
+        <source>resetCredentialsLabel</source>
+        <target>Reset credentials to default</target>
+      </trans-unit>
+      <trans-unit id="resetAboveLabel">
+        <source>resetAboveLabel</source>
+        <target>You can reset to the default credentials above.</target>
+      </trans-unit>
+      <trans-unit id="closeLabel">
+        <source>closeLabel</source>
+        <target>Close</target>
+      </trans-unit>
+      <trans-unit id="overrideConfigLabel">
+        <source>overrideConfigLabel</source>
+        <target>This configuration can be overriden through the form below or by using query string parameters.</target>
+      </trans-unit>
+      <trans-unit id="loadedFromLocalFileLabel">
+        <source>loadedFromLocalFileLabel</source>
+        <target>Loaded from local file</target>
+      </trans-unit>
+      <trans-unit id="usingServerCredentialsLabel">
+        <source>usingServerCredentialsLabel</source>
+        <target>The example app is currently using server side stored credentials to connect to a Contentful space.</target>
+      </trans-unit>
+      <trans-unit id="usingSessionCredentialsLabel">
+        <source>usingSessionCredentialsLabel</source>
+        <target>The example app is currently using application session stored credentials to connect to a Contentful space.</target>
+      </trans-unit>
+      <trans-unit id="applicationCredentialsLabel">
+        <source>applicationCredentialsLabel</source>
+        <target>Application session credentials</target>
       </trans-unit>
     </body>
   </file>

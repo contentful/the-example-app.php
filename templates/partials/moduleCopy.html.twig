@@ -4,7 +4,7 @@
  * @param Contentful\Delivery\DynamicEntry module
  #}
 
-{% set style = module.visualStyle == 'Emphasized' ? '--emphasized' : '' %}
+{% set style = module.getVisualStyle() == 'Emphasized' ? '--emphasized' : '' %}
 
 <div class="module">
     <div class="module-copy{{ style }}">

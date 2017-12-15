@@ -67,6 +67,11 @@ class State
     private $cookieCredentials;
 
     /**
+     * @var bool
+     */
+    private $usesDefaultCredentials = true;
+
+    /**
      * @param Request|null $request
      * @param string       $spaceId
      * @param string       $deliveryToken
@@ -117,6 +122,8 @@ class State
             $settings['deliveryToken'] = $cookieSettings['deliveryToken'];
             $settings['previewToken'] = $cookieSettings['previewToken'];
             $settings['editorialFeatures'] = $cookieSettings['editorialFeatures'];
+
+            $this->usesDefaultCredentials = false;
         }
 
         // The "enable_editorial_features" parameter
@@ -229,7 +236,7 @@ class State
      */
     public function isDeliveryApi(): bool
     {
-        return $this->api == Contentful::API_DELIVERY;
+        return $this->api === Contentful::API_DELIVERY;
     }
 
     /**
@@ -262,5 +269,35 @@ class State
     public function getQueryString(): string
     {
         return $this->queryString;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEditorialFeaturesLink(): bool
+    {
+        return $this->editorialFeatures && $this->api === 'cpa';
+    }
+
+    /**
+     * @return bool
+     */
+    public function usesDefaultCredentials(): bool
+    {
+        return $this->usesDefaultCredentials;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShareableLinkQuery(): string
+    {
+        return '?'.\http_build_query([
+            'space_id' => $this->spaceId,
+            'delivery_token' => $this->deliveryToken,
+            'preview_token' => $this->previewToken,
+            'api' => $this->api,
+            'locale' => $this->locale,
+        ]).($this->editorialFeatures ? '&enable_editorial_features' : '');
     }
 }

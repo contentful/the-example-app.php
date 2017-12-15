@@ -43,7 +43,7 @@ class CourseController
         string $courseSlug,
         ?string $lessonSlug
     ): Response {
-        $course = $contentful->findCourse($courseSlug);
+        $course = $contentful->findCourse($courseSlug, $lessonSlug !== null);
         if (!$course) {
             throw new NotFoundHttpException();
         }
@@ -114,7 +114,7 @@ class CourseController
     private function findLessonIndex(array $lessons, ?string $slug): ?int
     {
         foreach ($lessons as $index => $lesson) {
-            if ($lesson->getSlug() == $slug) {
+            if ($lesson->getSlug() === $slug) {
                 return $index;
             }
         }

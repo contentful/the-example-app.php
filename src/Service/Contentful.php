@@ -10,13 +10,11 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Kernel;
 use Contentful\Delivery\Client;
 use Contentful\Delivery\DynamicEntry;
 use Contentful\Delivery\Query;
 use Contentful\Delivery\Space;
 use Contentful\Exception\ApiException;
-use Contentful\Exception\NotFoundException;
 
 /**
  * Contentful class.
@@ -52,71 +50,47 @@ class Contentful
     private $state;
 
     /**
-     * @param State  $state
-     * @param string $cacheDir
+     * @var EntryStateChecker
      */
-    public function __construct(State $state, string $cacheDir)
+    private $entryStateChecker;
+
+    /**
+     * @var ClientFactory
+     */
+    private $clientFactory;
+
+    /**
+     * @param State             $state
+     * @param ClientFactory     $clientFactory
+     * @param EntryStateChecker $entryStateChecker
+     */
+    public function __construct(State $state, ClientFactory $clientFactory, EntryStateChecker $entryStateChecker)
     {
         $this->state = $state;
-        $options = ['cacheDir' => $cacheDir.'/contentful'];
-
-        $this->client = $this->state->isDeliveryApi()
-            ? new Client($this->state->getDeliveryToken(), $this->state->getSpaceId(), false, $this->state->getLocale(), $options)
-            : new Client($this->state->getPreviewToken(), $this->state->getSpaceId(), true, $this->state->getLocale(), $options);
-
-        $this->client->setApplication(Kernel::APP_NAME, Kernel::APP_VERSION);
+        $this->entryStateChecker = $entryStateChecker;
+        $this->clientFactory = $clientFactory;
+        $this->client = $clientFactory->createClient($this->state->isDeliveryApi() ? self::API_DELIVERY : self::API_PREVIEW);
     }
 
     /**
      * Validates the given credentials by trying to make an API call.
      *
      * @param string $spaceId
-     * @param string $token
+     * @param string $accessToken
      * @param bool   $deliveryApi
      *
      * @throws ApiException if the credentials are not valid and an error response is returned from Contentful
      */
-    public function validateCredentials(string $spaceId, string $token, bool $deliveryApi = true): void
+    public function validateCredentials(string $spaceId, string $accessToken, bool $deliveryApi = true): void
     {
         // We make an "empty" API call,
         // the result of which will depend on the validity of the credentials.
         // If any error should arise, the call will throw an exception.
-        $client = new Client($token, $spaceId, !$deliveryApi);
-        $client->setApplication('the-example-app.php', Kernel::APP_VERSION);
-        $client->getSpace();
-    }
-
-    /**
-     * Attaches to an entry metadata about its state.
-     * The entry will have two extra fields defined:
-     * - draft: whether the entry has not been published yet
-     * - pendingChanges: whether the entry has already been published,
-     *     but some changes have been made in the meanwhile.
-     *
-     * @param DynamicEntry $entry
-     *
-     * @return DynamicEntry
-     */
-    private function attachEntryState(DynamicEntry $entry): DynamicEntry
-    {
-        $entry->draft = false;
-        $entry->pendingChanges = false;
-
-        if ($this->state->hasEditorialFeaturesEnabled() && $this->state->getApi() == self::API_PREVIEW) {
-            $deliveryClient = new Client($this->state->getDeliveryToken(), $this->state->getSpaceId(), false, $this->state->getLocale());
-
-            try {
-                $publishedEntry = $deliveryClient->getEntry($entry->getId());
-
-                if ($entry->getUpdatedAt() != $publishedEntry->getUpdatedAt()) {
-                    $entry->pendingChanges = true;
-                }
-            } catch (NotFoundException $exception) {
-                $entry->draft = true;
-            }
-        }
-
-        return $entry;
+        $this->clientFactory->createClient(
+            $deliveryApi ? self::API_DELIVERY : self::API_PREVIEW,
+            $spaceId,
+            $accessToken
+        )->getSpace();
     }
 
     /**
@@ -157,41 +131,49 @@ class Contentful
             ->setContentType('course')
             ->setLocale($this->state->getLocale())
             ->orderBy('-sys.createdAt')
-            ->setInclude(6);
+            ->setInclude(2);
 
         if ($category) {
             $query->where('fields.categories.sys.id', $category->getId());
         }
 
-        $courses = $this->client->getEntries($query);
+        $courses = $this->client->getEntries($query)->getItems();
 
-        return array_map([$this, 'attachEntryState'], $courses->getItems());
+        if ($this->state->hasEditorialFeaturesLink()) {
+            $this->entryStateChecker->computeState($courses, 1);
+        }
+
+        return $courses;
     }
 
     /**
      * Finds a course using its slug.
      * We use the collection endpoint, so we can prefetch linked entries
      * by using the include parameter.
+     * Depending on the page, we can choose whether we can go as deep as
+     * the lesson modules when working out the entry state.
      *
      * @param string $slug
+     * @param bool   $includeLessonModules
      *
      * @return DynamicEntry|null
      */
-    public function findCourse(string $slug): ?DynamicEntry
+    public function findCourse(string $slug, bool $includeLessonModules): ?DynamicEntry
     {
         $query = (new Query())
             ->where('fields.slug', $slug)
             ->setContentType('course')
             ->setLocale($this->state->getLocale())
-            ->setInclude(6);
+            ->setInclude(3)
+            ->setLimit(1);
 
-        $courses = $this->client->getEntries($query);
+        $course = $this->client->getEntries($query)->getItems()[0] ?? null;
 
-        if (!count($courses)) {
-            return null;
+        if ($course && $this->state->hasEditorialFeaturesLink()) {
+            $this->entryStateChecker->computeState([$course], $includeLessonModules ? 3 : 2);
         }
 
-        return $this->attachEntryState($courses[0]);
+        return $course;
     }
 
     /**
@@ -209,14 +191,15 @@ class Contentful
             ->where('fields.slug', $slug)
             ->setContentType('layout')
             ->setLocale($this->state->getLocale())
-            ->setInclude(6);
+            ->setInclude(3)
+            ->setLimit(1);
 
-        $landingPages = $this->client->getEntries($query);
+        $landingPage = $this->client->getEntries($query)->getItems()[0] ?? null;
 
-        if (!count($landingPages)) {
-            return null;
+        if ($landingPage && $this->state->hasEditorialFeaturesLink()) {
+            $this->entryStateChecker->computeState([$landingPage], 2);
         }
 
-        return $this->attachEntryState($landingPages[0]);
+        return $landingPage;
     }
 }

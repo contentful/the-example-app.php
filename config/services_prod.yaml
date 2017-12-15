@@ -28,7 +28,7 @@ services:
         arguments:
             $spaceId: "%env(CONTENTFUL_SPACE_ID)%"
             $deliveryToken: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
-    App\Service\Contentful:
+    App\Service\ClientFactory:
         arguments:
             $cacheDir: "%kernel.cache_dir%"
     App\Service\ResponseFactory:

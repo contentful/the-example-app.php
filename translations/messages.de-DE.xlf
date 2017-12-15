@@ -92,15 +92,75 @@
       </trans-unit>
       <trans-unit id="modalTitle">
         <source>modalTitle</source>
-        <target>Ein Beispiel für Entwickler, die Contentful benutzen.</target>
+        <target>Ein Beispiel für Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitleDotnet">
+        <source>modalTitleDotnet</source>
+        <target>Ein Beispiel für .NET Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitleRuby">
+        <source>modalTitleRuby</source>
+        <target>Ein Beispiel für Ruby Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitlePhp">
+        <source>modalTitlePhp</source>
+        <target>Ein Beispiel für PHP Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitlePython">
+        <source>modalTitlePython</source>
+        <target>Ein Beispiel für Python Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitleSwift">
+        <source>modalTitleSwift</source>
+        <target>Ein Beispiel für Swift Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitleAndroid">
+        <source>modalTitleAndroid</source>
+        <target>Ein Beispiel für Android Entwickler, die Contentful benutzen</target>
+      </trans-unit>
+      <trans-unit id="modalTitleJava">
+        <source>modalTitleJava</source>
+        <target>Ein Beispiel für Java Entwickler, die Contentful benutzen</target>
       </trans-unit>
       <trans-unit id="modalIntro">
         <source>modalIntro</source>
-        <target>Dies ist "The Example App" in node.js. Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+        <target>Dies ist "The Node.js Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroDotnet">
+        <source>modalIntroDotnet</source>
+        <target>Dies ist "The .NET Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroRuby">
+        <source>modalIntroRuby</source>
+        <target>Dies ist "The Ruby Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroPhp">
+        <source>modalIntroPhp</source>
+        <target>Dies ist "The PHP Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroPython">
+        <source>modalIntroPython</source>
+        <target>Dies ist "The Python Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroSwift">
+        <source>modalIntroSwift</source>
+        <target>Dies ist "The Swift Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroAndroid">
+        <source>modalIntroAndroid</source>
+        <target>Dies ist "The Android Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
+      </trans-unit>
+      <trans-unit id="modalIntroJava">
+        <source>modalIntroJava</source>
+        <target>Dies ist "The Java Example App". Während Sie Ihre eigenen Anwendungen mit Contentful bauen, können Sie dieses Beispiel als Referenz verwenden. Den Quellcode finden Sie auf</target>
       </trans-unit>
       <trans-unit id="modalSpaceIntro">
         <source>modalSpaceIntro</source>
         <target>Den Inhalt dieser Anwendung können Sie selbst bearbeiten. Dafür müssen Sie den "The Example App" space in Ihren Contentful Account importieren. Anleitung hierzu gibt es</target>
+      </trans-unit>
+      <trans-unit id="modalPlatforms">
+        <source>modalPlatforms</source>
+        <target>Diese App ist auch in den folgenden Plattformen und Sprachen verfügbar:</target>
       </trans-unit>
       <trans-unit id="modalSpaceLinkLabel">
         <source>modalSpaceLinkLabel</source>
@@ -112,7 +172,7 @@
       </trans-unit>
       <trans-unit id="editorialFeaturesHint">
         <source>editorialFeaturesHint</source>
-        <target>Bearbeiten Sie diesen Eintrag in unserer Web App. Sie müssen sich eingelogged haben und Zugang zum Space haben, um diese Funktion nutzen zu können.</target>
+        <target>Bearbeiten Sie diesen Eintrag in der Contentful Web App. Sie müssen sich eingelogged haben und Zugang zum Space haben, um diese Funktion nutzen zu können.</target>
       </trans-unit>
       <trans-unit id="draftLabel">
         <source>draftLabel</source>
@@ -120,7 +180,7 @@
       </trans-unit>
       <trans-unit id="pendingChangesLabel">
         <source>pendingChangesLabel</source>
-        <target>Änderungen vorbehalten</target>
+        <target>Änderungen verfügbar</target>
       </trans-unit>
       <trans-unit id="lessonModuleErrorTitle">
         <source>lessonModuleErrorTitle</source>
@@ -264,7 +324,7 @@
       </trans-unit>
       <trans-unit id="connectedToSpaceLabel">
         <source>connectedToSpaceLabel</source>
-        <target>Verbunden mit Space </target>
+        <target>Verbundener Space </target>
       </trans-unit>
       <trans-unit id="spaceIdLabel">
         <source>spaceIdLabel</source>
@@ -288,11 +348,11 @@
       </trans-unit>
       <trans-unit id="contentDeliveryApiHelpText">
         <source>contentDeliveryApiHelpText</source>
-        <target>Schauen Sie sich veröffentlichten Inhalt mit dieser API an.</target>
+        <target>Schauen Sie sich veröffentlichten Inhalt mit diesem Token an.</target>
       </trans-unit>
       <trans-unit id="contentPreviewApiHelpText">
         <source>contentPreviewApiHelpText</source>
-        <target>Schauen Sie sich unveröffentlichten Inhalt mit dieser API an. (z.B. Inhalt im Zustand “Entwurf”).</target>
+        <target>Schauen Sie sich veröffentlichten Inhalt mit diesem Token an. (z.B. Inhalt im Zustand “Entwurf”).</target>
       </trans-unit>
       <trans-unit id="enableEditorialFeaturesLabel">
         <source>enableEditorialFeaturesLabel</source>
@@ -336,15 +396,75 @@
       </trans-unit>
       <trans-unit id="editInTheWebAppLabel">
         <source>editInTheWebAppLabel</source>
-        <target>In der web app bearbeiten</target>
+        <target>In der Contentful Web App bearbeiten</target>
       </trans-unit>
       <trans-unit id="error404Route">
         <source>error404Route</source>
-        <target>Ein nicht unterstützter HTTP Route</target>
+        <target>Eine nicht unterstützte HTTP Route</target>
       </trans-unit>
       <trans-unit id="currentLocaleLabel">
         <source>currentLocaleLabel</source>
         <target>Deutsch (Deutschland)</target>
+      </trans-unit>
+      <trans-unit id="hostedLabel">
+        <source>hostedLabel</source>
+        <target>Gehostet</target>
+      </trans-unit>
+      <trans-unit id="comingSoonLabel">
+        <source>comingSoonLabel</source>
+        <target>Bald verfügbar</target>
+      </trans-unit>
+      <trans-unit id="credentialSourceLabel">
+        <source>credentialSourceLabel</source>
+        <target>Ursprung der Zugangsdaten:</target>
+      </trans-unit>
+      <trans-unit id="readMoreLabel">
+        <source>readMoreLabel</source>
+        <target>Weiterlesen</target>
+      </trans-unit>
+      <trans-unit id="credentialsLocationLabel">
+        <source>credentialsLocationLabel</source>
+        <target>Ihre Zugangsdaten werden derzeit aus</target>
+      </trans-unit>
+      <trans-unit id="overwriteCredentialsLabel">
+        <source>overwriteCredentialsLabel</source>
+        <target>Sie können überschrieben werden, indem Sie das Formular unten oder einen Querystring Parameter verwenden.</target>
+      </trans-unit>
+      <trans-unit id="copyLinkLabel">
+        <source>copyLinkLabel</source>
+        <target>Einen Link zum Verteilen kopieren</target>
+      </trans-unit>
+      <trans-unit id="resetCredentialsLabel">
+        <source>resetCredentialsLabel</source>
+        <target>Zugangsdaten zurücksetzen</target>
+      </trans-unit>
+      <trans-unit id="resetAboveLabel">
+        <source>resetAboveLabel</source>
+        <target>Sie können auf voreingestellten Zugangsdaten zurücksetzen.</target>
+      </trans-unit>
+      <trans-unit id="closeLabel">
+        <source>closeLabel</source>
+        <target>Schließen</target>
+      </trans-unit>
+      <trans-unit id="overrideConfigLabel">
+        <source>overrideConfigLabel</source>
+        <target>Diese Konfiguration kann durch das folgende Formular oder durch Verwendung von Querystring Parameter überschrieben werden.</target>
+      </trans-unit>
+      <trans-unit id="loadedFromLocalFileLabel">
+        <source>loadedFromLocalFileLabel</source>
+        <target>Geladen von der lokalen Datei</target>
+      </trans-unit>
+      <trans-unit id="usingServerCredentialsLabel">
+        <source>usingServerCredentialsLabel</source>
+        <target>Die Beispielanwendung verwendet derzeit serverseitig gespeicherte Anmeldeinformationen zum Herstellen einer Verbindung mit einem Contentful-Space.</target>
+      </trans-unit>
+      <trans-unit id="usingSessionCredentialsLabel">
+        <source>usingSessionCredentialsLabel</source>
+        <target>Die Beispielanwendung verwendet derzeit Anmeldeinformationen von der Anwendungssitzung, um eine Verbindung zu einem Contentful-Space herzustellen.</target>
+      </trans-unit>
+      <trans-unit id="applicationCredentialsLabel">
+        <source>applicationCredentialsLabel</source>
+        <target>Anmeldeinformationen für die Anwendungssitzung</target>
       </trans-unit>
     </body>
   </file>
