@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Form\SettingsType;
 use App\Service\Breadcrumb;
+use App\Form\Type\SettingsType;
 use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
