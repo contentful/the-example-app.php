@@ -157,15 +157,7 @@ class Contentful
      */
     public function findCourse(string $courseSlug): ?DynamicEntry
     {
-        $query = (new Query())
-            ->where('fields.slug', $courseSlug)
-            ->setContentType('course')
-            ->setLocale($this->state->getLocale())
-            // Course -> Lesson
-            ->setInclude(1)
-            ->setLimit(1);
-
-        $course = $this->client->getEntries($query)->getItems()[0] ?? null;
+        $course = $this->findEntry('course', $courseSlug);
 
         if ($course && $this->state->hasEditorialFeaturesLink()) {
             $this->entryStateChecker->computeState([$course], 'getLessons');
@@ -179,8 +171,8 @@ class Contentful
      * This is done to take advantage of the include operator, which allows us to get
      * a whole tree of entries, which is useful because we also need to get
      * some data from the next lesson, too.
-     * In order to simplify access, we attach the $lesson and $nextLesson objects
-     * to the main $course one.
+     * In order to simplify access, we attach the lesson and nextLesson objects
+     * to the main course one.
      *
      * @param string $courseSlug
      * @param string $lessonSlug
@@ -189,15 +181,7 @@ class Contentful
      */
     public function findCourseByLesson(string $courseSlug, string $lessonSlug): ?DynamicEntry
     {
-        $query = (new Query())
-            ->where('fields.slug', $courseSlug)
-            ->setContentType('course')
-            ->setLocale($this->state->getLocale())
-            // Course -> Lesson / Module / Asset
-            ->setInclude(3)
-            ->setLimit(1);
-
-        $course = $this->client->getEntries($query)->getItems()[0] ?? null;
+        $course = $this->findEntry('course', $courseSlug, 3);
         if (!$course) {
             return null;
         }
@@ -246,19 +230,31 @@ class Contentful
      */
     public function findLandingPage(string $slug): ?DynamicEntry
     {
-        $query = (new Query())
-            ->where('fields.slug', $slug)
-            ->setContentType('layout')
-            ->setLocale($this->state->getLocale())
-            ->setInclude(3)
-            ->setLimit(1);
-
-        $landingPage = $this->client->getEntries($query)->getItems()[0] ?? null;
+        $landingPage = $this->findEntry('layout', $slug, 3);
 
         if ($landingPage && $this->state->hasEditorialFeaturesLink()) {
             $this->entryStateChecker->computeState([$landingPage], 'getContentModules');
         }
 
         return $landingPage;
+    }
+
+    /**
+     * @param string $contentType
+     * @param string $slug
+     * @param int    $include
+     *
+     * @return DynamicEntry|null
+     */
+    private function findEntry(string $contentType, string $slug, int $include = 1): ?DynamicEntry
+    {
+        $query = (new Query())
+            ->setLocale($this->state->getLocale())
+            ->setContentType($contentType)
+            ->where('fields.slug', $slug)
+            ->setInclude($include)
+            ->setLimit(1);
+
+        return $this->client->getEntries($query)->getItems()[0] ?? null;
     }
 }

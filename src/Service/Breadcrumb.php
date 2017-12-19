@@ -60,7 +60,7 @@ class Breadcrumb
      * @param array  $parameters
      * @param bool   $translate
      *
-     * @return Breadcrumb
+     * @return self
      */
     public function add(string $label, string $route, array $parameters = [], bool $translate = true): self
     {
