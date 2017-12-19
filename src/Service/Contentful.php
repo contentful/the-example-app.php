@@ -69,7 +69,9 @@ class Contentful
         $this->state = $state;
         $this->entryStateChecker = $entryStateChecker;
         $this->clientFactory = $clientFactory;
-        $this->client = $clientFactory->createClient($this->state->isDeliveryApi() ? self::API_DELIVERY : self::API_PREVIEW);
+        $this->client = $clientFactory->createClient(
+            $this->state->isDeliveryApi() ? self::API_DELIVERY : self::API_PREVIEW
+        );
     }
 
     /**
@@ -77,20 +79,16 @@ class Contentful
      *
      * @param string $spaceId
      * @param string $accessToken
-     * @param bool   $deliveryApi
+     * @param string $api
      *
      * @throws ApiException if the credentials are not valid and an error response is returned from Contentful
      */
-    public function validateCredentials(string $spaceId, string $accessToken, bool $deliveryApi = true): void
+    public function validateCredentials(string $spaceId, string $accessToken, string $api = self::API_DELIVERY): void
     {
         // We make an "empty" API call,
         // the result of which will depend on the validity of the credentials.
         // If any error should arise, the call will throw an exception.
-        $this->clientFactory->createClient(
-            $deliveryApi ? self::API_DELIVERY : self::API_PREVIEW,
-            $spaceId,
-            $accessToken
-        )->getSpace();
+        $this->clientFactory->createClient($api, $spaceId, $accessToken)->getSpace();
     }
 
     /**
