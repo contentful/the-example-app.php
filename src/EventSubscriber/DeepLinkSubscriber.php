@@ -120,8 +120,8 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         $queryParameters = $request->query->all();
 
         try {
-            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['delivery_token']);
-            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['preview_token'], false);
+            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['delivery_token'], Contentful::API_DELIVERY);
+            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['preview_token'], Contentful::API_PREVIEW);
         } catch (ApiException $exception) {
             $exception = FlattenException::create(
                 $exception,

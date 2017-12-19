@@ -35,7 +35,6 @@ class StateTest extends TestCase
         $this->assertSame('Content Delivery API', $state->getApiLabel());
         $this->assertTrue($state->isDeliveryApi());
         $this->assertSame('en-US', $state->getLocale());
-        $this->assertSame(['en-US', 'de-DE'], $state->getAvailableLocales());
         $this->assertSame('', $state->getQueryString());
     }
 
@@ -66,7 +65,6 @@ class StateTest extends TestCase
         $this->assertSame('Content Preview API', $state->getApiLabel());
         $this->assertFalse($state->isDeliveryApi());
         $this->assertSame('de-DE', $state->getLocale());
-        $this->assertSame(['en-US', 'de-DE'], $state->getAvailableLocales());
         $this->assertSame('?api=cpa&locale=de-DE', $state->getQueryString());
     }
 }

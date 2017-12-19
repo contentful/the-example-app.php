@@ -69,7 +69,9 @@ class Contentful
         $this->state = $state;
         $this->entryStateChecker = $entryStateChecker;
         $this->clientFactory = $clientFactory;
-        $this->client = $clientFactory->createClient($this->state->isDeliveryApi() ? self::API_DELIVERY : self::API_PREVIEW);
+        $this->client = $clientFactory->createClient(
+            $this->state->isDeliveryApi() ? self::API_DELIVERY : self::API_PREVIEW
+        );
     }
 
     /**
@@ -77,20 +79,16 @@ class Contentful
      *
      * @param string $spaceId
      * @param string $accessToken
-     * @param bool   $deliveryApi
+     * @param string $api
      *
      * @throws ApiException if the credentials are not valid and an error response is returned from Contentful
      */
-    public function validateCredentials(string $spaceId, string $accessToken, bool $deliveryApi = true): void
+    public function validateCredentials(string $spaceId, string $accessToken, string $api = self::API_DELIVERY): void
     {
         // We make an "empty" API call,
         // the result of which will depend on the validity of the credentials.
         // If any error should arise, the call will throw an exception.
-        $this->clientFactory->createClient(
-            $deliveryApi ? self::API_DELIVERY : self::API_PREVIEW,
-            $spaceId,
-            $accessToken
-        )->getSpace();
+        $this->clientFactory->createClient($api, $spaceId, $accessToken)->getSpace();
     }
 
     /**
@@ -139,8 +137,8 @@ class Contentful
 
         $courses = $this->client->getEntries($query)->getItems();
 
-        if ($this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState($courses, 1);
+        if ($courses && $this->state->hasEditorialFeaturesLink()) {
+            $this->entryStateChecker->computeState($courses, 'getLessons');
         }
 
         return $courses;
@@ -153,27 +151,72 @@ class Contentful
      * Depending on the page, we can choose whether we can go as deep as
      * the lesson modules when working out the entry state.
      *
-     * @param string $slug
-     * @param bool   $includeLessonModules
+     * @param string $courseSlug
      *
      * @return DynamicEntry|null
      */
-    public function findCourse(string $slug, bool $includeLessonModules): ?DynamicEntry
+    public function findCourse(string $courseSlug): ?DynamicEntry
     {
-        $query = (new Query())
-            ->where('fields.slug', $slug)
-            ->setContentType('course')
-            ->setLocale($this->state->getLocale())
-            ->setInclude(3)
-            ->setLimit(1);
-
-        $course = $this->client->getEntries($query)->getItems()[0] ?? null;
+        $course = $this->findEntry('course', $courseSlug);
 
         if ($course && $this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState([$course], $includeLessonModules ? 3 : 2);
+            $this->entryStateChecker->computeState([$course], 'getLessons');
         }
 
         return $course;
+    }
+
+    /**
+     * Even if the main goal of the query is to get a lesson, we look for the course instead.
+     * This is done to take advantage of the include operator, which allows us to get
+     * a whole tree of entries, which is useful because we also need to get
+     * some data from the next lesson, too.
+     * In order to simplify access, we attach the lesson and nextLesson objects
+     * to the main course one.
+     *
+     * @param string $courseSlug
+     * @param string $lessonSlug
+     *
+     * @return DynamicEntry|null
+     */
+    public function findCourseByLesson(string $courseSlug, string $lessonSlug): ?DynamicEntry
+    {
+        $course = $this->findEntry('course', $courseSlug, 3);
+        if (!$course) {
+            return null;
+        }
+
+        $lessons = $course->getLessons();
+        $lessonIndex = $this->findLessonIndex($lessons, $lessonSlug);
+        if (null === $lessonIndex) {
+            return null;
+        }
+
+        $course->lesson = $lessons[$lessonIndex];
+        $course->nextLesson = $lessons[$lessonIndex + 1] ?? null;
+
+        if ($this->state->hasEditorialFeaturesLink()) {
+            $this->entryStateChecker->computeState([$course->lesson], 'getModules');
+        }
+
+        return $course;
+    }
+
+    /**
+     * @param array  $lessons
+     * @param string $lessonSlug
+     *
+     * @return int|null
+     */
+    private function findLessonIndex(array $lessons, string $lessonSlug): ?int
+    {
+        foreach ($lessons as $index => $lesson) {
+            if ($lesson->getSlug() === $lessonSlug) {
+                return $index;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -187,19 +230,31 @@ class Contentful
      */
     public function findLandingPage(string $slug): ?DynamicEntry
     {
-        $query = (new Query())
-            ->where('fields.slug', $slug)
-            ->setContentType('layout')
-            ->setLocale($this->state->getLocale())
-            ->setInclude(3)
-            ->setLimit(1);
-
-        $landingPage = $this->client->getEntries($query)->getItems()[0] ?? null;
+        $landingPage = $this->findEntry('layout', $slug, 3);
 
         if ($landingPage && $this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState([$landingPage], 2);
+            $this->entryStateChecker->computeState([$landingPage], 'getContentModules');
         }
 
         return $landingPage;
+    }
+
+    /**
+     * @param string $contentType
+     * @param string $slug
+     * @param int    $include
+     *
+     * @return DynamicEntry|null
+     */
+    private function findEntry(string $contentType, string $slug, int $include = 1): ?DynamicEntry
+    {
+        $query = (new Query())
+            ->setLocale($this->state->getLocale())
+            ->setContentType($contentType)
+            ->where('fields.slug', $slug)
+            ->setInclude($include)
+            ->setLimit(1);
+
+        return $this->client->getEntries($query)->getItems()[0] ?? null;
     }
 }

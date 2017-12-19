@@ -41,4 +41,3 @@ services:
             $deliveryToken: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
             $previewToken: "%env(CONTENTFUL_PREVIEW_TOKEN)%"
             $locale: '%kernel.default_locale%'
-            $availableLocales: '%available_locales%'

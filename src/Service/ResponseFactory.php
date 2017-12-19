@@ -12,6 +12,7 @@ namespace App\Service;
 
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
@@ -138,5 +139,22 @@ class ResponseFactory
         }
 
         return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $entryId
+     *
+     * @return array
+     */
+    public function updateVisitedLessonCookie(Request $request, string $entryId): array
+    {
+        $cookie = $request->cookies->get('visitedLessons');
+        $visitedLessons = $cookie ? \json_decode($cookie, true) : [];
+        $visitedLessons[] = $entryId;
+
+        $this->addCookie('visitedLessons', \array_unique($visitedLessons));
+
+        return $visitedLessons;
     }
 }
