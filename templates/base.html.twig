@@ -94,7 +94,7 @@
                                             <div class="header__controls_label">{{ 'locale'|trans }}: {{ 'currentLocaleLabel'|trans }}</div>
                                             <div class="header__controls_dropdown">
                                                 <div class="header__controls_help_text">{{ 'localeQuestion'|trans }}</div>
-                                                {% for availableLocale in state.availableLocales %}
+                                                {% for availableLocale in availableLocales %}
                                                     <button type="submit" name="locale" value="{{ availableLocale }}" class="header__controls_button {{ availableLocale == state.locale ? 'header__controls_button--active' : '' }}">
                                                         {{ 'currentLocaleLabel'|trans({}, 'messages', availableLocale) }} ({{ availableLocale }})
                                                     </button>
