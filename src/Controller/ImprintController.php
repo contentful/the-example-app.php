@@ -10,28 +10,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\Breadcrumb;
-use App\Service\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ImprintController.
  */
-class ImprintController
+class ImprintController extends AppController
 {
     /**
      * Renders imprint page when `/imprint` route is requested.
      *
-     * @param ResponseFactory $responseFactory
-     * @param Breadcrumb      $breadcrumb
-     *
      * @return Response
      */
-    public function __invoke(ResponseFactory $responseFactory, Breadcrumb $breadcrumb): Response
+    public function __invoke(): Response
     {
-        $breadcrumb->add('homeLabel', 'landing_page')
+        $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('imprintLabel', 'imprint');
 
-        return $responseFactory->createResponse('imprint.html.twig');
+        return $this->responseFactory->createResponse('imprint.html.twig');
     }
 }

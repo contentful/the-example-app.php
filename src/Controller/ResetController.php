@@ -10,25 +10,22 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\ResponseFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * ResetController.
  */
-class ResetController
+class ResetController extends AppController
 {
     /**
      * Clears the cookie where the settings are stored.
      *
-     * @param ResponseFactory $responseFactory
-     *
      * @return RedirectResponse
      */
-    public function __invoke(ResponseFactory $responseFactory): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
-        $responseFactory->clearSettingsCookie();
+        $this->responseFactory->clearSettingsCookie();
 
-        return $responseFactory->createRoutedRedirectResponse('settings');
+        return $this->responseFactory->createRoutedRedirectResponse('settings');
     }
 }
