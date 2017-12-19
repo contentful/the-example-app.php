@@ -22,12 +22,11 @@ class AppCacheWarmer implements CacheWarmerInterface
     private $client;
 
     /**
-     * @param string $spaceId
-     * @param string $deliveryToken
+     * @param array $credentials
      */
-    public function __construct(string $spaceId, string $deliveryToken)
+    public function __construct(array $credentials)
     {
-        $this->client = new Client($deliveryToken, $spaceId);
+        $this->client = new Client($credentials['delivery_token'], $credentials['space_id']);
     }
 
     public function warmUp($cacheDir)

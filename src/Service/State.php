@@ -63,17 +63,15 @@ class State
 
     /**
      * @param Request|null $request
-     * @param string       $spaceId
-     * @param string       $deliveryToken
-     * @param string       $previewToken
+     * @param array        $credentials
      * @param string       $locale
      */
-    public function __construct(?Request $request, string $spaceId, string $deliveryToken, string $previewToken, string $locale)
+    public function __construct(?Request $request, array $credentials, string $locale)
     {
         $settings = [
-            'spaceId' => $spaceId,
-            'deliveryToken' => $deliveryToken,
-            'previewToken' => $previewToken,
+            'spaceId' => $credentials['space_id'],
+            'deliveryToken' => $credentials['delivery_token'],
+            'previewToken' => $credentials['preview_token'],
             'locale' => $locale,
             'editorialFeatures' => false,
             'api' => 'cda',
@@ -101,7 +99,9 @@ class State
         $settings = $this->extractCookieSettings($request);
 
         // The "enable_editorial_features" parameter overrides the current settings.
-        $settings['editorialFeatures'] = ($settings['editorialFeatures'] ?? false) || $request->query->has('enable_editorial_features');
+        if ($request->query->has('enable_editorial_features')) {
+            $settings['editorialFeatures'] = true;
+        }
 
         $settings['api'] = $request->query->get('api');
         $settings['locale'] = $request->query->get('locale');

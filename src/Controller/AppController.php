@@ -49,8 +49,12 @@ abstract class AppController
      * @param Breadcrumb      $breadcrumb
      * @param Contentful      $contentful
      */
-    public function __construct(ResponseFactory $responseFactory, State $state, Breadcrumb $breadcrumb, Contentful $contentful)
-    {
+    public function __construct(
+        ResponseFactory $responseFactory,
+        State $state,
+        Breadcrumb $breadcrumb,
+        Contentful $contentful
+    ) {
         $this->responseFactory = $responseFactory;
         $this->state = $state;
         $this->breadcrumb = $breadcrumb;

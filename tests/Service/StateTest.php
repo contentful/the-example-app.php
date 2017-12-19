@@ -18,7 +18,11 @@ class StateTest extends TestCase
 {
     public function testGettersWithoutCookieAndQueryParameters()
     {
-        $state = new State(null, 'defaultSpaceId', 'defaultDeliveryToken', 'defaultPreviewToken', 'en-US', ['en-US', 'de-DE']);
+        $state = new State(null, [
+            'space_id' => 'defaultSpaceId',
+            'delivery_token' => 'defaultDeliveryToken',
+            'preview_token' => 'defaultPreviewToken',
+        ], 'en-US');
 
         $this->assertSame([
             'spaceId' => 'defaultSpaceId',
@@ -48,7 +52,11 @@ class StateTest extends TestCase
             ['theExampleAppSettings' => $cookie]
         );
 
-        $state = new State($request, 'defaultSpaceId', 'defaultDeliveryToken', 'defaultPreviewToken', 'en-US', ['en-US', 'de-DE']);
+        $state = new State($request, [
+            'space_id' => 'cookieSpaceId',
+            'delivery_token' => 'cookieDeliveryToken',
+            'preview_token' => 'cookiePreviewToken',
+        ], 'en-US');
 
         $this->assertSame([
             'spaceId' => 'cookieSpaceId',

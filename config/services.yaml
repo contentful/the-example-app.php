@@ -10,6 +10,11 @@ parameters:
     env(CONTENTFUL_SPACE_ID): qz0n5cdakyl9
     env(CONTENTFUL_DELIVERY_TOKEN): 580d5944194846b690dd89b630a1cb98a0eef6a19b860ef71efc37ee8076ddb8
     env(CONTENTFUL_PREVIEW_TOKEN): e8fc39d9661c7468d0285a7ff949f7a23539dd2e686fcb7bd84dc01b392d698b
+    # Group the values for easy access
+    default_credentials:
+        space_id: "%env(CONTENTFUL_SPACE_ID)%"
+        delivery_token: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
+        preview_token: "%env(CONTENTFUL_PREVIEW_TOKEN)%"
 
 services:
     # default configuration for services in *this* file
@@ -36,8 +41,7 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Cache\AppCacheWarmer:
         arguments:
-            $spaceId: "%env(CONTENTFUL_SPACE_ID)%"
-            $deliveryToken: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
+            $credentials: "%default_credentials%"
     App\Service\ClientFactory:
         arguments:
             $cacheDir: "%kernel.cache_dir%"
@@ -47,7 +51,5 @@ services:
     App\Service\State:
         arguments:
             $request: "@=service('request_stack').getCurrentRequest()"
-            $spaceId: "%env(CONTENTFUL_SPACE_ID)%"
-            $deliveryToken: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
-            $previewToken: "%env(CONTENTFUL_PREVIEW_TOKEN)%"
+            $credentials: "%default_credentials%"
             $locale: '%kernel.default_locale%'

@@ -57,7 +57,7 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
-        if ($request->isMethod('POST') || !$request->query->has('space_id') || !$request->query->has('preview_token') || !$request->query->has('delivery_token')) {
+        if ($request->isMethod('POST') || !$this->hasCredentials($request)) {
             return;
         }
 
@@ -73,6 +73,18 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         }
 
         $event->setResponse($this->responseFactory->createRedirectResponse($url));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
+    private function hasCredentials(Request $request): bool
+    {
+        $query = $request->query;
+
+        return $query->has('space_id') && $query->has('preview_token') && $query->has('delivery_token');
     }
 
     /**
@@ -120,8 +132,16 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         $queryParameters = $request->query->all();
 
         try {
-            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['delivery_token'], Contentful::API_DELIVERY);
-            $this->contentful->validateCredentials($queryParameters['space_id'], $queryParameters['preview_token'], Contentful::API_PREVIEW);
+            $this->contentful->validateCredentials(
+                $queryParameters['space_id'],
+                $queryParameters['delivery_token'],
+                Contentful::API_DELIVERY
+            );
+            $this->contentful->validateCredentials(
+                $queryParameters['space_id'],
+                $queryParameters['preview_token'],
+                Contentful::API_PREVIEW
+            );
         } catch (ApiException $exception) {
             $exception = FlattenException::create(
                 $exception,
