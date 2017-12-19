@@ -12,15 +12,15 @@ category:
 
 course:
     path:     /courses/{courseSlug}
-    defaults: { _controller: App\Controller\CourseController, lessonSlug: null }
+    defaults: { _controller: App\Controller\CourseController }
 
 lessons:
     path:     /courses/{courseSlug}/lessons
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, permanent: true, route: course, lessonSlug: null }
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, permanent: true, route: course }
 
 lesson:
     path:     /courses/{courseSlug}/lessons/{lessonSlug}
-    defaults: { _controller: App\Controller\CourseController }
+    defaults: { _controller: App\Controller\LessonController }
 
 reset:
     path:     /settings/reset
