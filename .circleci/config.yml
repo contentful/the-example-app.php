@@ -35,4 +35,4 @@ jobs:
             npm install
             cd ..
             php bin/console server:start 127.0.0.1:8000
-            ./tests-e2e/node_modules/.bin/cypress run --spec tests-e2e/specs/the-example-app-spec.js
+            ./tests-e2e/node_modules/.bin/cypress run
