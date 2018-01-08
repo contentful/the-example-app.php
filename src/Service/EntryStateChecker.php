@@ -30,18 +30,6 @@ class EntryStateChecker
     private $client;
 
     /**
-     * A map of methods for accessing linked entries
-     * based on the entry content type.
-     *
-     * @var string[]
-     */
-    private static $linkedEntriesMethods = [
-        'layout' => 'getContentModules',
-        'course' => 'getLessons',
-        'lesson' => 'getModules',
-    ];
-
-    /**
      * @param ClientFactory $clientFactory
      */
     public function __construct(ClientFactory $clientFactory)
@@ -51,18 +39,14 @@ class EntryStateChecker
 
     /**
      * @param DynamicEntry[] $entries
-     * @param int            $depth
+     * @param string         $method  The method for accessing linked entries
      */
-    public function computeState(array $entries, int $depth): void
+    public function computeState(array $entries, string $method): void
     {
-        if (!\array_filter($entries)) {
-            return;
-        }
-
-        $deliveryEntries = $this->fetchDeliveryEntries($entries);
+        $deliveryEntries = $this->fetchDeliveryEntries($entries, $method);
 
         foreach ($entries as $entry) {
-            $this->attachEntryState($entry, $deliveryEntries, $depth);
+            $this->attachEntryState($entry, $deliveryEntries, $method);
         }
     }
 
@@ -72,49 +56,45 @@ class EntryStateChecker
      * published entries.
      *
      * @param DynamicEntry[] $entries
+     * @param string         $method
      *
      * @return DynamicEntry[]
      */
-    private function fetchDeliveryEntries(array $entries): array
+    private function fetchDeliveryEntries(array $entries, string $method): array
     {
-        $ids = $this->extractIdsForComparison($entries);
+        $ids = $this->extractIdsForComparison($entries, $method);
         $query = (new Query())
             ->setInclude(0)
             ->where('sys.id', $ids, 'in');
 
-        $entries = [];
+        $deliveryEntries = [];
         foreach ($this->client->getEntries($query) as $entry) {
-            $entries[$entry->getId()] = $entry;
+            $deliveryEntries[$entry->getId()] = $entry;
         }
 
-        return $entries;
+        return $deliveryEntries;
     }
 
     /**
      * Given an array of entries, it will extract all IDs including from the nested ones.
      *
      * @param DynamicEntry[] $entries
+     * @param string         $method
      *
      * @return string[]
      */
-    private function extractIdsForComparison(array $entries): array
+    private function extractIdsForComparison(array $entries, string $method): array
     {
         $ids = [];
-
         foreach ($entries as $entry) {
             $ids[] = $entry->getId();
-            $method = self::$linkedEntriesMethods[$entry->getContentType()->getId()] ?? null;
-
-            if (!$method) {
-                continue;
-            }
 
             foreach ($entry->$method() as $linkedEntry) {
-                $ids += \array_merge($ids, $this->extractIdsForComparison([$linkedEntry]));
+                $ids[] = $linkedEntry->getId();
             }
         }
 
-        return \array_unique($ids);
+        return $ids;
     }
 
     /**
@@ -128,23 +108,44 @@ class EntryStateChecker
      *
      * @param DynamicEntry   $previewEntry
      * @param DynamicEntry[] $deliveryEntries An array where the entry ID is used as key
-     * @param int            $depth
+     * @param string         $method          The method used for calling the linked entries
      */
-    private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries, int $depth = 1): void
+    private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries, string $method): void
     {
-        // Bail early if we've reached the limit of configured nesting.
-        if ($depth === 0) {
-            return;
-        }
+        $state = $this->compare($previewEntry, $deliveryEntries);
 
-        $previewEntry->draft = false;
-        $previewEntry->pendingChanges = false;
+        $previewEntry->draft = $state['draft'];
+        $previewEntry->pendingChanges = $state['pendingChanges'];
+
+        foreach ($previewEntry->$method() as $linkedPreviewEntry) {
+            $state = $this->compare($linkedPreviewEntry, $deliveryEntries);
+
+            $previewEntry->draft = $previewEntry->draft || $state['draft'];
+            $previewEntry->pendingChanges = $previewEntry->pendingChanges || $state['pendingChanges'];
+        }
+    }
+
+    /**
+     * Compares a preview entry with the one found in a list of given delivery entries,
+     * and returns an array with the resulting state.
+     *
+     * @param DynamicEntry $previewEntry
+     * @param array        $deliveryEntries
+     *
+     * @return bool[]
+     */
+    private function compare(DynamicEntry $previewEntry, array $deliveryEntries): array
+    {
+        $state = [
+            'draft' => false,
+            'pendingChanges' => false,
+        ];
 
         $deliveryEntry = $deliveryEntries[$previewEntry->getId()] ?? null;
 
         // If no entry is found, it means it's hasn't been published yet.
         if (!$deliveryEntry) {
-            $previewEntry->draft = true;
+            $state['draft'] = true;
         }
 
         // Different updatedAt values mean the entry has been updated since its last publishing.
@@ -152,27 +153,9 @@ class EntryStateChecker
         $previewUpdatedAt = $previewEntry->getUpdatedAt()->format('Y-m-d H:i:s');
         $deliveryUpdatedAt = $deliveryEntry ? $deliveryEntry->getUpdatedAt()->format('Y-m-d H:i:s') : null;
         if ($deliveryEntry && $previewUpdatedAt !== $deliveryUpdatedAt) {
-            $previewEntry->pendingChanges = true;
+            $state['pendingChanges'] = true;
         }
 
-        // We need a static methods map for accessing related entries.
-        // If we don't have a method configured for the current content type, let's bail.
-        if (!isset(self::$linkedEntriesMethods[$previewEntry->getContentType()->getId()])) {
-            return;
-        }
-
-        $method = self::$linkedEntriesMethods[$previewEntry->getContentType()->getId()];
-        $linkedPreviewEntries = $previewEntry->$method();
-
-        foreach ($linkedPreviewEntries as $linkedPreviewEntry) {
-            $this->attachEntryState($linkedPreviewEntry, $deliveryEntries, $depth - 1);
-
-            // State bubbles up: if a child entry is in draft state,
-            // we mark the parent as being in draft too. Same with pending changes.
-            // We use the null coalescing operator because if we've reached the maximum nesting,
-            // $linkedPreviewEntry will not have the properties "draft" and "pendingChanges" set.
-            $previewEntry->draft = $previewEntry->draft || ($linkedPreviewEntry->draft ?? false);
-            $previewEntry->pendingChanges = $previewEntry->pendingChanges || ($linkedPreviewEntry->pendingChanges ?? false);
-        }
+        return $state;
     }
 }

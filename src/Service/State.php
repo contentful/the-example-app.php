@@ -52,11 +52,6 @@ class State
     private $locale;
 
     /**
-     * @var string[]
-     */
-    private $availableLocales;
-
-    /**
      * @var string
      */
     private $queryString;
@@ -67,26 +62,17 @@ class State
     private $cookieCredentials;
 
     /**
-     * @var bool
-     */
-    private $usesDefaultCredentials = true;
-
-    /**
      * @param Request|null $request
-     * @param string       $spaceId
-     * @param string       $deliveryToken
-     * @param string       $previewToken
+     * @param array        $credentials
      * @param string       $locale
-     * @param string[]     $availableLocales
      */
-    public function __construct(?Request $request, string $spaceId, string $deliveryToken, string $previewToken, string $locale, array $availableLocales)
+    public function __construct(?Request $request, array $credentials, string $locale)
     {
         $settings = [
-            'spaceId' => $spaceId,
-            'deliveryToken' => $deliveryToken,
-            'previewToken' => $previewToken,
+            'spaceId' => $credentials['space_id'],
+            'deliveryToken' => $credentials['delivery_token'],
+            'previewToken' => $credentials['preview_token'],
             'locale' => $locale,
-            'availableLocales' => $availableLocales,
             'editorialFeatures' => false,
             'api' => 'cda',
             'queryString' => '',
@@ -95,7 +81,7 @@ class State
 
         // Request can be null when running the CLI.
         if ($request) {
-            $settings = $this->extractValues($settings, $request);
+            $settings = \array_merge($settings, $this->extractValues($request));
         }
 
         foreach ($settings as $setting => $value) {
@@ -104,66 +90,73 @@ class State
     }
 
     /**
-     * @param array   $settings
      * @param Request $request
      *
      * @return array
      */
-    private function extractValues(array $settings, Request $request): array
+    private function extractValues(Request $request): array
+    {
+        $settings = $this->extractCookieSettings($request);
+
+        // The "enable_editorial_features" parameter overrides the current settings.
+        if ($request->query->has('enable_editorial_features')) {
+            $settings['editorialFeatures'] = true;
+        }
+
+        $settings['api'] = $request->query->get('api');
+        $settings['locale'] = $request->query->get('locale');
+
+        $settings['queryString'] = $this->extractQueryString($request);
+
+        return \array_filter($settings);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    private function extractCookieSettings(Request $request): array
     {
         $cookieSettings = (array) \json_decode(
             \stripslashes($request->cookies->get(Contentful::COOKIE_SETTINGS_NAME, '')),
             true
         );
 
-        if ($this->hasCredentials($cookieSettings)) {
+        $settings = [];
+
+        if ($cookieSettings) {
             $settings['cookieCredentials'] = true;
             $settings['spaceId'] = $cookieSettings['spaceId'];
             $settings['deliveryToken'] = $cookieSettings['deliveryToken'];
             $settings['previewToken'] = $cookieSettings['previewToken'];
             $settings['editorialFeatures'] = $cookieSettings['editorialFeatures'];
-
-            $this->usesDefaultCredentials = false;
-        }
-
-        // The "enable_editorial_features" parameter
-        // overrides the current settings.
-        if ($request->query->has('enable_editorial_features')) {
-            $settings['editorialFeatures'] = true;
-        }
-
-        $settings['api'] = $request->query->get('api', $settings['api']);
-        $settings['locale'] = $request->query->get('locale', $settings['locale']);
-
-        // http_build_query will automatically skip null values.
-        $queryString = \http_build_query([
-            'api' => $request->query->get('api'),
-            'locale' => $request->query->get('locale'),
-        ]);
-        // We handle "enable_editorial_features" separately,
-        // as it is a query parameter which has no value,
-        // and http_build_query doesn't support this.
-        if ($request->query->has('enable_editorial_features')) {
-            $queryString .= ($queryString ? '&' : '').'enable_editorial_features';
-        }
-        if ($queryString) {
-            $settings['queryString'] = '?'.$queryString;
         }
 
         return $settings;
     }
 
     /**
-     * @param string[] $settings
+     * @param Request $request
      *
-     * @return bool
+     * @return string
      */
-    private function hasCredentials(array $settings): bool
+    private function extractQueryString(Request $request): string
     {
-        return isset($settings['spaceId'])
-            && isset($settings['deliveryToken'])
-            && isset($settings['previewToken'])
-            && isset($settings['editorialFeatures']);
+        // http_build_query will automatically skip null values.
+        $queryString = \http_build_query([
+            'api' => $request->query->get('api'),
+            'locale' => $request->query->get('locale'),
+        ]);
+
+        // We handle "enable_editorial_features" separately,
+        // as it is a query parameter which has no value,
+        // and http_build_query doesn't support this.
+        if ($request->query->has('enable_editorial_features')) {
+            $queryString .= ($queryString ? '&' : '').'enable_editorial_features';
+        }
+
+        return $queryString ? '?'.$queryString : '';
     }
 
     /**
@@ -236,7 +229,7 @@ class State
      */
     public function isDeliveryApi(): bool
     {
-        return $this->api === Contentful::API_DELIVERY;
+        return Contentful::API_DELIVERY === $this->api;
     }
 
     /**
@@ -245,14 +238,6 @@ class State
     public function getLocale(): string
     {
         return $this->locale;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAvailableLocales(): array
-    {
-        return $this->availableLocales;
     }
 
     /**
@@ -276,15 +261,7 @@ class State
      */
     public function hasEditorialFeaturesLink(): bool
     {
-        return $this->editorialFeatures && $this->api === 'cpa';
-    }
-
-    /**
-     * @return bool
-     */
-    public function usesDefaultCredentials(): bool
-    {
-        return $this->usesDefaultCredentials;
+        return $this->editorialFeatures && 'cpa' === $this->api;
     }
 
     /**

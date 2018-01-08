@@ -57,39 +57,44 @@ class ContentfulCredentialsValidator extends ConstraintValidator
             return;
         }
 
-        // Validate space ID and delivery token.
-        // If any error arises, we return early and skip validating the preview token.
+        $this->validateCredentials($values['spaceId'], $values['deliveryToken'], Contentful::API_DELIVERY)
+            && $this->validateCredentials($values['spaceId'], $values['previewToken'], Contentful::API_PREVIEW);
+    }
+
+    /**
+     * @param string $spaceId
+     * @param string $accessToken
+     * @param string $api         Either "delivery" or "preview"
+     *
+     * @return bool
+     */
+    private function validateCredentials(string $spaceId, string $accessToken, string $api): bool
+    {
+        $violation = null;
+        $path = null;
+        $apiLabel = Contentful::API_DELIVERY === $api ? 'delivery' : 'preview';
+
         try {
-            $this->contentful->validateCredentials($values['spaceId'], $values['deliveryToken']);
+            $this->contentful->validateCredentials($spaceId, $accessToken, $api);
         } catch (AccessTokenInvalidException $exception) {
-            return $this->context->buildViolation('deliveryKeyInvalidLabel')
-                ->atPath('[deliveryToken]')
-                ->addViolation();
+            $violation = $apiLabel.'KeyInvalidLabel';
+            $path = '['.$apiLabel.'Token]';
         } catch (NotFoundException $exception) {
-            return $this->context->buildViolation('spaceOrTokenInvalid')
-                ->atPath('[spaceId]')
-                ->addViolation();
+            $violation = 'spaceOrTokenInvalid';
+            $path = '[spaceId]';
         } catch (ApiException $exception) {
-            return $this->context->buildViolation('somethingWentWrongLabel')
-                ->atPath('[deliveryToken]')
-                ->addViolation();
+            $violation = 'somethingWentWrongLabel';
+            $path = '['.$apiLabel.'Token]';
         }
 
-        // Validate space ID and preview token.
-        try {
-            $this->contentful->validateCredentials($values['spaceId'], $values['previewToken'], false);
-        } catch (AccessTokenInvalidException $exception) {
-            $this->context->buildViolation('deliveryKeyInvalidLabel')
-                ->atPath('[previewToken]')
+        if ($violation) {
+            $this->context->buildViolation($violation)
+                ->atPath($path)
                 ->addViolation();
-        } catch (NotFoundException $exception) {
-            $this->context->buildViolation('spaceOrTokenInvalid')
-                ->atPath('[spaceId]')
-                ->addViolation();
-        } catch (ApiException $exception) {
-            $this->context->buildViolation('somethingWentWrongLabel')
-                ->atPath('[previewToken]')
-                ->addViolation();
+
+            return false;
         }
+
+        return true;
     }
 }

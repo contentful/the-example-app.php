@@ -10,11 +10,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Form\SettingsType;
-use App\Service\Breadcrumb;
+use App\Form\Type\SettingsType;
 use App\Service\Contentful;
-use App\Service\ResponseFactory;
-use App\Service\State;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,47 +20,37 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 /**
  * SettingsController.
  */
-class SettingsController
+class SettingsController extends AppController
 {
     /**
      * @param Request              $request
-     * @param ResponseFactory      $responseFactory
-     * @param Breadcrumb           $breadcrumb
-     * @param State                $state
-     * @param Contentful           $contentful
      * @param FormFactoryInterface $formFactory
      *
      * @return Response
      */
-    public function __invoke(
-        Request $request,
-        ResponseFactory $responseFactory,
-        Breadcrumb $breadcrumb,
-        State $state,
-        Contentful $contentful,
-        FormFactoryInterface $formFactory
-    ): Response {
-        $form = $formFactory->create(SettingsType::class, $state->getSettings());
+    public function __invoke(Request $request, FormFactoryInterface $formFactory): Response
+    {
+        $form = $formFactory->create(SettingsType::class, $this->state->getSettings());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateSettings($responseFactory, $request->getSession(), $form->getData());
+            $this->updateSettings($request->getSession(), $form->getData());
 
-            return $responseFactory->createRoutedRedirectResponse('settings');
+            return $this->responseFactory->createRoutedRedirectResponse('settings');
         }
 
-        $breadcrumb->add('homeLabel', 'landing_page')
+        $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('settingsLabel', 'settings');
 
-        return $responseFactory->createResponse('settings.html.twig', [
+        return $this->responseFactory->createResponse('settings.html.twig', [
             'form' => $form->createView(),
-            'space' => $contentful->findSpace(),
+            'space' => $this->contentful->findSpace(),
         ]);
     }
 
-    private function updateSettings(ResponseFactory $responseFactory, SessionInterface $session, array $settings): void
+    private function updateSettings(SessionInterface $session, array $settings): void
     {
-        $responseFactory->addCookie(
+        $this->responseFactory->addCookie(
             Contentful::COOKIE_SETTINGS_NAME,
             [
                 'spaceId' => $settings['spaceId'],

@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\Breadcrumb;
-use App\Service\Contentful;
-use App\Service\ResponseFactory;
 use Contentful\Delivery\DynamicEntry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,33 +17,30 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * CoursesController.
  */
-class CoursesController
+class CoursesController extends AppController
 {
     /**
-     * @param ResponseFactory $responseFactory
-     * @param Breadcrumb      $breadcrumb
-     * @param Contentful      $contentful
-     * @param string|null     $categorySlug
+     * @param string|null $categorySlug
      *
      * @return Response
      */
-    public function __invoke(ResponseFactory $responseFactory, Breadcrumb $breadcrumb, Contentful $contentful, ?string $categorySlug): Response
+    public function __invoke(?string $categorySlug): Response
     {
-        $categories = $contentful->findCategories();
+        $categories = $this->contentful->findCategories();
         $category = $this->findCategory($categories, $categorySlug);
-        if ($categorySlug and !$category) {
+        if ($categorySlug && !$category) {
             throw new NotFoundHttpException();
         }
-        $courses = $contentful->findCourses($category);
+        $courses = $this->contentful->findCourses($category);
 
-        $breadcrumb->add('homeLabel', 'landing_page')
+        $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('coursesLabel', 'courses');
 
         if ($category) {
-            $breadcrumb->add($category->getTitle(), 'category', ['categorySlug' => $categorySlug], false);
+            $this->breadcrumb->add($category->getTitle(), 'category', ['categorySlug' => $categorySlug], false);
         }
 
-        return $responseFactory->createResponse('courses.html.twig', [
+        return $this->responseFactory->createResponse('courses.html.twig', [
             'courses' => $courses,
             'categories' => $categories,
             'currentCategory' => $category,

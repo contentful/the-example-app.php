@@ -10,31 +10,27 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\Contentful;
-use App\Service\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * LandingPageController.
  */
-class LandingPageController
+class LandingPageController extends AppController
 {
     /**
-     * @param ResponseFactory $responseFactory
-     * @param Contentful      $contentful
-     * @param string          $landingPageSlug
+     * @param string $landingPageSlug
      *
      * @return Response
      */
-    public function __invoke(ResponseFactory $responseFactory, Contentful $contentful, string $landingPageSlug): Response
+    public function __invoke(string $landingPageSlug): Response
     {
-        $landingPage = $contentful->findLandingPage($landingPageSlug);
-        if ($landingPage === null) {
+        $landingPage = $this->contentful->findLandingPage($landingPageSlug);
+        if (null === $landingPage) {
             throw new NotFoundHttpException();
         }
 
-        return $responseFactory->createResponse('landingPage.html.twig', [
+        return $this->responseFactory->createResponse('landingPage.html.twig', [
             'landingPage' => $landingPage,
         ]);
     }

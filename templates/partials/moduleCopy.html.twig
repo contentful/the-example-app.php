@@ -6,8 +6,8 @@
 
 {% set style = module.getVisualStyle() == 'Emphasized' ? '--emphasized' : '' %}
 
-<div class="module">
-    <div class="module-copy{{ style }}">
+<div class="module module-copy{{ style }}">
+    <div class="module-copy__wrapper{{ style }}">
         <div class="module-copy__first{{ style }}">
             {% if module.getHeadline() %}
                 <h1 class="module-copy__headline{{ style }}">{{ module.getHeadline() }}</h1>
@@ -16,11 +16,12 @@
             <div class="module-copy__copy{{ style }}">
                 {{ module.getCopy()|markdown }}
             </div>
+
         </div>
 
         <div class="module-copy__second{{ style }}">
             {% if module.getCtaTitle() and module.getCtaLink() %}
-                <a href="{{ module.getCtaTitle() }}" class="cta module-copy__cta{{ style }}">{{ module.getCtaTitle() }}</a>
+                <a href="{{ module.getCtaLink() }}" class="cta module-copy__cta{{ style }}">{{ module.getCtaTitle() }}</a>
             {% endif %}
         </div>
     </div>

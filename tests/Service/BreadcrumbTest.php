@@ -24,7 +24,11 @@ class BreadcrumbTest extends TestCase
         $breadcrumb = new Breadcrumb(
             new BreadcrumbTestTranslator(),
             new BreadcrumbTestUrlGenerator(),
-            new State(null, 'spaceId', 'deliveryToken', 'previewToken', 'locale', ['en-US', 'de-DE'])
+            new State(null, [
+                'space_id' => 'spaceId',
+                'delivery_token' => 'deliveryToken',
+                'preview_token' => 'previewToken',
+            ], 'locale')
         );
 
         $breadcrumb->add('item1', 'route1', ['param1' => 'value1'])
