@@ -23,16 +23,19 @@ if (!isset($_SERVER['APP_ENV'])) {
     (new Dotenv())->load(__DIR__.'/../.env');
 }
 
-if ($_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev'))) {
+$env = $_SERVER['APP_ENV'] ?? 'dev';
+$debug = $_SERVER['APP_DEBUG'] ?? ('prod' !== $env);
+
+if ($debug) {
     umask(0000);
 
     Debug::enable();
 }
 
 // This is enabled to allow for correctly handling HTTPS on Heroku
-Request::setTrustedProxies(['0.0.0.0/0'], Request::HEADER_FORWARDED);
+Request::setTrustedProxies(['0.0.0.0/0'], Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST);
 
-$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
+$kernel = new Kernel($env, $debug);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
