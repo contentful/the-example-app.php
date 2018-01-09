@@ -3,6 +3,7 @@
   "fixturesFolder": false,
   "integrationFolder": "./tests-e2e/specs",
   "supportFile": false,
+  "videoRecording": false,
   "env": {
     "LANGUAGE": "php",
     "CONTENTFUL_SPACE_ID": "qz0n5cdakyl9",
