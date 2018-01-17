@@ -314,12 +314,12 @@
         <source>changesSavedLabel</source>
         <target>Änderungen erfolgreich gespeichert!</target>
       </trans-unit>
-      <trans-unit id="errorOcurredTitleLabel">
-        <source>errorOcurredTitleLabel</source>
+      <trans-unit id="errorOccurredTitleLabel">
+        <source>errorOccurredTitleLabel</source>
         <target>Fehler aufgetreten</target>
       </trans-unit>
-      <trans-unit id="errorOcurredMessageLabel">
-        <source>errorOcurredMessageLabel</source>
+      <trans-unit id="errorOccurredMessageLabel">
+        <source>errorOccurredMessageLabel</source>
         <target>Einige Fehler sind aufgetreten. Bitte schauen Sie sich die Fehlermeldungen neben den Feldern an.</target>
       </trans-unit>
       <trans-unit id="connectedToSpaceLabel">
