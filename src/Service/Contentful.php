@@ -88,7 +88,9 @@ class Contentful
         // We make an "empty" API call,
         // the result of which will depend on the validity of the credentials.
         // If any error should arise, the call will throw an exception.
-        $this->clientFactory->createClient($api, $spaceId, $accessToken)->getSpace();
+        $query = (new Query())
+            ->setLimit(1);
+        $this->clientFactory->createClient($api, $spaceId, $accessToken)->getContentTypes($query);
     }
 
     /**
