@@ -38,15 +38,19 @@ class EntryStateChecker
     }
 
     /**
+     * Compares entries retrieved from the Preview API
+     * to their equivalent in the Delivery API.
+     * If the entries have a property "DynamicEntry[] children",
+     * it will be checked and state will bubble up from them.
+     *
      * @param DynamicEntry[] $entries
-     * @param string         $method  The method for accessing linked entries
      */
-    public function computeState(array $entries, string $method): void
+    public function computeState(DynamicEntry ...$entries): void
     {
-        $deliveryEntries = $this->fetchDeliveryEntries($entries, $method);
+        $deliveryEntries = $this->fetchDeliveryEntries($entries);
 
         foreach ($entries as $entry) {
-            $this->attachEntryState($entry, $deliveryEntries, $method);
+            $this->attachEntryState($entry, $deliveryEntries);
         }
     }
 
@@ -56,13 +60,12 @@ class EntryStateChecker
      * published entries.
      *
      * @param DynamicEntry[] $entries
-     * @param string         $method
      *
      * @return DynamicEntry[]
      */
-    private function fetchDeliveryEntries(array $entries, string $method): array
+    private function fetchDeliveryEntries(array $entries): array
     {
-        $ids = $this->extractIdsForComparison($entries, $method);
+        $ids = $this->extractIdsForComparison($entries);
         $query = (new Query())
             ->setInclude(0)
             ->where('sys.id', $ids, 'in');
@@ -79,17 +82,17 @@ class EntryStateChecker
      * Given an array of entries, it will extract all IDs including from the nested ones.
      *
      * @param DynamicEntry[] $entries
-     * @param string         $method
      *
      * @return string[]
      */
-    private function extractIdsForComparison(array $entries, string $method): array
+    private function extractIdsForComparison(array $entries): array
     {
         $ids = [];
         foreach ($entries as $entry) {
             $ids[] = $entry->getId();
 
-            foreach ($entry->$method() as $linkedEntry) {
+            $children = $entry->children ?? [];
+            foreach ($children as $linkedEntry) {
                 $ids[] = $linkedEntry->getId();
             }
         }
@@ -108,16 +111,16 @@ class EntryStateChecker
      *
      * @param DynamicEntry   $previewEntry
      * @param DynamicEntry[] $deliveryEntries An array where the entry ID is used as key
-     * @param string         $method          The method used for calling the linked entries
      */
-    private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries, string $method): void
+    private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries): void
     {
         $state = $this->compare($previewEntry, $deliveryEntries);
 
         $previewEntry->draft = $state['draft'];
         $previewEntry->pendingChanges = $state['pendingChanges'];
 
-        foreach ($previewEntry->$method() as $linkedPreviewEntry) {
+        $children = $previewEntry->children ?? [];
+        foreach ($children as $linkedPreviewEntry) {
             $state = $this->compare($linkedPreviewEntry, $deliveryEntries);
 
             $previewEntry->draft = $previewEntry->draft || $state['draft'];

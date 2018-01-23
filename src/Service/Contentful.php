@@ -140,7 +140,7 @@ class Contentful
         $courses = $this->client->getEntries($query)->getItems();
 
         if ($courses && $this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState($courses, 'getLessons');
+            $this->entryStateChecker->computeState(...$courses);
         }
 
         return $courses;
@@ -162,7 +162,7 @@ class Contentful
         $course = $this->findEntry('course', $courseSlug);
 
         if ($course && $this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState([$course], 'getLessons');
+            $this->entryStateChecker->computeState($course);
         }
 
         return $course;
@@ -198,15 +198,16 @@ class Contentful
         $course->nextLesson = $lessons[$lessonIndex + 1] ?? null;
 
         if ($this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState([$course->lesson], 'getModules');
+            $course->lesson->children = $course->lesson->getModules();
+            $this->entryStateChecker->computeState($course->lesson);
         }
 
         return $course;
     }
 
     /**
-     * @param array  $lessons
-     * @param string $lessonSlug
+     * @param DynamicEntry[] $lessons
+     * @param string         $lessonSlug
      *
      * @return int|null
      */
@@ -235,7 +236,8 @@ class Contentful
         $landingPage = $this->findEntry('layout', $slug, 3);
 
         if ($landingPage && $this->state->hasEditorialFeaturesLink()) {
-            $this->entryStateChecker->computeState([$landingPage], 'getContentModules');
+            $landingPage->children = $landingPage->getContentModules();
+            $this->entryStateChecker->computeState($landingPage);
         }
 
         return $landingPage;
