@@ -11,8 +11,7 @@ jobs:
           name: Install required libraries
           command: |
             sudo apt-get install -y libzip-dev
-            sudo docker-php-ext-install zip
-            sudo docker-php-ext-install pcntl
+            sudo docker-php-ext-install zip pcntl
       - run:
           name: Install dependencies
           command: |
