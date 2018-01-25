@@ -34,4 +34,6 @@ jobs:
             npm install
             cd ..
             php bin/console server:start 127.0.0.1:8000
+            export APP_ENV=prod
+            php bin/console cache:warmup
             ./tests-e2e/node_modules/.bin/cypress run

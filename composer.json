@@ -4,7 +4,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
-        "contentful/contentful": "^2.3",
+        "contentful/contentful": "^2.4.1",
         "league/commonmark": "^0.16.0",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
