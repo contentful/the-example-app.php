@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "073824d0df935538f1255ddfe19d57c1",
+    "content-hash": "90e07f4c6818591deef8de3f47568df3",
     "packages": [
         {
             "name": "contentful/contentful",
-            "version": "2.3.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contentful/contentful.php.git",
-                "reference": "d3d7b9d0ce9aca60e56a8f9951d29dcd302f7d4f"
+                "reference": "7e5d29b0dd9a64ac0362d8ff242f95280e5ac130"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contentful/contentful.php/zipball/d3d7b9d0ce9aca60e56a8f9951d29dcd302f7d4f",
-                "reference": "d3d7b9d0ce9aca60e56a8f9951d29dcd302f7d4f",
+                "url": "https://api.github.com/repos/contentful/contentful.php/zipball/7e5d29b0dd9a64ac0362d8ff242f95280e5ac130",
+                "reference": "7e5d29b0dd9a64ac0362d8ff242f95280e5ac130",
                 "shasum": ""
             },
             "require": {
@@ -29,8 +29,6 @@
                 "symfony/filesystem": "~2.7|~3.0|~4.0"
             },
             "require-dev": {
-                "jakub-onderka/php-console-highlighter": "^0.3.2",
-                "jakub-onderka/php-parallel-lint": "^0.9.2",
                 "php-vcr/phpunit-testlistener-vcr": "^2.0"
             },
             "bin": [
@@ -39,7 +37,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.0-dev"
+                    "dev-master": "2.5.0-dev"
                 }
             },
             "autoload": {
@@ -55,7 +53,7 @@
                 "MIT"
             ],
             "description": "SDK for the Contentful Content Delivery API",
-            "time": "2017-12-01T09:28:39+00:00"
+            "time": "2018-01-25T10:30:25+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1140,24 +1138,24 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.57",
+            "version": "v1.0.67",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "73423de7560c492f159aeb3eb9687b470bc87aec"
+                "reference": "ac1c6aaafc4a9fddba3626867d786d151d2cc2ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/73423de7560c492f159aeb3eb9687b470bc87aec",
-                "reference": "73423de7560c492f159aeb3eb9687b470bc87aec",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/ac1c6aaafc4a9fddba3626867d786d151d2cc2ac",
+                "reference": "ac1c6aaafc4a9fddba3626867d786d151d2cc2ac",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
+                "composer-plugin-api": "^1.0",
                 "php": "^7.0"
             },
             "require-dev": {
-                "composer/composer": "^1.4",
+                "composer/composer": "^1.0.2",
                 "symfony/phpunit-bridge": "^3.2.8"
             },
             "type": "composer-plugin",
@@ -1182,7 +1180,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-03T11:28:30+00:00"
+            "time": "2018-01-25T06:46:31+00:00"
         },
         {
             "name": "symfony/form",

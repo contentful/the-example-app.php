@@ -5,6 +5,7 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AppWebTestCase extends WebTestCase
@@ -25,6 +26,11 @@ abstract class AppWebTestCase extends WebTestCase
     protected $response;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @param string $method
      * @param string $url
      * @param int    $statusCode
@@ -34,6 +40,7 @@ abstract class AppWebTestCase extends WebTestCase
         $this->client = static::createClient();
 
         $this->crawler = $this->client->request($method, $url);
+        $this->request = $this->client->getRequest();
         $this->response = $this->client->getResponse();
 
         $this->assertSame($statusCode, $this->response->getStatusCode());
