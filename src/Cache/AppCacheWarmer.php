@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace App\Cache;
 
+use App\Service\ClientFactory;
+use App\Service\Contentful;
 use Contentful\Delivery\Cache\CacheWarmer;
 use Contentful\Delivery\Client;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
@@ -22,11 +24,11 @@ class AppCacheWarmer implements CacheWarmerInterface
     private $client;
 
     /**
-     * @param array $credentials
+     * @param ClientFactory $clientFactory
      */
-    public function __construct(array $credentials)
+    public function __construct(ClientFactory $clientFactory)
     {
-        $this->client = new Client($credentials['delivery_token'], $credentials['space_id']);
+        $this->client = $clientFactory->createClient(Contentful::API_DELIVERY);
     }
 
     public function warmUp($cacheDir)
