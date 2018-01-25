@@ -15,6 +15,9 @@ parameters:
         space_id: "%env(CONTENTFUL_SPACE_ID)%"
         delivery_token: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
         preview_token: "%env(CONTENTFUL_PREVIEW_TOKEN)%"
+    # Default URLs to Contentful APIs
+    env(CONTENTFUL_DELIVERY_URL): "https://cdn.contentful.com/"
+    env(CONTENTFUL_PREVIEW_URL): "https://preview.contentful.com/"
 
 services:
     # default configuration for services in *this* file
@@ -45,6 +48,8 @@ services:
     App\Service\ClientFactory:
         arguments:
             $cacheDir: "%kernel.cache_dir%"
+            $deliveryApiUrl: "%env(CONTENTFUL_DELIVERY_URL)%"
+            $previewApiUrl: "%env(CONTENTFUL_PREVIEW_URL)%"
     App\Service\ResponseFactory:
         arguments:
             $cookieLifetime: "%cookie_lifetime%"
