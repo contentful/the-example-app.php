@@ -4,11 +4,12 @@
   "keywords": [
     "contentful",
     "example",
+    "php",
     "symfony"
   ],
-  "website": "https://www.contentful.com/",
+  "website": "https://the-example-app-php.contentful.com/",
   "repository": "https://github.com/contentful/the-example-app.php",
-  "logo": "https://the-example-app-php.herokuapp.com/images/the-example-app-logo-php.svg",
+  "logo": "https://the-example-app-php.contentful.com/images/the-example-app-logo-php.svg",
   "success_url": "/",
   "env": {
     "APP_ENV": {
