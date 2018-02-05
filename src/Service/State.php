@@ -98,14 +98,8 @@ class State
     {
         $settings = $this->extractCookieSettings($request);
 
-        // The "enable_editorial_features" parameter overrides the current settings.
-        if ($request->query->has('enable_editorial_features')) {
-            $settings['editorialFeatures'] = true;
-        }
-
         $settings['api'] = $request->query->get('api');
         $settings['locale'] = $request->query->get('locale');
-
         $settings['queryString'] = $this->extractQueryString($request);
 
         return \array_filter($settings);
@@ -148,13 +142,6 @@ class State
             'api' => $request->query->get('api'),
             'locale' => $request->query->get('locale'),
         ]);
-
-        // We handle "enable_editorial_features" separately,
-        // as it is a query parameter which has no value,
-        // and http_build_query doesn't support this.
-        if ($request->query->has('enable_editorial_features')) {
-            $queryString .= ($queryString ? '&' : '').'enable_editorial_features';
-        }
 
         return $queryString ? '?'.$queryString : '';
     }
@@ -273,8 +260,9 @@ class State
             'space_id' => $this->spaceId,
             'delivery_token' => $this->deliveryToken,
             'preview_token' => $this->previewToken,
+            'editorial_features' => $this->editorialFeatures ? 'enabled' : 'disabled',
             'api' => $this->api,
             'locale' => $this->locale,
-        ]).($this->editorialFeatures ? '&enable_editorial_features' : '');
+        ]);
     }
 }

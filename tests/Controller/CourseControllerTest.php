@@ -37,10 +37,10 @@ class CourseControllerTest extends AppWebTestCase
 
     public function testCoursePageEditorialFeatures()
     {
-        $this->visit('GET', '/courses/hello-contentful?enable_editorial_features');
+        $this->visit('GET', '/courses/hello-contentful?editorial_features=enabled', 302);
 
-        $this->assertPageContainsAttr('.header__logo-link', 'href', '/?enable_editorial_features');
-        $this->assertPageContainsAttr('.course__overview-cta', 'href', '/courses/hello-contentful/lessons/architecture?enable_editorial_features');
+        $this->crawler = $this->client->followRedirect();
+
         $this->assertPageContains('.course .editorial-features__item a', 'Edit in the Contentful Web App');
     }
 
@@ -66,18 +66,18 @@ class CourseControllerTest extends AppWebTestCase
     public function testLessonPage()
     {
         $requestTime = \time();
-        $this->visit('GET', '/courses/hello-contentful/lessons/architecture');
+        $this->visit('GET', '/courses/hello-contentful/lessons/apis');
 
         $this->assertBreadcrumb([
             ['Home', '/'],
             ['Courses', '/courses'],
             ['Hello Contentful', '/courses/hello-contentful'],
             ['Lessons', '/courses/hello-contentful'],
-            ['Architecture', '/courses/hello-contentful/lessons/architecture'],
+            ['APIs', '/courses/hello-contentful/lessons/apis'],
         ]);
 
-        $this->assertPageContains('.lesson__title', 'Architecture');
-        $this->assertPageContains('.table-of-contents__link.active', 'Architecture');
+        $this->assertPageContains('.lesson__title', 'APIs');
+        $this->assertPageContains('.table-of-contents__link.active', 'APIs');
         $this->assertPageContains('.lesson__cta', 'Go to the next lesson');
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
@@ -93,20 +93,21 @@ class CourseControllerTest extends AppWebTestCase
 
     public function testLessonPageEditorialFeatures()
     {
-        $this->visit('GET', '/courses/hello-contentful/lessons/architecture?enable_editorial_features');
+        $this->visit('GET', '/courses/hello-contentful/lessons/apis?editorial_features=enabled', 302);
 
-        $this->assertPageContainsAttr('.header__logo-link', 'href', '/?enable_editorial_features');
+        $this->crawler = $this->client->followRedirect();
+
         $this->assertPageContains('.lesson .editorial-features__item a', 'Edit in the Contentful Web App');
     }
 
     public function testLessonPageGerman()
     {
         $requestTime = \time();
-        $this->visit('GET', '/courses/hello-contentful/lessons/architecture?locale=de-DE');
+        $this->visit('GET', '/courses/hello-contentful/lessons/apis?locale=de-DE');
 
         $this->assertPageContainsAttr('.header__logo-link', 'href', '/?locale=de-DE');
-        $this->assertPageContains('.lesson__title', 'Architektur');
-        $this->assertPageContains('.table-of-contents__link.active', 'Architektur');
+        $this->assertPageContains('.lesson__title', 'APIs');
+        $this->assertPageContains('.table-of-contents__link.active', 'APIs');
         $this->assertPageContains('.lesson__cta', 'Nächste Lektion ansehen');
         $this->assertPageContainsAttr('.lesson__cta', 'href', '/courses/hello-contentful/lessons/content-model?locale=de-DE');
 
