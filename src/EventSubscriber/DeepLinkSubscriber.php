@@ -12,7 +12,7 @@ namespace App\EventSubscriber;
 
 use App\Service\Contentful;
 use App\Service\ResponseFactory;
-use Contentful\Exception\ApiException;
+use App\Service\State;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,13 +42,20 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     private $contentful;
 
     /**
+     * @var State
+     */
+    private $state;
+
+    /**
      * @param ResponseFactory $responseFactory
      * @param Contentful      $contentful
+     * @param State           $state
      */
-    public function __construct(ResponseFactory $responseFactory, Contentful $contentful)
+    public function __construct(ResponseFactory $responseFactory, Contentful $contentful, State $state)
     {
         $this->responseFactory = $responseFactory;
         $this->contentful = $contentful;
+        $this->state = $state;
     }
 
     /**
@@ -57,11 +64,11 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
-        if ($request->isMethod('POST') || !$this->hasCredentials($request)) {
+        if ($request->isMethod('POST') || !$this->hasParameters($request)) {
             return;
         }
 
-        if (!$this->validateCredentials($request)) {
+        if (!$this->validateParameters($request)) {
             return;
         }
 
@@ -80,11 +87,31 @@ class DeepLinkSubscriber implements EventSubscriberInterface
      *
      * @return bool
      */
+    private function hasParameters(Request $request): bool
+    {
+        return $this->hasCredentials($request) || $this->hasEditorialFeatures($request);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
     private function hasCredentials(Request $request): bool
     {
-        $query = $request->query;
+        return $request->query->has('space_id')
+            && $request->query->has('preview_token')
+            && $request->query->has('delivery_token');
+    }
 
-        return $query->has('space_id') && $query->has('preview_token') && $query->has('delivery_token');
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
+    private function hasEditorialFeatures(Request $request): bool
+    {
+        return $request->query->has('editorial_features');
     }
 
     /**
@@ -97,52 +124,49 @@ class DeepLinkSubscriber implements EventSubscriberInterface
      */
     private function cleanCookieParameters(Request $request): array
     {
-        $parameters = $request->query->all();
+        $currentSettings = $this->state->getSettings();
+        $queryParameters = $request->query->all();
+
         $this->responseFactory->addCookie(
             Contentful::COOKIE_SETTINGS_NAME,
             [
-                'spaceId' => $parameters['space_id'],
-                'deliveryToken' => $parameters['delivery_token'],
-                'previewToken' => $parameters['preview_token'],
-                'editorialFeatures' => isset($parameters['enable_editorial_features']),
+                'spaceId' => $queryParameters['space_id'] ?? $currentSettings['spaceId'],
+                'deliveryToken' => $queryParameters['delivery_token'] ?? $currentSettings['deliveryToken'],
+                'previewToken' => $queryParameters['preview_token'] ?? $currentSettings['previewToken'],
+                'editorialFeatures' => isset($queryParameters['editorial_features'])
+                    ? 'enabled' === $queryParameters['editorial_features']
+                    : $currentSettings['editorialFeatures'],
             ]
         );
 
         unset(
-            $parameters['space_id'],
-            $parameters['delivery_token'],
-            $parameters['preview_token'],
-            $parameters['enable_editorial_features']
+            $queryParameters['space_id'],
+            $queryParameters['delivery_token'],
+            $queryParameters['preview_token'],
+            $queryParameters['editorial_features']
         );
 
-        return $parameters;
+        return $queryParameters;
     }
 
     /**
-     * Tries to call the API using the given credentials.
-     * If the call fails, it will change the request object
-     * and set the controller to the custom error one.
-     *
      * @param Request $request
      *
      * @return bool
      */
-    private function validateCredentials(Request $request): bool
+    private function validateParameters(Request $request): bool
     {
-        $queryParameters = $request->query->all();
-
         try {
-            $this->contentful->validateCredentials(
-                $queryParameters['space_id'],
-                $queryParameters['delivery_token'],
-                Contentful::API_DELIVERY
-            );
-            $this->contentful->validateCredentials(
-                $queryParameters['space_id'],
-                $queryParameters['preview_token'],
-                Contentful::API_PREVIEW
-            );
-        } catch (ApiException $exception) {
+            if ($this->hasCredentials($request)) {
+                $this->validateCredentials($request);
+            }
+
+            if ($this->hasEditorialFeatures($request)) {
+                $this->validateEditorialFeatures($request);
+            }
+
+            return true;
+        } catch (\Exception $exception) {
             $exception = FlattenException::create(
                 $exception,
                 $exception->getResponse()->getStatusCode()
@@ -153,8 +177,46 @@ class DeepLinkSubscriber implements EventSubscriberInterface
 
             return false;
         }
+    }
 
-        return true;
+    /**
+     * Tries to call the API using the given credentials.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    private function validateCredentials(Request $request): void
+    {
+        $queryParameters = $request->query->all();
+
+        $this->contentful->validateCredentials(
+            $queryParameters['space_id'],
+            $queryParameters['delivery_token'],
+            Contentful::API_DELIVERY
+        );
+        $this->contentful->validateCredentials(
+            $queryParameters['space_id'],
+            $queryParameters['preview_token'],
+            Contentful::API_PREVIEW
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
+    private function validateEditorialFeatures(Request $request): void
+    {
+        $editorialFeatures = $queryParameters['editorial_features'] ?? null;
+
+        if (!in_array($editorialFeatures, [null, 'enabled', 'disabled'], true)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid value for editorial_features parameter: %s',
+                $editorialFeatures
+            ), 400);
+        }
     }
 
     /**

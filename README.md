@@ -87,7 +87,7 @@ php bin/console server:run
 ```
 Final Step:
 
-Open [http://localhost:8000?enable_editorial_features](http://localhost:8000?enable_editorial_features) and take a look around. This URL flag adds an “Edit” button in the app on every editable piece of content which will take you back to Contentful web app where you can make changes. It also adds “Draft” and “Pending Changes” status indicators to all content if relevant.
+Open [http://localhost:8000/?editorial_features=enabled](http://localhost:8000/?editorial_features=enabled) and take a look around. This URL flag adds an “Edit” button in the app on every editable piece of content which will take you back to Contentful web app where you can make changes. It also adds “Draft” and “Pending Changes” status indicators to all content if relevant.
 
 
 ## Use Docker

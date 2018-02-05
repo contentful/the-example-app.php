@@ -58,14 +58,16 @@ class CoursesControllerTest extends AppWebTestCase
         $this->visit('GET', '/courses/categories/wrong-category', 404);
     }
 
-    public function testLessonPageEditorialFeatures()
+    public function testCategoryPageEditorialFeatures()
     {
-        $this->visit('GET', '/courses/categories/getting-started?enable_editorial_features');
+        $this->visit('GET', '/courses/categories/getting-started?editorial_features=enabled', 302);
 
-        $this->assertPageContainsAttr('.header__logo-link', 'href', '/?enable_editorial_features');
+        $this->crawler = $this->client->followRedirect();
+
+        $this->assertPageContains('.courses .editorial-features__item a', 'Edit in the Contentful Web App');
     }
 
-    public function testLessonPageGerman()
+    public function testCategoryPageGerman()
     {
         $this->visit('GET', '/courses/categories/getting-started?locale=de-DE');
 
