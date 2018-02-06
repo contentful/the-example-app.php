@@ -36,5 +36,5 @@ imprint:
     defaults: { _controller: App\Controller\ImprintController }
 
 landing_page:
-    path:     /{landingPageSlug}
+    path:     /
     defaults: { _controller: App\Controller\LandingPageController, landingPageSlug: home }

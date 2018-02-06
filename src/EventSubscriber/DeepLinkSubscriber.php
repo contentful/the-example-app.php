@@ -13,6 +13,7 @@ namespace App\EventSubscriber;
 use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
+use Contentful\Exception\ApiException;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -169,7 +170,9 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         } catch (\Exception $exception) {
             $exception = FlattenException::create(
                 $exception,
-                $exception->getResponse()->getStatusCode()
+                $exception instanceof ApiException
+                    ? $exception->getResponse()->getStatusCode()
+                    : $exception->getCode()
             );
 
             $request->attributes->set('_controller', 'App\Controller\ExceptionController');
@@ -183,8 +186,6 @@ class DeepLinkSubscriber implements EventSubscriberInterface
      * Tries to call the API using the given credentials.
      *
      * @param Request $request
-     *
-     * @return bool
      */
     private function validateCredentials(Request $request): void
     {
@@ -205,11 +206,11 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     /**
      * @param Request $request
      *
-     * @return bool
+     * @throws \InvalidArgumentException
      */
     private function validateEditorialFeatures(Request $request): void
     {
-        $editorialFeatures = $queryParameters['editorial_features'] ?? null;
+        $editorialFeatures = $request->query->get('editorial_features');
 
         if (!in_array($editorialFeatures, [null, 'enabled', 'disabled'], true)) {
             throw new \InvalidArgumentException(sprintf(
