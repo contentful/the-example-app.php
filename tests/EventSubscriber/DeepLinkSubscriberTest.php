@@ -19,6 +19,12 @@ class DeepLinkSubscriberTest extends AppWebTestCase
     {
         $this->visit('GET', '/?space_id=cfexampleapi&delivery_token=b4c0n73n7fu1&preview_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50&api=cda&locale=en-US&editorial_features=enabled', 302);
 
+        // First, the redirect to the settings page/
+        $this->assertInstanceOf(RedirectResponse::class, $this->response);
+        $this->assertSame('/settings', $this->response->getTargetUrl());
+
+        // Second, the redirect back to the original URL.
+        $this->followRedirect();
         $this->assertInstanceOf(RedirectResponse::class, $this->response);
         $this->assertSame('/?api=cda&locale=en-US', $this->response->getTargetUrl());
 
@@ -31,6 +37,12 @@ class DeepLinkSubscriberTest extends AppWebTestCase
     {
         $this->visit('GET', '/?space_id=cfexampleapi&delivery_token=b4c0n73n7fu1&preview_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50', 302);
 
+        // First, the redirect to the settings page/
+        $this->assertInstanceOf(RedirectResponse::class, $this->response);
+        $this->assertSame('/settings', $this->response->getTargetUrl());
+
+        // Second, the redirect back to the original URL.
+        $this->followRedirect();
         $this->assertInstanceOf(RedirectResponse::class, $this->response);
         $this->assertSame('/', $this->response->getTargetUrl());
 
@@ -43,6 +55,12 @@ class DeepLinkSubscriberTest extends AppWebTestCase
     {
         $this->visit('GET', '/?editorial_features=enabled', 302);
 
+        // First, the redirect to the settings page/
+        $this->assertInstanceOf(RedirectResponse::class, $this->response);
+        $this->assertSame('/settings', $this->response->getTargetUrl());
+
+        // Second, the redirect back to the original URL.
+        $this->followRedirect();
         $this->assertInstanceOf(RedirectResponse::class, $this->response);
         $this->assertSame('/', $this->response->getTargetUrl());
 

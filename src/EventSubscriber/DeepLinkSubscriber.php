@@ -13,8 +13,6 @@ namespace App\EventSubscriber;
 use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
-use Contentful\Exception\ApiException;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -24,11 +22,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * DeepLinkSubscriber.
  *
  * This subscriber is used in order to intercept calls made to the app
- * when setting spaceId, deliveryToken and previewToken as query parameters.
- * When doing so, we intercept the call, extract the values, set a cookie and
- * redirect the user to a "clean" version of the same URL.
- * As these three parameters are all require to form valid credentials,
- * if they're not all defined, we skip the process.
+ * when setting space_id, delivery_token and preview_token as query parameters.
+ * When doing so, we intercept the call, and redirect to the settings page,
+ * where validation is performed. If credentials are valid, the user will be
+ * sent to the original URL.
  */
 class DeepLinkSubscriber implements EventSubscriberInterface
 {
@@ -69,18 +66,43 @@ class DeepLinkSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->validateParameters($request)) {
-            return;
+        $settings = $this->extractSettingsParameters($request);
+        $request->getSession()->set(State::SESSION_SETTINGS_NAME, $settings);
+
+        $event->setResponse($this->responseFactory->createRoutedRedirectResponse('settings'));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return string[]
+     */
+    private function extractSettingsParameters(Request $request): array
+    {
+        $currentSettings = $this->state->getSettings();
+        $queryParameters = $request->query->all();
+        $redirect = $request->getPathInfo();
+
+        $extraParameters = \http_build_query([
+            'api' => $request->query->get('api'),
+            'locale' => $request->query->get('locale'),
+        ]);
+        if ($extraParameters) {
+            $redirect .= '?'.$extraParameters;
         }
 
-        $queryParameters = $this->cleanCookieParameters($request);
+        $settings = [
+            'redirect' => $redirect,
+            'spaceId' => $queryParameters['space_id'] ?? $currentSettings['spaceId'],
+            'deliveryToken' => $queryParameters['delivery_token'] ?? $currentSettings['deliveryToken'],
+            'previewToken' => $queryParameters['preview_token'] ?? $currentSettings['previewToken'],
+        ];
 
-        $url = $request->getPathInfo();
-        if ($queryParameters) {
-            $url .= '?'.\http_build_query($queryParameters);
+        if ('enabled' === ($queryParameters['editorial_features'] ?? 'disabled')) {
+            $settings['editorialFeatures'] = true;
         }
 
-        $event->setResponse($this->responseFactory->createRedirectResponse($url));
+        return $settings;
     }
 
     /**
@@ -113,111 +135,6 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     private function hasEditorialFeatures(Request $request): bool
     {
         return $request->query->has('editorial_features');
-    }
-
-    /**
-     * This method extracts the query parameters from the request object,
-     * sets a cookie, a returns a cleaned array ready for be used in a redirect.
-     *
-     * @param Request $request
-     *
-     * @return string[]
-     */
-    private function cleanCookieParameters(Request $request): array
-    {
-        $currentSettings = $this->state->getSettings();
-        $queryParameters = $request->query->all();
-
-        $this->responseFactory->addCookie(
-            Contentful::COOKIE_SETTINGS_NAME,
-            [
-                'spaceId' => $queryParameters['space_id'] ?? $currentSettings['spaceId'],
-                'deliveryToken' => $queryParameters['delivery_token'] ?? $currentSettings['deliveryToken'],
-                'previewToken' => $queryParameters['preview_token'] ?? $currentSettings['previewToken'],
-                'editorialFeatures' => isset($queryParameters['editorial_features'])
-                    ? 'enabled' === $queryParameters['editorial_features']
-                    : $currentSettings['editorialFeatures'],
-            ]
-        );
-
-        unset(
-            $queryParameters['space_id'],
-            $queryParameters['delivery_token'],
-            $queryParameters['preview_token'],
-            $queryParameters['editorial_features']
-        );
-
-        return $queryParameters;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
-    private function validateParameters(Request $request): bool
-    {
-        try {
-            if ($this->hasCredentials($request)) {
-                $this->validateCredentials($request);
-            }
-
-            if ($this->hasEditorialFeatures($request)) {
-                $this->validateEditorialFeatures($request);
-            }
-
-            return true;
-        } catch (\Exception $exception) {
-            $exception = FlattenException::create(
-                $exception,
-                $exception instanceof ApiException
-                    ? $exception->getResponse()->getStatusCode()
-                    : $exception->getCode()
-            );
-
-            $request->attributes->set('_controller', 'App\Controller\ExceptionController');
-            $request->attributes->set('exception', $exception);
-
-            return false;
-        }
-    }
-
-    /**
-     * Tries to call the API using the given credentials.
-     *
-     * @param Request $request
-     */
-    private function validateCredentials(Request $request): void
-    {
-        $queryParameters = $request->query->all();
-
-        $this->contentful->validateCredentials(
-            $queryParameters['space_id'],
-            $queryParameters['delivery_token'],
-            Contentful::API_DELIVERY
-        );
-        $this->contentful->validateCredentials(
-            $queryParameters['space_id'],
-            $queryParameters['preview_token'],
-            Contentful::API_PREVIEW
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @throws \InvalidArgumentException
-     */
-    private function validateEditorialFeatures(Request $request): void
-    {
-        $editorialFeatures = $request->query->get('editorial_features');
-
-        if (!in_array($editorialFeatures, [null, 'enabled', 'disabled'], true)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid value for editorial_features parameter: %s',
-                $editorialFeatures
-            ), 400);
-        }
     }
 
     /**

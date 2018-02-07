@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Validator\Constraints;
 
 use App\Service\Contentful;
+use App\Service\State;
 use Contentful\Exception\AccessTokenInvalidException;
 use Contentful\Exception\ApiException;
 use Contentful\Exception\NotFoundException;
@@ -37,11 +38,18 @@ class ContentfulCredentialsValidator extends ConstraintValidator
     private $contentful;
 
     /**
-     * @param Contentful $contentful
+     * @var State
      */
-    public function __construct(Contentful $contentful)
+    private $state;
+
+    /**
+     * @param Contentful $contentful
+     * @param State      $state
+     */
+    public function __construct(Contentful $contentful, State $state)
     {
         $this->contentful = $contentful;
+        $this->state = $state;
     }
 
     /**
@@ -57,8 +65,28 @@ class ContentfulCredentialsValidator extends ConstraintValidator
             return;
         }
 
+        if ($this->equalsStateCredentials($values)) {
+            return;
+        }
+
         $this->validateCredentials($values['spaceId'], $values['deliveryToken'], Contentful::API_DELIVERY)
             && $this->validateCredentials($values['spaceId'], $values['previewToken'], Contentful::API_PREVIEW);
+    }
+
+    /**
+     * Small optimization:
+     * let's not check for validity of credentials when they equal
+     * those currently in use, which are guaranteed to be correct.
+     *
+     * @param string[] $values
+     *
+     * @return bool
+     */
+    private function equalsStateCredentials(array $values): bool
+    {
+        return $this->state->getSpaceId() === $values['spaceId']
+            && $this->state->getDeliveryToken() === $values['deliveryToken']
+            && $this->state->getPreviewToken() === $values['previewToken'];
     }
 
     /**
