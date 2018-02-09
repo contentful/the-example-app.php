@@ -39,7 +39,10 @@ class CourseControllerTest extends AppWebTestCase
     {
         $this->visit('GET', '/courses/hello-contentful?editorial_features=enabled', 302);
 
-        $this->crawler = $this->client->followRedirect();
+        // Two redirects are used:
+        // one to the settings page, and one back to the previous URL.
+        $this->followRedirect();
+        $this->followRedirect();
 
         $this->assertPageContains('.course .editorial-features__item a', 'Edit in the Contentful Web App');
     }
@@ -95,7 +98,10 @@ class CourseControllerTest extends AppWebTestCase
     {
         $this->visit('GET', '/courses/hello-contentful/lessons/apis?editorial_features=enabled', 302);
 
-        $this->crawler = $this->client->followRedirect();
+        // Two redirects are used:
+        // one to the settings page, and one back to the previous URL.
+        $this->followRedirect();
+        $this->followRedirect();
 
         $this->assertPageContains('.lesson .editorial-features__item a', 'Edit in the Contentful Web App');
     }

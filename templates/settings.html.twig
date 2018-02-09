@@ -123,7 +123,7 @@
             </div>
         {% endif %}
 
-        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+        {{ form_start(form, {action: path('settings'), attr: {class: 'form'}}) }}
             <div class="form-item">
                 {{ form_label(form.spaceId, 'spaceIdLabel', {id: 'input-space-id'}) }}
                 {{ form_widget(form.spaceId, {id: 'input-space-id'}) }}

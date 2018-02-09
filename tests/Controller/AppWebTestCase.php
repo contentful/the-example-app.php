@@ -103,4 +103,14 @@ abstract class AppWebTestCase extends WebTestCase
             $constraint
         );
     }
+
+    /**
+     * Shortcut function for children classes.
+     */
+    protected function followRedirect(): void
+    {
+        $this->crawler = $this->client->followRedirect();
+        $this->request = $this->client->getRequest();
+        $this->response = $this->client->getResponse();
+    }
 }

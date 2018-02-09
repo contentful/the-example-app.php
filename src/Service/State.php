@@ -24,6 +24,11 @@ class State
     /**
      * @var string
      */
+    public const SESSION_SETTINGS_NAME = 'settings';
+
+    /**
+     * @var string
+     */
     private $spaceId;
 
     /**
