@@ -8,31 +8,38 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install required libraries
+          name: Install dependencies
           command: |
             sudo apt-get install -y libzip-dev
             sudo docker-php-ext-install zip pcntl
-      - run:
-          name: Install dependencies
-          command: |
             sudo composer self-update
             composer install -n --prefer-dist
-      - run:
-          name: Syntax tests
-          command: |
             wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
-            chmod a+x php-cs-fixer
-            ./php-cs-fixer fix --dry-run
       - run:
-          name: Unit tests
+          name: Run syntax tests
+          command: php php-cs-fixer fix --dry-run
+      - run:
+          name: Run unit tests
           command: php bin/phpunit
       - run:
-          name: E2E tests
+          name: Clone E2E tests
+          command: git clone https://github.com/contentful/the-example-app-e2e-tests.git ./tests-e2e
+      - restore_cache:
+          keys:
+            - tea-e2e-tests-{{ checksum "./tests-e2e/package.json" }}
+            - tea-e2e-tests
+      - run:
+          name: Install E2E tests dependencies
           command: |
-            git clone https://github.com/contentful/the-example-app-e2e-tests.git ./tests-e2e
             cd tests-e2e
             npm install
-            cd ..
+      - save_cache:
+          key: tea-e2e-tests-{{ checksum "./tests-e2e/package.json" }}
+          paths:
+            - ./tests-e2e/node_modules
+      - run:
+          name: Run E2E tests
+          command: |
             php bin/console server:start 127.0.0.1:8000
             export APP_ENV=prod
             php bin/console cache:warmup
