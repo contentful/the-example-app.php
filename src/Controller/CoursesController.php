@@ -29,7 +29,7 @@ class CoursesController extends AppController
         $categories = $this->contentful->findCategories();
         $category = $this->findCategory($categories, $categorySlug);
         if ($categorySlug && !$category) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException($this->translator->trans('errorMessage404Category'));
         }
         $courses = $this->contentful->findCourses($category);
 

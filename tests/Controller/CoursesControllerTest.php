@@ -56,6 +56,8 @@ class CoursesControllerTest extends AppWebTestCase
     public function testCategory404Page()
     {
         $this->visit('GET', '/courses/categories/wrong-category', 404);
+
+        $this->assertPageContains('body', 'The category you are trying to open does not exist.');
     }
 
     public function testCategoryPageEditorialFeatures()
@@ -67,7 +69,7 @@ class CoursesControllerTest extends AppWebTestCase
         $this->followRedirect();
         $this->followRedirect();
 
-        $this->assertPageContains('.courses .editorial-features__item a', 'Edit in the Contentful Web App');
+        $this->assertPageContains('.courses .editorial-features__item a', 'Edit in the Contentful web app');
     }
 
     public function testCategoryPageGerman()

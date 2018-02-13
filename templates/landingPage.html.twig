@@ -25,16 +25,17 @@
 
     <div class="modules-container">
         {% for module in landingPage.getContentModules() %}
-            {% if module.getContentType().getId() == 'layoutCopy' %}
+            {% set contentTypeId = module.getContentType().getId() %}
+            {% if contentTypeId == 'layoutCopy' %}
                 {% include 'partials/moduleCopy.html.twig' with {module: module} only %}
             {% endif %}
 
-            {% if module.getContentType().getId() == 'layoutHeroImage' %}
+            {% if contentTypeId == 'layoutHeroImage' %}
                 {% include 'partials/moduleHeroImage.html.twig' with {module: module} only %}
             {% endif %}
 
-            {% if module.getContentType().getId() == 'layoutHighlightedCourse' %}
-                {% include 'partials/moduleHighlightedCourse.html.twig' with {module: module, course: module.getCourse()} only %}
+            {% if contentTypeId == 'layoutHighlightedCourse' %}
+                {% include 'partials/moduleHighlightedCourse.html.twig' with {module: module} only %}
             {% endif %}
         {% endfor %}
     </div>

@@ -5,4 +5,4 @@ twig:
     globals:
         state: "@App\\Service\\State"
         breadcrumb: "@App\\Service\\Breadcrumb"
-        availableLocales: "%available_locales%"
+        locale: "@App\\Service\\Locale"

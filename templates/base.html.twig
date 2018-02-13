@@ -71,7 +71,7 @@
                                                     class="header__controls_button {{ state.isDeliveryApi ? 'header__controls_button--active' : '' }}"
                                                     type="submit"
                                                     name="api"
-                                                    value="cda"
+                                                    value="{{ constant('App\\Service\\Contentful::API_DELIVERY') }}"
                                                     >{{ 'contentDeliveryApiLabel'|trans }}:<br />
                                                     <span class="header__controls_button_help">{{ 'contentDeliveryApiHelp'|trans }}</span>
                                                 </button>
@@ -79,7 +79,7 @@
                                                     class="header__controls_button {{ state.isDeliveryApi ? '' : 'header__controls_button--active' }}"
                                                     type="submit"
                                                     name="api"
-                                                    value="cpa"
+                                                    value="{{ constant('App\\Service\\Contentful::API_PREVIEW') }}"
                                                     >{{ 'contentPreviewApiLabel'|trans }}:<br />
                                                     <span class="header__controls_button_help">{{ 'contentPreviewApiHelp'|trans }}</span>
                                                 </button>
@@ -91,12 +91,12 @@
                                     <div class="header__controls_group">
                                         <form action="" method="get">
                                             <input type="hidden" name="api" value="{{ state.api }}" />
-                                            <div class="header__controls_label">{{ 'locale'|trans }}: {{ 'currentLocaleLabel'|trans }}</div>
+                                            <div class="header__controls_label">{{ 'locale'|trans }}: {{ locale.current ? locale.current.name : state.locale }}</div>
                                             <div class="header__controls_dropdown">
                                                 <div class="header__controls_help_text">{{ 'localeQuestion'|trans }}</div>
-                                                {% for availableLocale in availableLocales %}
-                                                    <button type="submit" name="locale" value="{{ availableLocale }}" class="header__controls_button {{ availableLocale == state.locale ? 'header__controls_button--active' : '' }}">
-                                                        {{ 'currentLocaleLabel'|trans({}, 'messages', availableLocale) }} ({{ availableLocale }})
+                                                {% for localeItem in locale.all %}
+                                                    <button type="submit" name="locale" value="{{ localeItem.code }}" class="header__controls_button {{ localeItem.code == state.locale ? 'header__controls_button--active' : '' }}">
+                                                        {{ localeItem.name }} ({{ localeItem.code }})
                                                     </button>
                                                 {% endfor %}
                                             </div>
@@ -121,10 +121,10 @@
                                 <nav class="header__navigation main-navigation">
                                     <ul>
                                         <li>
-                                            <a class="{{ app.request.get('_route') == 'landing_page' ? 'active' : '' }}" href="{{ path('landing_page') ~ state.queryString }}">{{ 'homeLabel'|trans }}</a>
+                                            <a class="{{ app.request.get('tab') == 'home' ? 'active' : '' }}" href="{{ path('landing_page') ~ state.queryString }}">{{ 'homeLabel'|trans }}</a>
                                         </li>
                                         <li>
-                                            <a class="{{ app.request.get('_route') == 'landing_page' ? '' : 'active' }}" href="{{ path('courses') ~ state.queryString }}">{{ 'coursesLabel'|trans }}</a>
+                                            <a class="{{ app.request.get('tab') == 'courses' ? 'active' : '' }}" href="{{ path('courses') ~ state.queryString }}">{{ 'coursesLabel'|trans }}</a>
                                         </li>
                                     </ul>
                                 </nav>

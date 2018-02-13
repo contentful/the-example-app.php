@@ -12,9 +12,21 @@ jobs:
           command: |
             sudo apt-get install -y libzip-dev
             sudo docker-php-ext-install zip pcntl
+            wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
+      - restore_cache:
+          keys:
+            - tea-composer-{{ checksum "./composer.lock" }}
+            - tea-composer
+      - run:
+          name: Install Composer dependencies
+          command: |
             sudo composer self-update
             composer install -n --prefer-dist
-            wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
+            composer dump-autoload --optimize
+      - save_cache:
+          key: tea-composer-{{ checksum "./composer.lock" }}
+          paths:
+            - ./vendor
       - run:
           name: Run syntax tests
           command: php php-cs-fixer fix --dry-run

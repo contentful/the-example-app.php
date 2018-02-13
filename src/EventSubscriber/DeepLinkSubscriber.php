@@ -40,20 +40,13 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     private $contentful;
 
     /**
-     * @var State
-     */
-    private $state;
-
-    /**
      * @param ResponseFactory $responseFactory
      * @param Contentful      $contentful
-     * @param State           $state
      */
-    public function __construct(ResponseFactory $responseFactory, Contentful $contentful, State $state)
+    public function __construct(ResponseFactory $responseFactory, Contentful $contentful)
     {
         $this->responseFactory = $responseFactory;
         $this->contentful = $contentful;
-        $this->state = $state;
     }
 
     /**
@@ -79,7 +72,6 @@ class DeepLinkSubscriber implements EventSubscriberInterface
      */
     private function extractSettingsParameters(Request $request): array
     {
-        $currentSettings = $this->state->getSettings();
         $queryParameters = $request->query->all();
         $redirect = $request->getPathInfo();
 
@@ -93,9 +85,9 @@ class DeepLinkSubscriber implements EventSubscriberInterface
 
         $settings = [
             'redirect' => $redirect,
-            'spaceId' => $queryParameters['space_id'] ?? $currentSettings['spaceId'],
-            'deliveryToken' => $queryParameters['delivery_token'] ?? $currentSettings['deliveryToken'],
-            'previewToken' => $queryParameters['preview_token'] ?? $currentSettings['previewToken'],
+            'spaceId' => $queryParameters['space_id'] ?? null,
+            'deliveryToken' => $queryParameters['delivery_token'] ?? null,
+            'previewToken' => $queryParameters['preview_token'] ?? null,
         ];
 
         if ('enabled' === ($queryParameters['editorial_features'] ?? 'disabled')) {

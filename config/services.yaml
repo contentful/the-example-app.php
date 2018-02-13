@@ -6,18 +6,11 @@ parameters:
     available_locales: ['en-US', 'de-DE']
     # Two days in seconds
     cookie_lifetime: 172800
-    # Default values, which can be overridden by "true" env vars
-    env(CONTENTFUL_SPACE_ID): qz0n5cdakyl9
-    env(CONTENTFUL_DELIVERY_TOKEN): 580d5944194846b690dd89b630a1cb98a0eef6a19b860ef71efc37ee8076ddb8
-    env(CONTENTFUL_PREVIEW_TOKEN): e8fc39d9661c7468d0285a7ff949f7a23539dd2e686fcb7bd84dc01b392d698b
     # Group the values for easy access
     default_credentials:
         space_id: "%env(CONTENTFUL_SPACE_ID)%"
         delivery_token: "%env(CONTENTFUL_DELIVERY_TOKEN)%"
         preview_token: "%env(CONTENTFUL_PREVIEW_TOKEN)%"
-    # Default URLs to Contentful APIs
-    env(CONTENTFUL_DELIVERY_URL): "https://cdn.contentful.com/"
-    env(CONTENTFUL_PREVIEW_URL): "https://preview.contentful.com/"
 
 services:
     # default configuration for services in *this* file
@@ -47,6 +40,9 @@ services:
             $cacheDir: "%kernel.cache_dir%"
             $deliveryApiUrl: "%env(CONTENTFUL_DELIVERY_URL)%"
             $previewApiUrl: "%env(CONTENTFUL_PREVIEW_URL)%"
+    App\Service\Locale:
+        arguments:
+            $availableLocales: "%available_locales%"
     App\Service\ResponseFactory:
         arguments:
             $cookieLifetime: "%cookie_lifetime%"

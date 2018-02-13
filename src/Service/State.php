@@ -68,7 +68,7 @@ class State
 
     /**
      * @param Request|null $request
-     * @param array        $credentials
+     * @param string[]     $credentials
      * @param string       $locale
      */
     public function __construct(?Request $request, array $credentials, string $locale)
@@ -79,7 +79,7 @@ class State
             'previewToken' => $credentials['preview_token'],
             'locale' => $locale,
             'editorialFeatures' => false,
-            'api' => 'cda',
+            'api' => Contentful::API_DELIVERY,
             'queryString' => '',
             'cookieCredentials' => false,
         ];
@@ -103,9 +103,13 @@ class State
     {
         $settings = $this->extractCookieSettings($request);
 
-        $settings['api'] = $request->query->get('api');
+        if ($request->query->has('api')) {
+            $settings['api'] = Contentful::API_PREVIEW === $request->query->get('api')
+                ? Contentful::API_PREVIEW
+                : Contentful::API_DELIVERY;
+        }
         $settings['locale'] = $request->query->get('locale');
-        $settings['queryString'] = $this->extractQueryString($request);
+        $settings['queryString'] = $this->extractQueryString($settings['api'] ?? null, $settings['locale']);
 
         return \array_filter($settings);
     }
@@ -136,16 +140,17 @@ class State
     }
 
     /**
-     * @param Request $request
+     * @param string|null $api
+     * @param string|null $locale
      *
      * @return string
      */
-    private function extractQueryString(Request $request): string
+    private function extractQueryString(?string $api, ?string $locale): string
     {
         // http_build_query will automatically skip null values.
         $queryString = \http_build_query([
-            'api' => $request->query->get('api'),
-            'locale' => $request->query->get('locale'),
+            'api' => $api,
+            'locale' => $locale,
         ]);
 
         return $queryString ? '?'.$queryString : '';
@@ -253,7 +258,7 @@ class State
      */
     public function hasEditorialFeaturesLink(): bool
     {
-        return $this->editorialFeatures && 'cpa' === $this->api;
+        return $this->editorialFeatures && Contentful::API_PREVIEW === $this->api;
     }
 
     /**
