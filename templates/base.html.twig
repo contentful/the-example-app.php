@@ -7,210 +7,202 @@
 
 {% spaceless %}
 <!DOCTYPE html>
-    <html>
-        <head>
-            <title>{{ block('page_title')|trim }} — The Example App</title>
+<html>
+    <head>
+        <title>{{ block('page_title')|trim }} — The Example App</title>
 
-            <link rel="stylesheet" href="{{ asset('stylesheets/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('stylesheets/style.css') }}" />
 
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta name="description" content="{{ 'metaDescription'|trans }}" />
-            <meta name="twitter:card" content="{{ 'metaTwitterCard'|trans }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="{{ 'metaDescription'|trans }}" />
+        <meta name="twitter:card" content="{{ 'metaTwitterCard'|trans }}" />
 
-            <meta property="og:title" content="{{ block('page_title')|trim }} — The Example App">
-            <meta property="og:type" content="article" />
-            {% if app.request.get('_route') %}
-                <meta property="og:url" content="{{ path(app.request.get('_route'), app.request.get('_route_params')) ~ state.queryString }}" />
-            {% endif %}
-            <meta property="og:image" content="https://the-example-app-php.contentful.com/og-image.jpg" />
-            <meta property="og:image:type" content="image/jpeg" />
-            <meta property="og:image:width" content="1200" />
-            <meta property="og:image:height" content="1200" />
-            <meta property="og:image:alt" content="{{ 'metaImageAlt'|trans }}" />
-            <meta property="og:description" content="{{ 'metaImageDescription'|trans }}" />
+        <meta property="og:title" content="{{ block('page_title')|trim }} — The Example App">
+        <meta property="og:type" content="article" />
+        {% if app.request.get('_route') %}
+            <meta property="og:url" content="{{ path(app.request.get('_route'), app.request.get('_route_params')) ~ state.queryString }}" />
+        {% endif %}
+        <meta property="og:image" content="https://the-example-app-php.contentful.com/og-image.jpg" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta property="og:image:alt" content="{{ 'metaImageAlt'|trans }}" />
+        <meta property="og:description" content="{{ 'metaImageDescription'|trans }}" />
 
-            <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon.png') }}" />
-            <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}" />
-            <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}" />
-            <link rel="manifest" href="{{ asset('manifest.json') }}" />
-            <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#4a90e2" />
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon.png') }}" />
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}" />
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}" />
+        <link rel="manifest" href="{{ asset('manifest.json') }}" />
+        <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#4a90e2" />
 
-            <meta name="theme-color" content="#ffffff" />
-        </head>
-        <body>
-            <main class="main">
-                <div class="main__header">
-                    <header class="header">
-                        <div class="header__upper-wrapper">
-                            <div class="header__upper layout-centered">
-                                <div class="header__upper-title">
-                                    <a class="header__upper-link" id="about-this-modal-trigger" href="#">
-                                        <svg class="header__upper-icon">
-                                            <use xlink:href="{{ asset('icons/icons.svg#info') }}"></use>
-                                        </svg>
-                                        <span>{{ 'whatIsThisApp'|trans }}</span>
-                                    </a>
+        <meta name="theme-color" content="#ffffff" />
+    </head>
+    <body>
+        <main class="main">
+            <div class="main__header">
+                <header class="header">
+                    <div class="header__upper-wrapper">
+                        <div class="header__upper layout-centered">
+                            <div class="header__upper-title">
+                                <a class="header__upper-link" id="about-this-modal-trigger" href="#">
+                                    <svg class="header__upper-icon">
+                                        <use xlink:href="{{ asset('icons/icons.svg#info') }}"></use>
+                                    </svg>
+                                    <span>{{ 'whatIsThisApp'|trans }}</span>
+                                </a>
+                            </div>
+
+                            <div class="header__upper-copy">
+                                <a class="header__upper-link" href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">
+                                    <svg class="header__upper-icon">
+                                        <use xlink:href="{{ asset('icons/icons.svg#github') }}"></use>
+                                    </svg>
+                                    {{ 'viewOnGithub'|trans }}
+                                </a>
+                            </div>
+
+                            <div class="header__controls">
+                                <div class="header__controls_group">
+                                    <form action="" method="get">
+                                        <div class="header__controls_label">API: {{ state.apiLabel }}</div>
+                                        <div class="header__controls_dropdown">
+                                            <div class="header__controls_help_text">{{ 'apiSwitcherHelp'|trans }}</div>
+                                            <button
+                                                class="header__controls_button {{ state.isDeliveryApi ? 'header__controls_button--active' : '' }}"
+                                                type="submit"
+                                                name="api"
+                                                value="{{ constant('App\\Service\\Contentful::API_DELIVERY') }}"
+                                                >{{ 'contentDeliveryApiLabel'|trans }}:<br />
+                                                <span class="header__controls_button_help">{{ 'contentDeliveryApiHelp'|trans }}</span>
+                                            </button>
+                                            <button
+                                                class="header__controls_button {{ state.isDeliveryApi ? '' : 'header__controls_button--active' }}"
+                                                type="submit"
+                                                name="api"
+                                                value="{{ constant('App\\Service\\Contentful::API_PREVIEW') }}"
+                                                >{{ 'contentPreviewApiLabel'|trans }}:<br />
+                                                <span class="header__controls_button_help">{{ 'contentPreviewApiHelp'|trans }}</span>
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="locale" value="{{ state.locale }}" />
+                                    </form>
                                 </div>
 
-                                <div class="header__upper-copy">
-                                    <a class="header__upper-link" href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">
-                                        <svg class="header__upper-icon">
+                                <div class="header__controls_group">
+                                    <form action="" method="get">
+                                        <input type="hidden" name="api" value="{{ state.api }}" />
+                                        <div class="header__controls_label">{{ 'locale'|trans }}: {{ locale.current ? locale.current.name : state.locale }}</div>
+                                        <div class="header__controls_dropdown">
+                                            <div class="header__controls_help_text">{{ 'localeQuestion'|trans }}</div>
+                                            {% for localeItem in locale.all %}
+                                                <button type="submit" name="locale" value="{{ localeItem.code }}" class="header__controls_button {{ localeItem.code == state.locale ? 'header__controls_button--active' : '' }}">
+                                                    {{ localeItem.name }} ({{ localeItem.code }})
+                                                </button>
+                                            {% endfor %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="header__upper-menu">
+                                <a href="{{ path('settings') ~ state.queryString }}">{{ 'settingsLabel'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header__lower-wrapper">
+                        <div class="header__lower layout-centered">
+                            <div class="header__logo">
+                                <a class="header__logo-link" href="{{ path('landing_page') ~ state.queryString }}">
+                                    <img src="{{ asset('images/the-example-app-logo-php.svg') }}" alt="{{ 'logoAlt'|trans }}" />
+                                </a>
+                            </div>
+
+                            <nav class="header__navigation main-navigation">
+                                <ul>
+                                    <li>
+                                        <a class="{{ app.request.get('tab') == 'home' ? 'active' : '' }}" href="{{ path('landing_page') ~ state.queryString }}">{{ 'homeLabel'|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="{{ app.request.get('tab') == 'courses' ? 'active' : '' }}" href="{{ path('courses') ~ state.queryString }}">{{ 'coursesLabel'|trans }}</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+            <div class="main__content">
+                {% block body %}{% endblock %}
+            </div>
+
+            <div class="main__footer">
+                <div class="layout-centered">
+                    <footer class="footer">
+                        <div class="footer__upper">
+                            <nav class="footer__navigation main-navigation">
+                                <ul>
+                                    <li>
+                                        <a class="{{ app.request.get('_route') == 'landing_page' ? 'active' : '' }}" href="{{ path('landing_page') ~ state.queryString }}">{{ 'homeLabel'|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a class="{{ app.request.get('_route') == 'landing_page' ? '' : 'active' }}" href="{{ path('courses') ~ state.queryString }}">{{ 'coursesLabel'|trans }}</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="footer__apps">
+                            </div>
+                        </div>
+
+                        <div class="footer__lower">
+                            <div class="footer__logo">
+                                <a href="https://www.contentful.com/" target="_blank" rel="noopener">
+                                    <img class="footer__disclaimer-logo" src="{{ asset('images/contentful-logo.svg') }}" />
+                                </a>
+                            </div>
+
+                            <div class="footer__disclaimer">
+                                <p class="footer__disclaimer-text">
+                                    {{ 'footerDisclaimer'|trans }}&nbsp;
+                                    <a href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">{{ 'viewOnGithub'|trans }}</a>.&nbsp;
+                                    <a href="{{ path('imprint') ~ state.queryString }}">{{ 'imprintLabel'|trans }}</a>.&nbsp;
+                                    <a href="https://www.contentful.com/contact/">{{ 'contactUsLabel'|trans }}</a>.
+                                </p>
+                            </div>
+
+                            <div class="footer__social">
+                                <p>
+                                    <a href="https://www.facebook.com/contentful/" target="_blank" rel="noopener">
+                                        <svg>
+                                            <use xlink:href="{{ asset('icons/icons.svg#facebook') }}"></use>
+                                        </svg>
+                                    </a>
+                                    <a href="https://twitter.com/contentful" target="_blank" rel="noopener">
+                                        <svg>
+                                            <use xlink:href="{{ asset('icons/icons.svg#twitter') }}"></use>
+                                        </svg>
+                                    </a>
+                                    <a href="https://github.com/contentful" target="_blank" rel="noopener">
+                                        <svg>
                                             <use xlink:href="{{ asset('icons/icons.svg#github') }}"></use>
                                         </svg>
-                                        {{ 'viewOnGithub'|trans }}
                                     </a>
-                                </div>
-
-                                <div class="header__controls">
-                                    <div class="header__controls_group">
-                                        <form action="" method="get">
-                                            <div class="header__controls_label">API: {{ state.apiLabel }}</div>
-                                            <div class="header__controls_dropdown">
-                                                <div class="header__controls_help_text">{{ 'apiSwitcherHelp'|trans }}</div>
-                                                <button
-                                                    class="header__controls_button {{ state.isDeliveryApi ? 'header__controls_button--active' : '' }}"
-                                                    type="submit"
-                                                    name="api"
-                                                    value="{{ constant('App\\Service\\Contentful::API_DELIVERY') }}"
-                                                    >{{ 'contentDeliveryApiLabel'|trans }}:<br />
-                                                    <span class="header__controls_button_help">{{ 'contentDeliveryApiHelp'|trans }}</span>
-                                                </button>
-                                                <button
-                                                    class="header__controls_button {{ state.isDeliveryApi ? '' : 'header__controls_button--active' }}"
-                                                    type="submit"
-                                                    name="api"
-                                                    value="{{ constant('App\\Service\\Contentful::API_PREVIEW') }}"
-                                                    >{{ 'contentPreviewApiLabel'|trans }}:<br />
-                                                    <span class="header__controls_button_help">{{ 'contentPreviewApiHelp'|trans }}</span>
-                                                </button>
-                                            </div>
-                                            <input type="hidden" name="locale" value="{{ state.locale }}" />
-                                        </form>
-                                    </div>
-
-                                    <div class="header__controls_group">
-                                        <form action="" method="get">
-                                            <input type="hidden" name="api" value="{{ state.api }}" />
-                                            <div class="header__controls_label">{{ 'locale'|trans }}: {{ locale.current ? locale.current.name : state.locale }}</div>
-                                            <div class="header__controls_dropdown">
-                                                <div class="header__controls_help_text">{{ 'localeQuestion'|trans }}</div>
-                                                {% for localeItem in locale.all %}
-                                                    <button type="submit" name="locale" value="{{ localeItem.code }}" class="header__controls_button {{ localeItem.code == state.locale ? 'header__controls_button--active' : '' }}">
-                                                        {{ localeItem.name }} ({{ localeItem.code }})
-                                                    </button>
-                                                {% endfor %}
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="header__upper-menu">
-                                    <a href="{{ path('settings') ~ state.queryString }}">{{ 'settingsLabel'|trans }}</a>
-                                </div>
+                                </p>
                             </div>
                         </div>
-
-                        <div class="header__lower-wrapper">
-                            <div class="header__lower layout-centered">
-                                <div class="header__logo">
-                                    <a class="header__logo-link" href="{{ path('landing_page') ~ state.queryString }}">
-                                        <img src="{{ asset('images/the-example-app-logo-php.svg') }}" alt="{{ 'logoAlt'|trans }}" />
-                                    </a>
-                                </div>
-
-                                <nav class="header__navigation main-navigation">
-                                    <ul>
-                                        <li>
-                                            <a class="{{ app.request.get('tab') == 'home' ? 'active' : '' }}" href="{{ path('landing_page') ~ state.queryString }}">{{ 'homeLabel'|trans }}</a>
-                                        </li>
-                                        <li>
-                                            <a class="{{ app.request.get('tab') == 'courses' ? 'active' : '' }}" href="{{ path('courses') ~ state.queryString }}">{{ 'coursesLabel'|trans }}</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </header>
+                    </footer>
                 </div>
+            </div>
+        </main>
 
-                <div class="main__content">
-                    {% block body %}{% endblock %}
-                </div>
+        {% include 'partials/modal.html.twig' with {} only %}
 
-                <div class="main__footer">
-                    <div class="layout-centered">
-                        <footer class="footer">
-                            <div class="footer__upper">
-                                <nav class="footer__navigation main-navigation">
-                                    <ul>
-                                        <li>
-                                            <a class="{{ app.request.get('_route') == 'landing_page' ? 'active' : '' }}" href="{{ path('landing_page') ~ state.queryString }}">{{ 'homeLabel'|trans }}</a>
-                                        </li>
-                                        <li>
-                                            <a class="{{ app.request.get('_route') == 'landing_page' ? '' : 'active' }}" href="{{ path('courses') ~ state.queryString }}">{{ 'coursesLabel'|trans }}</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <div class="footer__apps">
-                                    {#
-                                        <a href="#">
-                                            <img src="{{ asset('images/badge-app-store.svg') }}" alt="iPhone" />
-                                        </a>
-                                        <a href="#">
-                                            <img src="{{ asset('images/badge-google-play.svg') }}" alt="Android" />
-                                        </a>
-                                    #}
-                                </div>
-                            </div>
+        <script src="{{ asset('scripts/index.js') }}"></script>
 
-                            <div class="footer__lower">
-                                <div class="footer__logo">
-                                    <a href="https://www.contentful.com/" target="_blank" rel="noopener">
-                                        <img class="footer__disclaimer-logo" src="{{ asset('images/contentful-logo.svg') }}" />
-                                    </a>
-                                </div>
-
-                                <div class="footer__disclaimer">
-                                    <p class="footer__disclaimer-text">
-                                        {{ 'footerDisclaimer'|trans }}&nbsp;
-                                        <a href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">{{ 'viewOnGithub'|trans }}</a>.&nbsp;
-                                        <a href="{{ path('imprint') ~ state.queryString }}">{{ 'imprintLabel'|trans }}</a>.&nbsp;
-                                        <a href="https://www.contentful.com/contact/">{{ 'contactUsLabel'|trans }}</a>.
-                                    </p>
-                                </div>
-
-                                <div class="footer__social">
-                                    <p>
-                                        <a href="https://www.facebook.com/contentful/" target="_blank" rel="noopener">
-                                            <svg>
-                                                <use xlink:href="{{ asset('icons/icons.svg#facebook') }}"></use>
-                                            </svg>
-                                        </a>
-                                        <a href="https://twitter.com/contentful" target="_blank" rel="noopener">
-                                            <svg>
-                                                <use xlink:href="{{ asset('icons/icons.svg#twitter') }}"></use>
-                                            </svg>
-                                        </a>
-                                        <a href="https://github.com/contentful" target="_blank" rel="noopener">
-                                            <svg>
-                                                <use xlink:href="{{ asset('icons/icons.svg#github') }}"></use>
-                                            </svg>
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-            </main>
-
-            {% include 'partials/modal.html.twig' with {} only %}
-
-            <script src="{{ asset('scripts/index.js') }}"></script>
-
-            {% if app.environment == 'prod' %}
-                {% include 'partials/analytics.html.twig' with {} only %}
-            {% endif %}
-        </body>
-    </html>
+        {% if app.environment == 'prod' %}
+            {% include 'partials/analytics.html.twig' with {} only %}
+        {% endif %}
+    </body>
+</html>
 {% endspaceless %}
