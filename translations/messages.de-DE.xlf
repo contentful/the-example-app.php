@@ -246,42 +246,6 @@
         <source>allCoursesLabel</source>
         <target>Alle Kurse</target>
       </trans-unit>
-      <trans-unit id="somethingWentWrongLabel">
-        <source>somethingWentWrongLabel</source>
-        <target>Hmm, etwas ging schief.</target>
-      </trans-unit>
-      <trans-unit id="tryLabel">
-        <source>tryLabel</source>
-        <target>Versuchen Sie</target>
-      </trans-unit>
-      <trans-unit id="contentModelChangedErrorLabel">
-        <source>contentModelChangedErrorLabel</source>
-        <target>Überprüfen Sie, ob das Content Model verändert wurde.</target>
-      </trans-unit>
-      <trans-unit id="draftOrPublishedErrorLabel">
-        <source>draftOrPublishedErrorLabel</source>
-        <target>Überprüfen Sie, ob es nicht veröffentlichte Änderungen gibt.</target>
-      </trans-unit>
-      <trans-unit id="localeContentErrorLabel">
-        <source>localeContentErrorLabel</source>
-        <target>Überprüfen Sie, ob es Inhalt für diese Sprache gibt.</target>
-      </trans-unit>
-      <trans-unit id="verifyCredentialsErrorLabel">
-        <source>verifyCredentialsErrorLabel</source>
-        <target>Überprüfen Sie, ob die Zugangsdaten richtig und nicht abgelaufen sind.</target>
-      </trans-unit>
-      <trans-unit id="stackTraceErrorLabel">
-        <source>stackTraceErrorLabel</source>
-        <target>Schauen Sie sich den folgenden Stack Trace an</target>
-      </trans-unit>
-      <trans-unit id="errorLabel">
-        <source>errorLabel</source>
-        <target>Fehler</target>
-      </trans-unit>
-      <trans-unit id="stackTraceLabel">
-        <source>stackTraceLabel</source>
-        <target>Stack Trace</target>
-      </trans-unit>
       <trans-unit id="companyLabel">
         <source>companyLabel</source>
         <target>Firma</target>
@@ -356,7 +320,7 @@
       </trans-unit>
       <trans-unit id="enableEditorialFeaturesLabel">
         <source>enableEditorialFeaturesLabel</source>
-        <target>Editoriale Funktionen aktivieren.</target>
+        <target>Editoriale Funktionen aktivieren</target>
       </trans-unit>
       <trans-unit id="enableEditorialFeaturesHelpText">
         <source>enableEditorialFeaturesHelpText</source>
@@ -396,11 +360,7 @@
       </trans-unit>
       <trans-unit id="editInTheWebAppLabel">
         <source>editInTheWebAppLabel</source>
-        <target>In der Contentful Web App bearbeiten</target>
-      </trans-unit>
-      <trans-unit id="error404Route">
-        <source>error404Route</source>
-        <target>Eine nicht unterstützte HTTP Route</target>
+        <target>In der Contentful web app bearbeiten</target>
       </trans-unit>
       <trans-unit id="currentLocaleLabel">
         <source>currentLocaleLabel</source>
@@ -465,6 +425,66 @@
       <trans-unit id="applicationCredentialsLabel">
         <source>applicationCredentialsLabel</source>
         <target>Anmeldeinformationen für die Anwendungssitzung</target>
+      </trans-unit>
+      <trans-unit id="errorHighlightedCourse">
+        <source>errorHighlightedCourse</source>
+        <target>⚠️ Dieser Kurs wurde nicht veröffentlicht oder existiert nicht.</target>
+      </trans-unit>
+      <trans-unit id="somethingWentWrongLabel">
+        <source>somethingWentWrongLabel</source>
+        <target>Hmm, etwas ging schief.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Route">
+        <source>errorMessage404Route</source>
+        <target>Diese Seite existiert nicht.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Lesson">
+        <source>errorMessage404Lesson</source>
+        <target>Diese Lektion existiert nicht.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Course">
+        <source>errorMessage404Course</source>
+        <target>Dieser Kurs existiert nicht.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Category">
+        <source>errorMessage404Category</source>
+        <target>Diese Kategorie existiert nicht.</target>
+      </trans-unit>
+      <trans-unit id="hintsLabel">
+        <source>hintsLabel</source>
+        <target>Versuchen Sie Folgendes um die Probleme zu lösen:</target>
+      </trans-unit>
+      <trans-unit id="notFoundErrorHint">
+        <source>notFoundErrorHint</source>
+        <target>Überprüfen Sie, ob dieser Inhalt existiert und veröffentlicht wurde.</target>
+      </trans-unit>
+      <trans-unit id="contentModelChangedErrorHint">
+        <source>contentModelChangedErrorHint</source>
+        <target>Überprüfen Sie, ob die Struktur der Inhalte geändert wurde. Haben Sie einen Inhaltstyp oder ein benötigtes Feld gelöscht?</target>
+      </trans-unit>
+      <trans-unit id="draftOrPublishedErrorHint">
+        <source>draftOrPublishedErrorHint</source>
+        <target>Überprüfen Sie, ob der Inhalt veröffentlicht wurde, Änderungen enthält (Content Delivery API) oder gelöscht wurde (Content Preview API &amp; Content Delivery API).</target>
+      </trans-unit>
+      <trans-unit id="localeContentErrorHint">
+        <source>localeContentErrorHint</source>
+        <target>Überprüfen Sie, ob alle benötigten Felder dieser Sprache befüllt wurden.</target>
+      </trans-unit>
+      <trans-unit id="verifyCredentialsErrorHint">
+        <source>verifyCredentialsErrorHint</source>
+        <target>Überprüfen Sie, ob die Space ID und die Access Tokens richtig und nicht abgelaufen sind.</target>
+      </trans-unit>
+      <trans-unit id="stackTraceErrorHint">
+        <source>stackTraceErrorHint</source>
+        <target>Schauen Sie sich den folgenden Stack Trace an.</target>
+      </trans-unit>
+      <trans-unit id="errorLabel">
+        <source>errorLabel</source>
+        <target>Fehler von Contentful:</target>
+      </trans-unit>
+      <trans-unit id="stackTraceLabel">
+        <source>stackTraceLabel</source>
+        <target>Stack trace:</target>
       </trans-unit>
     </body>
   </file>

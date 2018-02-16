@@ -31,6 +31,8 @@ class LandingPageControllerTest extends AppWebTestCase
     public function test404Page()
     {
         $this->visit('GET', '/wrong-page', 404);
+
+        $this->assertPageContains('body', 'The page you are trying to open does not exist.');
     }
 
     public function testPageLayout()

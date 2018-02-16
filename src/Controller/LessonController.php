@@ -35,7 +35,7 @@ class LessonController extends AppController
 
         // $course will be null even in the case of an existing course with a non-existing lesson.
         if (!$course) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException($this->translator->trans('errorMessage404Lesson'));
         }
 
         // Manage state of viewed lessons

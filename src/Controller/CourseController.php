@@ -31,7 +31,7 @@ class CourseController extends AppController
     {
         $course = $this->contentful->findCourse($courseSlug);
         if (!$course) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException($this->translator->trans('errorMessage404Course'));
         }
         $lessons = $course->getLessons();
         $nextLesson = $lessons[0] ?? null;

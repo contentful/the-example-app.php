@@ -246,42 +246,6 @@
         <source>allCoursesLabel</source>
         <target>All courses</target>
       </trans-unit>
-      <trans-unit id="somethingWentWrongLabel">
-        <source>somethingWentWrongLabel</source>
-        <target>Oops, something went wrong</target>
-      </trans-unit>
-      <trans-unit id="tryLabel">
-        <source>tryLabel</source>
-        <target>Try</target>
-      </trans-unit>
-      <trans-unit id="contentModelChangedErrorLabel">
-        <source>contentModelChangedErrorLabel</source>
-        <target>Check if the content model has changed</target>
-      </trans-unit>
-      <trans-unit id="draftOrPublishedErrorLabel">
-        <source>draftOrPublishedErrorLabel</source>
-        <target>Check the selection has content in draft or published state (for Preview or Delivery)</target>
-      </trans-unit>
-      <trans-unit id="localeContentErrorLabel">
-        <source>localeContentErrorLabel</source>
-        <target>Check if there's any content for this locale</target>
-      </trans-unit>
-      <trans-unit id="verifyCredentialsErrorLabel">
-        <source>verifyCredentialsErrorLabel</source>
-        <target>Verify credentials are correct and up to date</target>
-      </trans-unit>
-      <trans-unit id="stackTraceErrorLabel">
-        <source>stackTraceErrorLabel</source>
-        <target>Check the stack trace below</target>
-      </trans-unit>
-      <trans-unit id="errorLabel">
-        <source>errorLabel</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="stackTraceLabel">
-        <source>stackTraceLabel</source>
-        <target>Stack trace</target>
-      </trans-unit>
       <trans-unit id="companyLabel">
         <source>companyLabel</source>
         <target>Company</target>
@@ -396,11 +360,7 @@
       </trans-unit>
       <trans-unit id="editInTheWebAppLabel">
         <source>editInTheWebAppLabel</source>
-        <target>Edit in the Contentful Web App</target>
-      </trans-unit>
-      <trans-unit id="error404Route">
-        <source>error404Route</source>
-        <target>Verify that you are trying to reach a supported route</target>
+        <target>Edit in the Contentful web app</target>
       </trans-unit>
       <trans-unit id="currentLocaleLabel">
         <source>currentLocaleLabel</source>
@@ -448,7 +408,7 @@
       </trans-unit>
       <trans-unit id="overrideConfigLabel">
         <source>overrideConfigLabel</source>
-        <target>This configuration can be overriden through the form below or by using query string parameters.</target>
+        <target>This configuration can be overridden through the form below or by using query string parameters.</target>
       </trans-unit>
       <trans-unit id="loadedFromLocalFileLabel">
         <source>loadedFromLocalFileLabel</source>
@@ -465,6 +425,66 @@
       <trans-unit id="applicationCredentialsLabel">
         <source>applicationCredentialsLabel</source>
         <target>Application session credentials</target>
+      </trans-unit>
+      <trans-unit id="errorHighlightedCourse">
+        <source>errorHighlightedCourse</source>
+        <target>⚠️ The course is not published or does not exist.</target>
+      </trans-unit>
+      <trans-unit id="somethingWentWrongLabel">
+        <source>somethingWentWrongLabel</source>
+        <target>Oops, something went wrong</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Route">
+        <source>errorMessage404Route</source>
+        <target>The page you are trying to open does not exist.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Lesson">
+        <source>errorMessage404Lesson</source>
+        <target>The lesson you are trying to open does not exist.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Course">
+        <source>errorMessage404Course</source>
+        <target>The course you are trying to open does not exist.</target>
+      </trans-unit>
+      <trans-unit id="errorMessage404Category">
+        <source>errorMessage404Category</source>
+        <target>The category you are trying to open does not exist.</target>
+      </trans-unit>
+      <trans-unit id="hintsLabel">
+        <source>hintsLabel</source>
+        <target>Try the following to fix the issue(s):</target>
+      </trans-unit>
+      <trans-unit id="notFoundErrorHint">
+        <source>notFoundErrorHint</source>
+        <target>Make sure the content you are trying to access exists and is published.</target>
+      </trans-unit>
+      <trans-unit id="contentModelChangedErrorHint">
+        <source>contentModelChangedErrorHint</source>
+        <target>Check if the content model has changed. Did you delete a content type or a required field?</target>
+      </trans-unit>
+      <trans-unit id="draftOrPublishedErrorHint">
+        <source>draftOrPublishedErrorHint</source>
+        <target>Check if the content is in a draft or pending changes state (Content Delivery API), or if it has been deleted (Content Preview API &amp; Content Delivery API).</target>
+      </trans-unit>
+      <trans-unit id="localeContentErrorHint">
+        <source>localeContentErrorHint</source>
+        <target>Check if all required fields have content for this locale.</target>
+      </trans-unit>
+      <trans-unit id="verifyCredentialsErrorHint">
+        <source>verifyCredentialsErrorHint</source>
+        <target>Verify that your space id and access tokens are correct and up to date.</target>
+      </trans-unit>
+      <trans-unit id="stackTraceErrorHint">
+        <source>stackTraceErrorHint</source>
+        <target>Check the stack trace below.</target>
+      </trans-unit>
+      <trans-unit id="errorLabel">
+        <source>errorLabel</source>
+        <target>Error from Contentful:</target>
+      </trans-unit>
+      <trans-unit id="stackTraceLabel">
+        <source>stackTraceLabel</source>
+        <target>Stack trace:</target>
       </trans-unit>
     </body>
   </file>

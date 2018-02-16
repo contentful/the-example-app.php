@@ -1,9 +1,10 @@
 {#
  * Template: partials/moduleHighlightedCourse.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry course
+ * @param Contentful\Delivery\DynamicEntry module
  #}
 
+{% set course = module.getCourse() %}
  <div class="module module-highlighted-course">
     <div class="module-highlighted-course__wrapper" style="background-image: url('{{ course.getImage().getFile().getUrl() }}');">
         <div class="module-highlighted-course__overlay"></div>

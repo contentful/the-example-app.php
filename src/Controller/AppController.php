@@ -14,6 +14,7 @@ use App\Service\Breadcrumb;
 use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * AppController class.
@@ -44,20 +45,28 @@ abstract class AppController
     protected $contentful;
 
     /**
-     * @param ResponseFactory $responseFactory
-     * @param State           $state
-     * @param Breadcrumb      $breadcrumb
-     * @param Contentful      $contentful
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @param ResponseFactory     $responseFactory
+     * @param State               $state
+     * @param Breadcrumb          $breadcrumb
+     * @param Contentful          $contentful
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         ResponseFactory $responseFactory,
         State $state,
         Breadcrumb $breadcrumb,
-        Contentful $contentful
+        Contentful $contentful,
+        TranslatorInterface $translator
     ) {
         $this->responseFactory = $responseFactory;
         $this->state = $state;
         $this->breadcrumb = $breadcrumb;
         $this->contentful = $contentful;
+        $this->translator = $translator;
     }
 }

@@ -15,32 +15,29 @@
             <h1>{{ 'somethingWentWrongLabel'|trans }} ({{ exception.statusCode }})</h1>
 
             {% if exception.message %}
-                <h2>{{ 'errorLabel'|trans }}</h2>
-                <pre class="error__stack-trace">
-                    <code class="shell">{{ exception.message }}</code>
-                </pre>
+                <p>{{ exception.message }}</p>
             {% endif %}
 
-            <h2>{{ 'tryLabel'|trans }}:</h2>
+            <h2>{{ 'hintsLabel'|trans }}</h2>
             <ul>
                 {% if exception.statusCode == 404 %}
-                    <li>{{ 'error404Route'|trans }}</li>
-                    <li>{{ 'draftOrPublishedErrorLabel'|trans }}</li>
+                    <li>{{ 'notFoundErrorHint'|trans }}</li>
+                    <li>{{ 'draftOrPublishedErrorHint'|trans }}</li>
+                {% elseif exception.statusCode == 400 %}
+                    <li>{{ 'contentModelChangedErrorHint'|trans }}</li>
+                {% elseif exception.statusCode == 401 %}
+                    <li>{{ 'verifyCredentialsErrorHint'|trans }}</li>
+                {% else %}
+                    <li>{{ 'contentModelChangedErrorHint'|trans }}</li>
+                    <li>{{ 'draftOrPublishedErrorHint'|trans }}</li>
+                    <li>{{ 'localeContentErrorHint'|trans }}</li>
                 {% endif %}
-                {% if exception.statusCode == 400 %}
-                    <li>{{ 'contentModelChangedErrorLabel'|trans }}</li>
-                {% endif %}
-                {% if exception.statusCode == 401 %}
-                    <li>{{ 'verifyCredentialsErrorLabel'|trans }}</li>
-                    <li>{{ 'localeContentErrorLabel'|trans }}</li>
-                {% endif %}
-                <li>{{ 'stackTraceErrorLabel'|trans }}</li>
             </ul>
 
             {% if state.usesCookieCredentials %}
                 <form method="post" action="{{ path('reset') }}">
                     <p>
-                        <button type="submit">{{ 'resetCredentialsLabel'|trans }}</button><br />
+                        <button type="submit">{{ 'resetCredentialsLabel'|trans }}</button>
                     </p>
                 </form>
             {% endif %}

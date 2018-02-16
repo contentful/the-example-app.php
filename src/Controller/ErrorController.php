@@ -14,9 +14,9 @@ use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * ExceptionController class.
+ * ErrorController class.
  */
-class ExceptionController extends AppController
+class ErrorController extends AppController
 {
     /**
      * @param FlattenException $exception

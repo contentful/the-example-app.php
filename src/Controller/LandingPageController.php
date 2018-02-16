@@ -19,15 +19,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class LandingPageController extends AppController
 {
     /**
-     * @param string $landingPageSlug
-     *
+     * @var string
+     */
+    const HOME_SLUG = 'home';
+
+    /**
      * @return Response
      */
-    public function __invoke(string $landingPageSlug): Response
+    public function __invoke(): Response
     {
-        $landingPage = $this->contentful->findLandingPage($landingPageSlug);
+        $landingPage = $this->contentful->findLandingPage(self::HOME_SLUG);
         if (null === $landingPage) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException($this->translator->trans('errorMessage404Route'));
         }
 
         return $this->responseFactory->createResponse('landingPage.html.twig', [

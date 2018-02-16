@@ -1,6 +1,6 @@
 courses:
     path:     /courses
-    defaults: { _controller: App\Controller\CoursesController }
+    defaults: { _controller: App\Controller\CoursesController, tab: courses }
 
 categories:
     path:     /courses/categories
@@ -8,11 +8,11 @@ categories:
 
 category:
     path:     /courses/categories/{categorySlug}
-    defaults: { _controller: App\Controller\CoursesController }
+    defaults: { _controller: App\Controller\CoursesController, tab: courses }
 
 course:
     path:     /courses/{courseSlug}
-    defaults: { _controller: App\Controller\CourseController }
+    defaults: { _controller: App\Controller\CourseController, tab: courses }
 
 lessons:
     path:     /courses/{courseSlug}/lessons
@@ -20,7 +20,7 @@ lessons:
 
 lesson:
     path:     /courses/{courseSlug}/lessons/{lessonSlug}
-    defaults: { _controller: App\Controller\LessonController }
+    defaults: { _controller: App\Controller\LessonController, tab: courses }
 
 reset:
     path:     /settings/reset
@@ -37,4 +37,10 @@ imprint:
 
 landing_page:
     path:     /
-    defaults: { _controller: App\Controller\LandingPageController, landingPageSlug: home }
+    defaults: { _controller: App\Controller\LandingPageController, tab: home }
+
+not_found:
+    path:     /{anything}
+    defaults: { _controller: App\Controller\NotFoundController }
+    requirements:
+        anything: ".+"
