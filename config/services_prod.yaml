@@ -24,6 +24,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\EventSubscriber\LocaleSubscriber:
+        arguments:
+            $availableLocales: "%available_locales%"
     App\Service\ClientFactory:
         arguments:
             $cacheDir: "%kernel.cache_dir%"

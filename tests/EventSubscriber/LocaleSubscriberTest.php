@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Tests\EventSubscriber;
 
 use App\Tests\Controller\AppWebTestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LocaleSubscriberTest extends AppWebTestCase
 {
@@ -27,10 +28,26 @@ class LocaleSubscriberTest extends AppWebTestCase
         $this->assertPageContains('.module-highlighted-course__title', 'Hallo Contentful');
     }
 
-    public function testInvalidLocale()
+    /**
+     * @dataProvider invalidLocaleProvider
+     */
+    public function testInvalidLocale(string $requestUrl, string $redirectUrl)
     {
-        $this->visit('GET', '/?locale=it-IT', 500);
+        $this->visit('GET', $requestUrl, 302);
 
-        $this->assertPageContains('body', 'Unknown locale: it-IT');
+        $this->assertInstanceOf(RedirectResponse::class, $this->response);
+        $this->assertSame($redirectUrl, $this->response->getTargetUrl());
+    }
+
+    public function invalidLocaleProvider()
+    {
+        return [
+            ['/?locale=foobar', '/'],
+            ['/?api=cda&locale=foobar', '/'],
+            ['/?api=cpa&locale=foobar', '/?api=cpa'],
+            ['/courses/hello-contentful/lessons/apis?locale=foobar', '/courses/hello-contentful/lessons/apis'],
+            ['/courses/hello-contentful/lessons/apis?api=cda&locale=foobar', '/courses/hello-contentful/lessons/apis'],
+            ['/courses/hello-contentful/lessons/apis?api=cpa&locale=foobar', '/courses/hello-contentful/lessons/apis?api=cpa'],
+        ];
     }
 }

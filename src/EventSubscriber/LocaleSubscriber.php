@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
+use App\Service\Contentful;
+use App\Service\ResponseFactory;
 use App\Service\State;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -32,11 +34,27 @@ class LocaleSubscriber implements EventSubscriberInterface
     private $state;
 
     /**
-     * @param State $state
+     * @var ResponseFactory
      */
-    public function __construct(State $state)
+    private $responseFactory;
+
+    /**
+     * @var string[]
+     */
+    private $availableLocales;
+
+    /**
+     * @param State           $state
+     * @param ResponseFactory $responseFactory
+     * @param Contentful      $contentful
+     * @param string[]        $availableLocales
+     */
+    public function __construct(State $state, ResponseFactory $responseFactory, Contentful $contentful, array $availableLocales)
     {
         $this->state = $state;
+        $this->responseFactory = $responseFactory;
+        $this->contentful = $contentful;
+        $this->availableLocales = $availableLocales;
     }
 
     /**
@@ -45,8 +63,59 @@ class LocaleSubscriber implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
+        $locale = $this->state->getLocale();
 
-        $request->setLocale($this->state->getLocale());
+        if (!$this->apiSupportsLocale($locale)) {
+            // By the time we reach this subscriber, there are only
+            // two meaningful query parameters available: api and locale.
+            // By removing the invalid locale, we only need to care about adding
+            // the api parameter to the query string, and only if it's not already
+            // using the default value ("cda").
+            $params = $request->attributes->get('_route_params');
+            if (!$this->state->isDeliveryApi()) {
+                $params['api'] = Contentful::API_PREVIEW;
+            }
+
+            $response = $this->responseFactory->createRoutedRedirectResponse(
+                $request->attributes->get('_route'),
+                $params
+            );
+            $event->setResponse($response);
+
+            return;
+        }
+
+        $request->setLocale($locale);
+    }
+
+    /**
+     * In order to check if a locale is supported,
+     * we first simply check a list of statically defined locales
+     * (those available in this app), and if that fails,
+     * we query the "/spaces/xxx" endpoint, which contains the info we need.
+     * The space result is actually cached, so if the query succeeds
+     * and the locale is indeed supported in the Contentful space,
+     * there is no performance penalty, as it is always retrieved from the SDK anyway.
+     *
+     * @param string $locale
+     *
+     * @return bool
+     */
+    private function apiSupportsLocale(string $locale): bool
+    {
+        if (\in_array($locale, $this->availableLocales, true)) {
+            return true;
+        }
+
+        try {
+            $this->contentful
+                ->findSpace()
+                ->getLocale($locale);
+
+            return true;
+        } catch (\InvalidArgumentException $exception) {
+            return false;
+        }
     }
 
     /**
