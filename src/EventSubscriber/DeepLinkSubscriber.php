@@ -85,13 +85,16 @@ class DeepLinkSubscriber implements EventSubscriberInterface
 
         $settings = [
             'redirect' => $redirect,
-            'spaceId' => $queryParameters['space_id'] ?? null,
-            'deliveryToken' => $queryParameters['delivery_token'] ?? null,
-            'previewToken' => $queryParameters['preview_token'] ?? null,
         ];
 
-        if ('enabled' === ($queryParameters['editorial_features'] ?? 'disabled')) {
-            $settings['editorialFeatures'] = true;
+        if ($this->hasCredentials($request)) {
+            $settings['spaceId'] = $queryParameters['space_id'];
+            $settings['deliveryToken'] = $queryParameters['delivery_token'];
+            $settings['previewToken'] = $queryParameters['preview_token'];
+        }
+
+        if ($this->hasEditorialFeatures($request)) {
+            $settings['editorialFeatures'] = 'enabled' === $queryParameters['editorial_features'];
         }
 
         return $settings;

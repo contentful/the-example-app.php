@@ -9,7 +9,7 @@
         {% if course.getCategories() %}
             {% for category in course.getCategories() %}
                 <div class="course-card__category">
-                    <a href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}">{{ category.getTitle() }}</a>
+                    <a href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}" class="course-card__category-link">{{ category.getTitle() }}</a>
                 </div>
             {% endfor %}
         {% endif %}

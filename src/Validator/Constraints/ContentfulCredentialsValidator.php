@@ -69,8 +69,8 @@ class ContentfulCredentialsValidator extends ConstraintValidator
             return;
         }
 
-        $this->validateCredentials($values['spaceId'], $values['deliveryToken'], Contentful::API_DELIVERY)
-            && $this->validateCredentials($values['spaceId'], $values['previewToken'], Contentful::API_PREVIEW);
+        $this->validateCredentials($values['spaceId'], $values['deliveryToken'], Contentful::API_DELIVERY);
+        $this->validateCredentials($values['spaceId'], $values['previewToken'], Contentful::API_PREVIEW);
     }
 
     /**
@@ -93,10 +93,8 @@ class ContentfulCredentialsValidator extends ConstraintValidator
      * @param string $spaceId
      * @param string $accessToken
      * @param string $api         Either "delivery" or "preview"
-     *
-     * @return bool
      */
-    private function validateCredentials(string $spaceId, string $accessToken, string $api): bool
+    private function validateCredentials(string $spaceId, string $accessToken, string $api): void
     {
         $violation = null;
         $path = null;
@@ -119,10 +117,6 @@ class ContentfulCredentialsValidator extends ConstraintValidator
             $this->context->buildViolation($violation)
                 ->atPath($path)
                 ->addViolation();
-
-            return false;
         }
-
-        return true;
     }
 }
