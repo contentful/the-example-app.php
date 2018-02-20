@@ -81,7 +81,7 @@ class SettingsController extends AppController
 
         // Assign default values in case of partial settings being passed,
         // for instance when only setting credentials or the editorial features flag.
-        $settings = \array_merge($this->state->getSettings(), \array_filter($settings));
+        $settings = \array_merge($this->state->getSettings(), $settings);
 
         $url = $settings['redirect'];
         unset($settings['redirect']);
