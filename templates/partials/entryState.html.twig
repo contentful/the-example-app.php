@@ -5,13 +5,17 @@
  #}
 
 {% if entry.draft %}
-    <div class="pill pill--draft">
-        {{ 'draftLabel'|trans }}
+    <div class="editorial-features__item">
+        <div class="pill pill--draft">
+            {{ 'draftLabel'|trans }}
+        </div>
     </div>
 {% endif %}
 
 {% if entry.pendingChanges %}
-    <div class="pill pill--pending-changes">
-        {{ 'pendingChangesLabel'|trans }}
+    <div class="editorial-features__item">
+        <div class="pill pill--pending-changes">
+            {{ 'pendingChangesLabel'|trans }}
+        </div>
     </div>
 {% endif %}
