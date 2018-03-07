@@ -1,5 +1,5 @@
 {#
- * Template: course.html.twig
+ * Template: courses.html.twig
  *
  * @param Contentful\Delivery\DynamicEntry[]    courses
  * @param Contentful\Delivery\DynamicEntry[]    categories
@@ -74,6 +74,8 @@
                         <div class="grid-list__item">
                             {% include 'partials/courseCard.html.twig' with {course: course} only %}
                         </div>
+                    {% else %}
+                        {% include 'partials/emptyModule.html.twig' with {} only %}
                     {% endfor %}
                 </div>
             </div>

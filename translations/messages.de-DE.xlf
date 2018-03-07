@@ -426,6 +426,10 @@
         <source>applicationCredentialsLabel</source>
         <target>Anmeldeinformationen für die Anwendungssitzung</target>
       </trans-unit>
+      <trans-unit id="noContentLabel">
+        <source>noContentLabel</source>
+        <target>Keinen Inhalt gefunden.</target>
+      </trans-unit>
       <trans-unit id="errorHighlightedCourse">
         <source>errorHighlightedCourse</source>
         <target>⚠️ Dieser Kurs wurde nicht veröffentlicht oder existiert nicht.</target>

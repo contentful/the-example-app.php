@@ -53,6 +53,6 @@ jobs:
           name: Run E2E tests
           command: |
             php bin/console server:start 127.0.0.1:8000
-            echo "APP_ENV=prod" > .env
+            echo "APP_ENV=staging" > .env
             php bin/console cache:warmup
             ./tests-e2e/node_modules/.bin/cypress run
