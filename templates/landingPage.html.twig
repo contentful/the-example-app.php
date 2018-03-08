@@ -37,6 +37,8 @@
             {% if contentTypeId == 'layoutHighlightedCourse' %}
                 {% include 'partials/moduleHighlightedCourse.html.twig' with {module: module} only %}
             {% endif %}
+        {% else %}
+            {% include 'partials/emptyModule.html.twig' with {} only %}
         {% endfor %}
     </div>
 {% endblock %}

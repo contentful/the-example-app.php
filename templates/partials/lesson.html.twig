@@ -32,6 +32,8 @@
                     <strong>{{ module.getId() }}</strong>
                 </p>
             {% endif %}
+        {% else %}
+            {% include 'partials/emptyModule.html.twig' with {} only %}
         {% endfor %}
     </div>
 

@@ -426,6 +426,10 @@
         <source>applicationCredentialsLabel</source>
         <target>Application session credentials</target>
       </trans-unit>
+      <trans-unit id="noContentLabel">
+        <source>noContentLabel</source>
+        <target>No content found.</target>
+      </trans-unit>
       <trans-unit id="errorHighlightedCourse">
         <source>errorHighlightedCourse</source>
         <target>⚠️ The course is not published or does not exist.</target>
