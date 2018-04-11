@@ -2,6 +2,9 @@
     "contentful/contentful": {
         "version": "2.3.0"
     },
+    "doctrine/inflector": {
+        "version": "v1.3.0"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
     },
@@ -13,6 +16,9 @@
     },
     "league/commonmark": {
         "version": "0.16.0"
+    },
+    "nikic/php-parser": {
+        "version": "v4.0.1"
     },
     "psr/cache": {
         "version": "1.0.1"
