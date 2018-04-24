@@ -6,25 +6,25 @@
 
 <div class="course-card">
     <div class="course-card__categories">
-        {% if course.getCategories() %}
-            {% for category in course.getCategories() %}
+        {% if course.categories %}
+            {% for category in course.categories %}
                 <div class="course-card__category">
-                    <a href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}" class="course-card__category-link">{{ category.getTitle() }}</a>
+                    <a href="{{ path('category', {categorySlug: category.slug}) ~ state.queryString }}" class="course-card__category-link">{{ category.title }}</a>
                 </div>
             {% endfor %}
         {% endif %}
     </div>
 
     <h2 class="course-card__title">
-        <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}">{{ course.getTitle() }}</a>
+        <a href="{{ path('course', {courseSlug: course.slug}) ~ state.queryString }}">{{ course.title }}</a>
         {% if state.hasEditorialFeaturesLink %}
             {% include 'partials/entryState.html.twig' with {entry: course} only %}
         {% endif %}
     </h2>
 
-    <p class="course-card__description">{{ course.getShortDescription() }}</p>
+    <p class="course-card__description">{{ course.shortDescription }}</p>
 
     <div class="course-card__link-wrapper">
-        <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}" class="course-card__link">{{ 'viewCourseLabel'|trans }}</a>
+        <a href="{{ path('course', {courseSlug: course.slug}) ~ state.queryString }}" class="course-card__link">{{ 'viewCourseLabel'|trans }}</a>
     </div>
 </div>

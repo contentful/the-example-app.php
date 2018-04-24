@@ -7,13 +7,13 @@
  #}
 
 <div class="lesson">
-    <h1 class="lesson__title">{{ lesson.getTitle() }}</h1>
+    <h1 class="lesson__title">{{ lesson.title }}</h1>
 
     {% include 'partials/editorialFeatures.html.twig' with {entry: lesson} only %}
 
     <div class="lesson__modules">
-        {% for module in lesson.getModules() %}
-            {% if module.getContentType() %}
+        {% for module in lesson.modules %}
+            {% if module.contentType %}
                 {% if module.contentType.id == 'lessonCodeSnippets' %}
                     {% include 'partials/lessonCodeSnippets.html.twig' with {module: module} only %}
                 {% endif %}
@@ -38,6 +38,6 @@
     </div>
 
     {% if nextLesson %}
-        <a href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: nextLesson.getSlug()}) ~ state.queryString }}" class="lesson__cta cta">{{ 'nextLessonLabel'|trans }}</a>
+        <a href="{{ path('lesson', {courseSlug: course.slug, lessonSlug: nextLesson.slug}) ~ state.queryString }}" class="lesson__cta cta">{{ 'nextLessonLabel'|trans }}</a>
     {% endif %}
 </div>

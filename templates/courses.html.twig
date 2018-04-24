@@ -8,7 +8,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% set title = (currentCategory ? currentCategory.getTitle() : 'allCoursesLabel'|trans) ~ ' (' ~ courses|length ~ ')' %}
+{% set title = (currentCategory ? currentCategory.title : 'allCoursesLabel'|trans) ~ ' (' ~ courses|length ~ ')' %}
 
 {% block page_title %}
     {{ title }}
@@ -35,9 +35,9 @@
                         {% for category in categories %}
                             <li class="sidebar-menu__item">
                                 <a
-                                    href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}"
+                                    href="{{ path('category', {categorySlug: category.slug}) ~ state.queryString }}"
                                     class="sidebar-menu__link {{ currentCategory and category.id == currentCategory.id ? 'active' : '' }}"
-                                    >{{ category.getTitle() }}</a>
+                                    >{{ category.title }}</a>
                             </li>
                         {% endfor %}
                     </ul>

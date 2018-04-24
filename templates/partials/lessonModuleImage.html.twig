@@ -5,12 +5,12 @@
  #}
 
  <div class="lesson-module lesson-module-image">
-    {% if module.getImage() and module.getImage().getFile() and module.getImage().getFile().getUrl() %}
+    {% if module.image and module.image.file and module.image.file.url %}
         <figure class="lesson-module-image__figure">
-            <img src="{{ module.getImage().getFile().getUrl() }}" alt="{{ module.getImage().getTitle() }}" class="lesson-module-image__image" />
+            <img src="{{ module.image.file.url }}" alt="{{ module.image.title }}" class="lesson-module-image__image" />
 
-            {% if module.getCaption() %}
-                <figcaption class="lesson-module-image__caption">{{ module.getCaption() }}</figcaption>
+            {% if module.caption %}
+                <figcaption class="lesson-module-image__caption">{{ module.caption }}</figcaption>
             {% endif %}
         </figure>
     {% else %}
