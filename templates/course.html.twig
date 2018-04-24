@@ -1,10 +1,10 @@
 {#
  * Template: course.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry      course
- * @param Contentful\Delivery\DynamicEntry|null lesson
- * @param Contentful\Delivery\DynamicEntry[]    lessons
- * @param Contentful\Delivery\DynamicEntry|null nextLesson
+ * @param Contentful\Delivery\Resource\Entry      course
+ * @param Contentful\Delivery\Resource\Entry|null lesson
+ * @param Contentful\Delivery\Resource\Entry[]    lessons
+ * @param Contentful\Delivery\Resource\Entry|null nextLesson
  * @param string[]                              visitedLessons
  #}
 
@@ -33,7 +33,7 @@
                         <div class="table-of-contents__item">
                             <a
                                 href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}"
-                                class="table-of-contents__link {{ course.getId() in visitedLessons ? 'visited' : '' }} {{ not lesson ? 'active' : '' }}"
+                                class="table-of-contents__link {{ course.id in visitedLessons ? 'visited' : '' }} {{ not lesson ? 'active' : '' }}"
                                 >{{ 'courseOverviewLabel'|trans }}</a>
                         </div>
 
@@ -41,7 +41,7 @@
                             <div class="table-of-contents__item">
                                 <a
                                     href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: courseLesson.getSlug()}) ~ state.queryString }}"
-                                    class="table-of-contents__link {{ courseLesson.getId() in visitedLessons ? 'visited' : '' }} {{ lesson and courseLesson.getId() == lesson.getId() ? 'active' : '' }}"
+                                    class="table-of-contents__link {{ courseLesson.id in visitedLessons ? 'visited' : '' }} {{ lesson and courseLesson.id == lesson.id ? 'active' : '' }}"
                                     >{{ courseLesson.getTitle() }}</a>
                             </div>
                         {% endfor %}
@@ -90,12 +90,14 @@
                             </div>
                         {% endif %}
 
-                        <div class="course__overview-cta-wrapper">
-                            <a
-                                href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: course.getLessons()[0].getSlug()}) ~ state.queryString }}"
-                                class="course__overview-cta cta"
-                                >{{ 'startCourseLabel'|trans }}</a>
-                        </div>
+                        {% if course.getLessons() %}
+                            <div class="course__overview-cta-wrapper">
+                                <a
+                                    href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: course.getLessons()[0].getSlug()}) ~ state.queryString }}"
+                                    class="course__overview-cta cta"
+                                    >{{ 'startCourseLabel'|trans }}</a>
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="course__description">

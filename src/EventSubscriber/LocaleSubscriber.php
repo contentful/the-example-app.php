@@ -39,6 +39,11 @@ class LocaleSubscriber implements EventSubscriberInterface
     private $responseFactory;
 
     /**
+     * @var Contentful
+     */
+    private $contentful;
+
+    /**
      * @var string[]
      */
     private $availableLocales;
@@ -109,7 +114,7 @@ class LocaleSubscriber implements EventSubscriberInterface
 
         try {
             $this->contentful
-                ->findSpace()
+                ->findEnvironment()
                 ->getLocale($locale);
 
             return true;

@@ -1,7 +1,7 @@
 {#
  * Template: partials/editorialFeatures.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry entry
+ * @param Contentful\Delivery\Resource\Entry entry
  #}
 
 {% if state.hasEditorialFeaturesEnabled %}
@@ -14,7 +14,7 @@
 
         <div class="editorial-features__item">
             <a
-                href="https://app.contentful.com/spaces/{{ state.spaceId }}/entries/{{ entry.getId() }}"
+                href="https://app.contentful.com/spaces/{{ state.spaceId }}/entries/{{ entry.id }}"
                 class="editorial-features__text"
                 target="_blank"
                 rel="noopener"

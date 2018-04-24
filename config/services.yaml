@@ -40,7 +40,6 @@ services:
             $availableLocales: "%available_locales%"
     App\Service\ClientFactory:
         arguments:
-            $cacheDir: "%kernel.cache_dir%"
             $deliveryApiUrl: "%env(CONTENTFUL_DELIVERY_URL)%"
             $previewApiUrl: "%env(CONTENTFUL_PREVIEW_URL)%"
     App\Service\Locale:

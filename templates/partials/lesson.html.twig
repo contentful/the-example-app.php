@@ -1,9 +1,9 @@
 {#
  * Template: partials/lesson.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry course
- * @param Contentful\Delivery\DynamicEntry lesson
- * @param Contentful\Delivery\DynamicEntry nextLesson
+ * @param Contentful\Delivery\Resource\Entry course
+ * @param Contentful\Delivery\Resource\Entry lesson
+ * @param Contentful\Delivery\Resource\Entry nextLesson
  #}
 
 <div class="lesson">
@@ -14,22 +14,22 @@
     <div class="lesson__modules">
         {% for module in lesson.getModules() %}
             {% if module.getContentType() %}
-                {% if module.getContentType().getId() == 'lessonCodeSnippets' %}
+                {% if module.contentType.id == 'lessonCodeSnippets' %}
                     {% include 'partials/lessonCodeSnippets.html.twig' with {module: module} only %}
                 {% endif %}
 
-                {% if module.getContentType().getId() == 'lessonCopy' %}
+                {% if module.contentType.id == 'lessonCopy' %}
                     {% include 'partials/lessonModuleCopy.html.twig' with {module: module} only %}
                 {% endif %}
 
-                {% if module.getContentType().getId() == 'lessonImage' %}
+                {% if module.contentType.id == 'lessonImage' %}
                     {% include 'partials/lessonModuleImage.html.twig' with {module: module} only %}
                 {% endif %}
             {% else %}
                 <h2>{{ 'lessonModuleErrorTitle'|trans }}</h2>
                 <p>
                     <span>{{ 'lessonModuleErrorBody'|trans }}</span>
-                    <strong>{{ module.getId() }}</strong>
+                    <strong>{{ module.id }}</strong>
                 </p>
             {% endif %}
         {% else %}

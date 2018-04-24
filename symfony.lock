@@ -1,6 +1,21 @@
 {
+    "cache/adapter-common": {
+        "version": "1.0.0"
+    },
+    "cache/hierarchical-cache": {
+        "version": "1.0.0"
+    },
+    "cache/tag-interop": {
+        "version": "1.0.0"
+    },
+    "cache/void-adapter": {
+        "version": "1.0.0"
+    },
     "contentful/contentful": {
         "version": "2.3.0"
+    },
+    "contentful/core": {
+        "version": "1.0.0"
     },
     "doctrine/inflector": {
         "version": "v1.3.0"

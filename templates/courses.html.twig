@@ -1,9 +1,9 @@
 {#
  * Template: courses.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry[]    courses
- * @param Contentful\Delivery\DynamicEntry[]    categories
- * @param Contentful\Delivery\DynamicEntry|null currentCategory
+ * @param Contentful\Delivery\Resource\Entry[]    courses
+ * @param Contentful\Delivery\Resource\Entry[]    categories
+ * @param Contentful\Delivery\Resource\Entry|null currentCategory
  #}
 
 {% extends 'base.html.twig' %}
@@ -36,7 +36,7 @@
                             <li class="sidebar-menu__item">
                                 <a
                                     href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}"
-                                    class="sidebar-menu__link {{ currentCategory and category.getId() == currentCategory.getId() ? 'active' : '' }}"
+                                    class="sidebar-menu__link {{ currentCategory and category.id == currentCategory.id ? 'active' : '' }}"
                                     >{{ category.getTitle() }}</a>
                             </li>
                         {% endfor %}
