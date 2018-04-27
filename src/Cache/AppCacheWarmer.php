@@ -13,31 +13,39 @@ namespace App\Cache;
 use App\Service\ClientFactory;
 use App\Service\Contentful;
 use Contentful\Delivery\Cache\CacheWarmer;
-use Contentful\Delivery\Client;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class AppCacheWarmer implements CacheWarmerInterface
 {
     /**
-     * @var Client
+     * @var CacheWarmer
      */
-    private $client;
+    private $cacheWarmer;
 
     /**
-     * @param ClientFactory $clientFactory
+     * @param ClientFactory          $clientFactory
+     * @param CacheItemPoolInterface $cacheItemPool
      */
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct(ClientFactory $clientFactory, CacheItemPoolInterface $cacheItemPool)
     {
-        $this->client = $clientFactory->createClient(Contentful::API_DELIVERY);
+        $this->cacheWarmer = new CacheWarmer(
+            $clientFactory->createClient(Contentful::API_DELIVERY, null, null, false),
+            $cacheItemPool
+        );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function warmUp($cacheDir)
     {
-        $warmer = new CacheWarmer($this->client);
-
-        $warmer->warmUp($cacheDir.'/contentful');
+        $this->cacheWarmer->warmUp();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isOptional()
     {
         return true;

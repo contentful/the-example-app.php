@@ -1,15 +1,15 @@
 {#
  * Template: partials/moduleHeroImage.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry module
+ * @param Contentful\Delivery\Resource\Entry module
  #}
 
 <div class="module module-hero-image">
     <div class="module-hero-image__wrapper">
         <div class="module-hero-image__headline-wrapper">
-            <h2 class="module-hero-image__headline">{{ module.getHeadline() }}</h2>
+            <h2 class="module-hero-image__headline">{{ module.headline }}</h2>
         </div>
 
-        <img src="{{ module.getBackgroundImage().getFile().getUrl() }}" alt="{{ module.getBackgroundImage().getTitle() }}" class="module-hero-image__image" />
+        <img src="{{ module.backgroundImage.file.url }}" alt="{{ module.backgroundImage.title }}" class="module-hero-image__image" />
     </div>
 </div>

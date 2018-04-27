@@ -12,9 +12,9 @@ namespace App\Validator\Constraints;
 
 use App\Service\Contentful;
 use App\Service\State;
-use Contentful\Exception\AccessTokenInvalidException;
-use Contentful\Exception\ApiException;
-use Contentful\Exception\NotFoundException;
+use Contentful\Core\Api\Exception;
+use Contentful\Core\Exception\AccessTokenInvalidException;
+use Contentful\Core\Exception\NotFoundException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -108,7 +108,7 @@ class ContentfulCredentialsValidator extends ConstraintValidator
         } catch (NotFoundException $exception) {
             $violation = 'spaceOrTokenInvalid';
             $path = '[spaceId]';
-        } catch (ApiException $exception) {
+        } catch (Exception $exception) {
             $violation = 'somethingWentWrongLabel';
             $path = '['.$apiLabel.'Token]';
         }

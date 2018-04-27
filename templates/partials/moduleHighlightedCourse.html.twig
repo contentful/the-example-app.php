@@ -1,33 +1,33 @@
 {#
  * Template: partials/moduleHighlightedCourse.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry module
+ * @param Contentful\Delivery\Resource\Entry module
  #}
 
-{% set course = module.getCourse() %}
+{% set course = module.course %}
  <div class="module module-highlighted-course">
-    <div class="module-highlighted-course__wrapper" style="background-image: url('{{ course.getImage().getFile().getUrl() }}');">
+    <div class="module-highlighted-course__wrapper" style="background-image: url('{{ course.image.file.url }}');">
         <div class="module-highlighted-course__overlay"></div>
 
         <div class="module-highlighted-course__content">
-            {% if course.getCategories() %}
+            {% if course.categories %}
                 <div class="module-highlighted-course__categories">
-                    {% for category in course.getCategories() %}
-                        <a href="{{ path('category', {categorySlug: category.getSlug()}) ~ state.queryString }}" class="module-highlighted-course__category">{{ category.getTitle() }}</a>
+                    {% for category in course.categories %}
+                        <a href="{{ path('category', {categorySlug: category.slug}) ~ state.queryString }}" class="module-highlighted-course__category">{{ category.title }}</a>
                     {% endfor %}
                 </div>
             {% endif %}
 
             <h2 class="module-highlighted-course__title">
-                <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}">{{ course.getTitle() }}</a>
+                <a href="{{ path('course', {courseSlug: course.slug}) ~ state.queryString }}">{{ course.title }}</a>
             </h2>
 
             <div class="module-highlighted-course__description-wrapper">
-                <p>{{ course.getShortDescription()|markdown }}</p>
+                <p>{{ course.shortDescription|markdown }}</p>
             </div>
 
             <div class="module-highlighted-course__link-wrapper">
-                <a href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}" class="module-highlighted-course__link">{{ 'viewCourseLabel'|trans }}</a>
+                <a href="{{ path('course', {courseSlug: course.slug}) ~ state.queryString }}" class="module-highlighted-course__link">{{ 'viewCourseLabel'|trans }}</a>
             </div>
         </div>
     </div>

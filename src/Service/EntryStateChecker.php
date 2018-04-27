@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Contentful\Delivery\Client;
-use Contentful\Delivery\DynamicEntry;
 use Contentful\Delivery\Query;
+use Contentful\Delivery\Resource\Entry;
 
 /**
  * EntryStateChecker class.
@@ -40,12 +40,12 @@ class EntryStateChecker
     /**
      * Compares entries retrieved from the Preview API
      * to their equivalent in the Delivery API.
-     * If the entries have a property "DynamicEntry[] children",
+     * If the entries have a property "Entry[] children",
      * it will be checked and state will bubble up from them.
      *
-     * @param DynamicEntry[] $entries
+     * @param Entry[] $entries
      */
-    public function computeState(DynamicEntry ...$entries): void
+    public function computeState(Entry ...$entries): void
     {
         $deliveryEntries = $this->fetchDeliveryEntries($entries);
 
@@ -59,9 +59,9 @@ class EntryStateChecker
      * and then queries the Delivery API in order to get a list with the corresponding,
      * published entries.
      *
-     * @param DynamicEntry[] $entries
+     * @param Entry[] $entries
      *
-     * @return DynamicEntry[]
+     * @return Entry[]
      */
     private function fetchDeliveryEntries(array $entries): array
     {
@@ -81,7 +81,7 @@ class EntryStateChecker
     /**
      * Given an array of entries, it will extract all IDs including from the nested ones.
      *
-     * @param DynamicEntry[] $entries
+     * @param Entry[] $entries
      *
      * @return string[]
      */
@@ -91,7 +91,11 @@ class EntryStateChecker
         foreach ($entries as $entry) {
             $ids[] = $entry->getId();
 
-            $children = $entry->children ?? [];
+            try {
+                $children = $entry->children;
+            } catch (\InvalidArgumentException $exception) {
+                $children = [];
+            }
             foreach ($children as $linkedEntry) {
                 $ids[] = $linkedEntry->getId();
             }
@@ -109,17 +113,21 @@ class EntryStateChecker
      * - pendingChanges: whether the entry has already been published,
      *     but some changes have been made in the meanwhile.
      *
-     * @param DynamicEntry   $previewEntry
-     * @param DynamicEntry[] $deliveryEntries An array where the entry ID is used as key
+     * @param Entry   $previewEntry
+     * @param Entry[] $deliveryEntries An array where the entry ID is used as key
      */
-    private function attachEntryState(DynamicEntry $previewEntry, array $deliveryEntries): void
+    private function attachEntryState(Entry $previewEntry, array $deliveryEntries): void
     {
         $state = $this->compare($previewEntry, $deliveryEntries);
 
         $previewEntry->draft = $state['draft'];
         $previewEntry->pendingChanges = $state['pendingChanges'];
 
-        $children = $previewEntry->children ?? [];
+        try {
+            $children = $previewEntry->children;
+        } catch (\InvalidArgumentException $exception) {
+            $children = [];
+        }
         foreach ($children as $linkedPreviewEntry) {
             $state = $this->compare($linkedPreviewEntry, $deliveryEntries);
 
@@ -132,12 +140,12 @@ class EntryStateChecker
      * Compares a preview entry with the one found in a list of given delivery entries,
      * and returns an array with the resulting state.
      *
-     * @param DynamicEntry $previewEntry
-     * @param array        $deliveryEntries
+     * @param Entry $previewEntry
+     * @param array $deliveryEntries
      *
      * @return bool[]
      */
-    private function compare(DynamicEntry $previewEntry, array $deliveryEntries): array
+    private function compare(Entry $previewEntry, array $deliveryEntries): array
     {
         $state = [
             'draft' => false,
@@ -153,8 +161,8 @@ class EntryStateChecker
 
         // Different updatedAt values mean the entry has been updated since its last publishing.
         // We format the values to remove milliseconds in order to ignore slight discrepancies.
-        $previewUpdatedAt = $previewEntry->getUpdatedAt()->format('Y-m-d H:i:s');
-        $deliveryUpdatedAt = $deliveryEntry ? $deliveryEntry->getUpdatedAt()->format('Y-m-d H:i:s') : null;
+        $previewUpdatedAt = $previewEntry->getSystemProperties()->getUpdatedAt()->format('Y-m-d H:i:s');
+        $deliveryUpdatedAt = $deliveryEntry ? $deliveryEntry->getSystemProperties()->getUpdatedAt()->format('Y-m-d H:i:s') : null;
         if ($deliveryEntry && $previewUpdatedAt !== $deliveryUpdatedAt) {
             $state['pendingChanges'] = true;
         }

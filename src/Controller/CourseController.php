@@ -33,7 +33,7 @@ class CourseController extends AppController
         if (!$course) {
             throw new NotFoundHttpException($this->translator->trans('errorMessage404Course'));
         }
-        $lessons = $course->getLessons();
+        $lessons = $course->get('lessons');
         $nextLesson = $lessons[0] ?? null;
 
         // Manage state of viewed lessons
@@ -41,7 +41,7 @@ class CourseController extends AppController
 
         $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('coursesLabel', 'courses')
-            ->add($course->getTitle(), 'course', ['courseSlug' => $course->getSlug()], false);
+            ->add($course->get('title'), 'course', ['courseSlug' => $course->get('slug')], false);
 
         return $this->responseFactory->createResponse('course.html.twig', [
             'course' => $course,

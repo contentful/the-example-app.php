@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Contentful\Delivery\DynamicEntry;
+use Contentful\Delivery\Resource\Entry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -46,25 +46,25 @@ class LessonController extends AppController
         return $this->responseFactory->createResponse('course.html.twig', [
             'course' => $course,
             'lesson' => $course->lesson,
-            'lessons' => $course->getLessons(),
+            'lessons' => $course->get('lessons'),
             'nextLesson' => $course->nextLesson,
             'visitedLessons' => $visitedLessons,
         ]);
     }
 
     /**
-     * @param DynamicEntry $course
-     * @param DynamicEntry $lesson
+     * @param Entry $course
+     * @param Entry $lesson
      */
-    private function setBreadcrumb(DynamicEntry $course, DynamicEntry $lesson): void
+    private function setBreadcrumb(Entry $course, Entry $lesson): void
     {
         $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('coursesLabel', 'courses')
-            ->add($course->getTitle(), 'course', ['courseSlug' => $course->getSlug()], false)
-            ->add('lessonsLabel', 'course', ['courseSlug' => $course->getSlug()])
-            ->add($lesson->getTitle(), 'lesson', [
-                'courseSlug' => $course->getSlug(),
-                'lessonSlug' => $lesson->getSlug(),
+            ->add($course->get('title'), 'course', ['courseSlug' => $course->get('slug')], false)
+            ->add('lessonsLabel', 'course', ['courseSlug' => $course->get('slug')])
+            ->add($lesson->get('title'), 'lesson', [
+                'courseSlug' => $course->get('slug'),
+                'lessonSlug' => $lesson->get('slug'),
             ], false);
     }
 }

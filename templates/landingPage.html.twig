@@ -1,19 +1,19 @@
 {#
  * Template: landingPage.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry landingPage
+ * @param Contentful\Delivery\Resource\Entry landingPage
  #}
 
 {% extends 'base.html.twig' %}
 
-{% set title = landingPage.getTitle() %}
+{% set title = landingPage.title %}
 
 {% block page_title %}
     {{ title }}
 {% endblock %}
 
 {% block body %}
-    {% if landingPage.getSlug() != 'home' %}
+    {% if landingPage.slug != 'home' %}
         <div class="layout-centered">
             {% include 'partials/breadcrumb.html.twig' with {} only %}
         </div>
@@ -24,8 +24,8 @@
     </div>
 
     <div class="modules-container">
-        {% for module in landingPage.getContentModules() %}
-            {% set contentTypeId = module.getContentType().getId() %}
+        {% for module in landingPage.contentModules %}
+            {% set contentTypeId = module.contentType.id %}
             {% if contentTypeId == 'layoutCopy' %}
                 {% include 'partials/moduleCopy.html.twig' with {module: module} only %}
             {% endif %}

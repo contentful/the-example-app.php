@@ -1,7 +1,7 @@
 {#
  * Template: settings.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry space
+ * @param Contentful\Delivery\Resource\Entry space
  * @param Symfony/Component/Form/FormView  form
  #}
 
@@ -85,7 +85,7 @@
                             </p>
                             <p>
                                 <strong>{{ 'connectedToSpaceLabel'|trans }}:</strong><br />
-                                {{ space.getName() }} ({{ space.getId() }})
+                                {{ space.name }} ({{ space.id }})
                             </p>
 
                             <form method="post" action="{{ path('reset') }}">
@@ -108,7 +108,7 @@
                             </p>
                             <p>
                                 <strong>{{ 'connectedToSpaceLabel'|trans }}:</strong><br />
-                                {{ space.getName() }} ({{ space.getId() }})
+                                {{ space.name }} ({{ space.id }})
                             </p>
                             <p>
                                 <strong>{{ 'credentialSourceLabel'|trans }}:</strong><br />

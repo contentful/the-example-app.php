@@ -12,6 +12,7 @@ namespace App\Service;
 
 use App\Kernel;
 use Contentful\Delivery\Client;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * ClientFactory class.
@@ -26,9 +27,9 @@ class ClientFactory
     private $state;
 
     /**
-     * @var string
+     * @var CacheItemPoolInterface
      */
-    private $cacheDir;
+    private $cacheItemPool;
 
     /**
      * @var string
@@ -41,15 +42,15 @@ class ClientFactory
     private $previewApiUrl;
 
     /**
-     * @param State  $state
-     * @param string $cacheDir
-     * @param string $deliveryApiUrl
-     * @param string $previewApiUrl
+     * @param State                  $state
+     * @param CacheItemPoolInterface $cacheItemPool
+     * @param string                 $deliveryApiUrl
+     * @param string                 $previewApiUrl
      */
-    public function __construct(State $state, string $cacheDir, string $deliveryApiUrl, string $previewApiUrl)
+    public function __construct(State $state, CacheItemPoolInterface $cacheItemPool, string $deliveryApiUrl, string $previewApiUrl)
     {
         $this->state = $state;
-        $this->cacheDir = $cacheDir.'/contentful';
+        $this->cacheItemPool = $cacheItemPool;
         $this->deliveryApiUrl = $deliveryApiUrl;
         $this->previewApiUrl = $previewApiUrl;
     }
@@ -61,10 +62,11 @@ class ClientFactory
      * @param string      $api
      * @param string|null $spaceId
      * @param string|null $accessToken
+     * @param bool        $useCache
      *
      * @return Client
      */
-    public function createClient(string $api, string $spaceId = null, string $accessToken = null): Client
+    public function createClient(string $api, string $spaceId = null, string $accessToken = null, bool $useCache = true): Client
     {
         if (Contentful::API_DELIVERY !== $api && Contentful::API_PREVIEW !== $api) {
             throw new \InvalidArgumentException(sprintf(
@@ -89,16 +91,22 @@ class ClientFactory
         // you should care about too much.
         // This means that in normal use, we wouldn't have environment variables
         // for defining these URLs, and they wouldn't be injected in this factory.
-        $url = Contentful::API_DELIVERY === $api
+        $uri = Contentful::API_DELIVERY === $api
             ? $this->deliveryApiUrl
             : $this->previewApiUrl;
+
+        $options = ['baseUri' => $uri];
+        if ($useCache) {
+            $options['cache'] = $this->cacheItemPool;
+        }
 
         $client = new Client(
             $accessToken,
             $spaceId,
+            'master',
             Contentful::API_PREVIEW === $api,
             $this->state->getLocale(),
-            ['cacheDir' => $this->cacheDir, 'uriOverride' => $url]
+            $options
         );
         $client->setApplication(Kernel::APP_NAME, Kernel::APP_VERSION);
 

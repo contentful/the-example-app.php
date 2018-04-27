@@ -1,11 +1,11 @@
 {#
  * Template: partials/lessonModuleCopy.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry module
+ * @param Contentful\Delivery\Resource\Entry module
  #}
 
 <div class="lesson-module lesson-module-copy">
     <div class="lesson-module-copy__copy">
-        {{ module.getCopy()|markdown }}
+        {{ module.copy|markdown }}
     </div>
 </div>

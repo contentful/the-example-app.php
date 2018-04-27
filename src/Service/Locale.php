@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * This file is part of the contentful/the-example-app package.
+ *
+ * @copyright 2018 Contentful GmbH
+ * @license   MIT
+ */
+
 namespace App\Service;
 
-use Contentful\Delivery\Locale as ContentfulLocale;
-use Contentful\Delivery\Space;
+use Contentful\Delivery\Resource\Environment;
+use Contentful\Delivery\Resource\Locale as ContentfulLocale;
 
 /**
  * Locale class.
@@ -20,9 +27,9 @@ class Locale
     private $state;
 
     /**
-     * @var Space
+     * @var Environment
      */
-    private $space;
+    private $environment;
 
     /**
      * @var string[]
@@ -37,7 +44,7 @@ class Locale
     public function __construct(State $state, Contentful $contentful, array $availableLocales)
     {
         $this->state = $state;
-        $this->space = $contentful->findSpace();
+        $this->environment = $contentful->findEnvironment();
         $this->availableLocales = $availableLocales;
     }
 
@@ -46,7 +53,7 @@ class Locale
      */
     public function getAll(): array
     {
-        return $this->space->getLocales();
+        return $this->environment->getLocales();
     }
 
     /**
@@ -55,7 +62,7 @@ class Locale
     public function getCurrent(): ?ContentfulLocale
     {
         try {
-            return $this->space->getLocale($this->state->getLocale());
+            return $this->environment->getLocale($this->state->getLocale());
         } catch (\InvalidArgumentException $exception) {
             return null;
         }

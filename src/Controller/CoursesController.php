@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Contentful\Delivery\DynamicEntry;
+use Contentful\Delivery\Resource\Entry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -37,7 +37,7 @@ class CoursesController extends AppController
             ->add('coursesLabel', 'courses');
 
         if ($category) {
-            $this->breadcrumb->add($category->getTitle(), 'category', ['categorySlug' => $categorySlug], false);
+            $this->breadcrumb->add($category->get('title'), 'category', ['categorySlug' => $categorySlug], false);
         }
 
         return $this->responseFactory->createResponse('courses.html.twig', [
@@ -48,15 +48,15 @@ class CoursesController extends AppController
     }
 
     /**
-     * @param DynamicEntry[] $categories
-     * @param string|null    $categorySlug
+     * @param Entry[]     $categories
+     * @param string|null $categorySlug
      *
-     * @return DynamicEntry|null
+     * @return Entry|null
      */
-    private function findCategory(array $categories, ?string $categorySlug): ?DynamicEntry
+    private function findCategory(array $categories, ?string $categorySlug): ?Entry
     {
         foreach ($categories as $category) {
-            if ($category->getSlug() === $categorySlug) {
+            if ($category->get('slug') === $categorySlug) {
                 return $category;
             }
         }

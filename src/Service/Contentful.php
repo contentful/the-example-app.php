@@ -10,11 +10,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use Contentful\Core\Api\Exception;
 use Contentful\Delivery\Client;
-use Contentful\Delivery\DynamicEntry;
 use Contentful\Delivery\Query;
-use Contentful\Delivery\Space;
-use Contentful\Exception\ApiException;
+use Contentful\Delivery\Resource\Entry;
+use Contentful\Delivery\Resource\Environment;
+use Contentful\Delivery\Resource\Space;
 
 /**
  * Contentful class.
@@ -81,7 +82,7 @@ class Contentful
      * @param string $accessToken
      * @param string $api
      *
-     * @throws ApiException if the credentials are not valid and an error response is returned from Contentful
+     * @throws Exception if the credentials are not valid and an error response is returned from Contentful
      */
     public function validateCredentials(string $spaceId, string $accessToken, string $api = self::API_DELIVERY): void
     {
@@ -90,7 +91,7 @@ class Contentful
         // If any error should arise, the call will throw an exception.
         $query = (new Query())
             ->setLimit(1);
-        $this->clientFactory->createClient($api, $spaceId, $accessToken)->getContentTypes($query);
+        $this->clientFactory->createClient($api, $spaceId, $accessToken, false)->getContentTypes($query);
     }
 
     /**
@@ -104,9 +105,19 @@ class Contentful
     }
 
     /**
+     * Finds the environment object currently in use.
+     *
+     * @return Environment
+     */
+    public function findEnvironment(): Environment
+    {
+        return $this->client->getEnvironment();
+    }
+
+    /**
      * Finds the available courses, sorted alphabetically.
      *
-     * @return DynamicEntry[]
+     * @return Entry[]
      */
     public function findCategories(): array
     {
@@ -121,11 +132,11 @@ class Contentful
     /**
      * Finds the available courses, sorted by creation date.
      *
-     * @param DynamicEntry|null $category
+     * @param Entry|null $category
      *
-     * @return DynamicEntry[]
+     * @return Entry[]
      */
-    public function findCourses(?DynamicEntry $category): array
+    public function findCourses(?Entry $category): array
     {
         $query = (new Query())
             ->setContentType('course')
@@ -155,9 +166,9 @@ class Contentful
      *
      * @param string $courseSlug
      *
-     * @return DynamicEntry|null
+     * @return Entry|null
      */
-    public function findCourse(string $courseSlug): ?DynamicEntry
+    public function findCourse(string $courseSlug): ?Entry
     {
         $course = $this->findEntry('course', $courseSlug);
 
@@ -179,16 +190,16 @@ class Contentful
      * @param string $courseSlug
      * @param string $lessonSlug
      *
-     * @return DynamicEntry|null
+     * @return Entry|null
      */
-    public function findCourseByLesson(string $courseSlug, string $lessonSlug): ?DynamicEntry
+    public function findCourseByLesson(string $courseSlug, string $lessonSlug): ?Entry
     {
         $course = $this->findEntry('course', $courseSlug, 3);
         if (!$course) {
             return null;
         }
 
-        $lessons = $course->getLessons();
+        $lessons = $course->get('lessons');
         $lessonIndex = $this->findLessonIndex($lessons, $lessonSlug);
         if (null === $lessonIndex) {
             return null;
@@ -198,7 +209,7 @@ class Contentful
         $course->nextLesson = $lessons[$lessonIndex + 1] ?? null;
 
         if ($this->state->hasEditorialFeaturesLink()) {
-            $course->lesson->children = $course->lesson->getModules();
+            $course->lesson->children = $course->lesson->get('modules');
             $this->entryStateChecker->computeState($course->lesson);
         }
 
@@ -206,15 +217,15 @@ class Contentful
     }
 
     /**
-     * @param DynamicEntry[] $lessons
-     * @param string         $lessonSlug
+     * @param Entry[] $lessons
+     * @param string  $lessonSlug
      *
      * @return int|null
      */
     private function findLessonIndex(array $lessons, string $lessonSlug): ?int
     {
         foreach ($lessons as $index => $lesson) {
-            if ($lesson->getSlug() === $lessonSlug) {
+            if ($lesson->get('slug') === $lessonSlug) {
                 return $index;
             }
         }
@@ -229,14 +240,14 @@ class Contentful
      *
      * @param string $slug
      *
-     * @return DynamicEntry|null
+     * @return Entry|null
      */
-    public function findLandingPage(string $slug): ?DynamicEntry
+    public function findLandingPage(string $slug): ?Entry
     {
         $landingPage = $this->findEntry('layout', $slug, 3);
 
         if ($landingPage && $this->state->hasEditorialFeaturesLink()) {
-            $landingPage->children = $landingPage->getContentModules();
+            $landingPage->children = $landingPage->get('contentModules');
             $this->entryStateChecker->computeState($landingPage);
         }
 
@@ -248,9 +259,9 @@ class Contentful
      * @param string $slug
      * @param int    $include
      *
-     * @return DynamicEntry|null
+     * @return Entry|null
      */
-    private function findEntry(string $contentType, string $slug, int $include = 1): ?DynamicEntry
+    private function findEntry(string $contentType, string $slug, int $include = 1): ?Entry
     {
         $query = (new Query())
             ->setLocale($this->state->getLocale())

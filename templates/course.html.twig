@@ -1,16 +1,16 @@
 {#
  * Template: course.html.twig
  *
- * @param Contentful\Delivery\DynamicEntry      course
- * @param Contentful\Delivery\DynamicEntry|null lesson
- * @param Contentful\Delivery\DynamicEntry[]    lessons
- * @param Contentful\Delivery\DynamicEntry|null nextLesson
- * @param string[]                              visitedLessons
+ * @param Contentful\Delivery\Resource\Entry      course
+ * @param Contentful\Delivery\Resource\Entry|null lesson
+ * @param Contentful\Delivery\Resource\Entry[]    lessons
+ * @param Contentful\Delivery\Resource\Entry|null nextLesson
+ * @param string[]                                visitedLessons
  #}
 
 {% extends 'base.html.twig' %}
 
-{% set title = lesson ? (course.getTitle() ~ ' | ' ~ lesson.getTitle()) : course.getTitle() %}
+{% set title = lesson ? (course.title ~ ' | ' ~ lesson.title) : course.title %}
 
 {% block page_title %}
     {{ title }}
@@ -32,17 +32,17 @@
                     <div class="table-of-contents__list">
                         <div class="table-of-contents__item">
                             <a
-                                href="{{ path('course', {courseSlug: course.getSlug()}) ~ state.queryString }}"
-                                class="table-of-contents__link {{ course.getId() in visitedLessons ? 'visited' : '' }} {{ not lesson ? 'active' : '' }}"
+                                href="{{ path('course', {courseSlug: course.slug}) ~ state.queryString }}"
+                                class="table-of-contents__link {{ course.id in visitedLessons ? 'visited' : '' }} {{ not lesson ? 'active' : '' }}"
                                 >{{ 'courseOverviewLabel'|trans }}</a>
                         </div>
 
-                        {% for courseLesson in course.getLessons() %}
+                        {% for courseLesson in course.lessons %}
                             <div class="table-of-contents__item">
                                 <a
-                                    href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: courseLesson.getSlug()}) ~ state.queryString }}"
-                                    class="table-of-contents__link {{ courseLesson.getId() in visitedLessons ? 'visited' : '' }} {{ lesson and courseLesson.getId() == lesson.getId() ? 'active' : '' }}"
-                                    >{{ courseLesson.getTitle() }}</a>
+                                    href="{{ path('lesson', {courseSlug: course.slug, lessonSlug: courseLesson.slug}) ~ state.queryString }}"
+                                    class="table-of-contents__link {{ courseLesson.id in visitedLessons ? 'visited' : '' }} {{ lesson and courseLesson.id == lesson.id ? 'active' : '' }}"
+                                    >{{ courseLesson.title }}</a>
                             </div>
                         {% endfor %}
                     </div>
@@ -66,40 +66,42 @@
                     <div class="course__overview">
                         <h3 class="course__overview-title">{{ 'overviewLabel'|trans }}</h3>
 
-                        {% if course.getDuration() %}
+                        {% if course.duration %}
                             <div class="course__overview-item">
                                 <svg class="course__overview-icon">
                                     <use xlink:href="{{ asset('icons/icons.svg#duration') }}"></use>
                                 </svg>
 
                                 <div class="course__overview-value">
-                                    {{ 'durationLabel'|trans ~ ': ' ~ course.getDuration() ~ ' ' ~ 'minutesLabel'|trans }}
+                                    {{ 'durationLabel'|trans ~ ': ' ~ course.duration ~ ' ' ~ 'minutesLabel'|trans }}
                                 </div>
                             </div>
                         {% endif %}
 
-                        {% if course.getSkillLevel() %}
+                        {% if course.skillLevel %}
                             <div class="course__overview-item">
                                 <svg class="course__overview-icon">
                                     <use xlink:href="{{ asset('icons/icons.svg#skill-level') }}"></use>
                                 </svg>
 
                                 <div class="course__overview-value">
-                                    {{ 'skillLevelLabel'|trans ~ ': ' ~ (course.getSkillLevel() ~ 'Label')|trans }}
+                                    {{ 'skillLevelLabel'|trans ~ ': ' ~ (course.skillLevel ~ 'Label')|trans }}
                                 </div>
                             </div>
                         {% endif %}
 
-                        <div class="course__overview-cta-wrapper">
-                            <a
-                                href="{{ path('lesson', {courseSlug: course.getSlug(), lessonSlug: course.getLessons()[0].getSlug()}) ~ state.queryString }}"
-                                class="course__overview-cta cta"
-                                >{{ 'startCourseLabel'|trans }}</a>
-                        </div>
+                        {% if course.lessons %}
+                            <div class="course__overview-cta-wrapper">
+                                <a
+                                    href="{{ path('lesson', {courseSlug: course.slug, lessonSlug: course.lessons[0].slug}) ~ state.queryString }}"
+                                    class="course__overview-cta cta"
+                                    >{{ 'startCourseLabel'|trans }}</a>
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="course__description">
-                        {{ course.getDescription()|markdown }}
+                        {{ course.description|markdown }}
                     </div>
                 </div>
             {% endif %}
