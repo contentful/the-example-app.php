@@ -3,9 +3,10 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017 Contentful GmbH
+ * @copyright 2017-2018 Contentful GmbH
  * @license   MIT
  */
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -69,7 +70,7 @@ class ClientFactory
     public function createClient(string $api, string $spaceId = null, string $accessToken = null, bool $useCache = true): Client
     {
         if (Contentful::API_DELIVERY !== $api && Contentful::API_PREVIEW !== $api) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'Trying to instantiate a client for unknown API: %s.',
                 $api
             ));
