@@ -3,9 +3,10 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017 Contentful GmbH
+ * @copyright 2017-2018 Contentful GmbH
  * @license   MIT
  */
+
 declare(strict_types=1);
 
 namespace App\Tests\Controller;
@@ -41,7 +42,7 @@ class LessonControllerTest extends AppWebTestCase
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
         $this->assertSame('visitedLessons', $visitedLessonsCookie->getName());
-        $this->assertCount(1, json_decode($visitedLessonsCookie->getValue()));
+        $this->assertCount(1, \json_decode($visitedLessonsCookie->getValue()));
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }
 
@@ -75,7 +76,7 @@ class LessonControllerTest extends AppWebTestCase
 
         $visitedLessonsCookie = $this->response->headers->getCookies()[0];
         $this->assertSame('visitedLessons', $visitedLessonsCookie->getName());
-        $this->assertCount(1, json_decode($visitedLessonsCookie->getValue()));
+        $this->assertCount(1, \json_decode($visitedLessonsCookie->getValue()));
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }
 

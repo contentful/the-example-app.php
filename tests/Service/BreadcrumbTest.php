@@ -1,11 +1,12 @@
 <?php
 
 /**
- * This file is part of the contentful/the-example-app.php package.
+ * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2017 Contentful GmbH
+ * @copyright 2017-2018 Contentful GmbH
  * @license   MIT
  */
+
 declare(strict_types=1);
 
 namespace App\Tests\Service;
@@ -48,7 +49,7 @@ class BreadcrumbTestTranslator implements TranslatorInterface
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        return $id.'-'.json_encode($parameters);
+        return $id.'-'.\json_encode($parameters);
     }
 
     /**
@@ -56,7 +57,7 @@ class BreadcrumbTestTranslator implements TranslatorInterface
      */
     public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
-        return $id.'-'.$number.'-'.json_encode($parameters);
+        return $id.'-'.$number.'-'.\json_encode($parameters);
     }
 
     /**
@@ -81,7 +82,7 @@ class BreadcrumbTestUrlGenerator implements UrlGeneratorInterface
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
-        return '/'.$name.'-'.json_encode($parameters);
+        return '/'.$name.'-'.\json_encode($parameters);
     }
 
     /**

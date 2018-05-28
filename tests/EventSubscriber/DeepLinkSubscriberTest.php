@@ -3,9 +3,10 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017 Contentful GmbH
+ * @copyright 2017-2018 Contentful GmbH
  * @license   MIT
  */
+
 declare(strict_types=1);
 
 namespace App\Tests\EventSubscriber;
@@ -72,7 +73,7 @@ class DeepLinkSubscriberTest extends AppWebTestCase
         $credentials = static::bootKernel()
             ->getContainer()
             ->getParameter('default_credentials');
-        $this->assertJsonStringEqualsJsonString(json_encode([
+        $this->assertJsonStringEqualsJsonString(\json_encode([
             'editorialFeatures' => true,
             'spaceId' => $credentials['space_id'],
             'deliveryToken' => $credentials['delivery_token'],
