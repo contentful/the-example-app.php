@@ -1,9 +1,12 @@
-FROM php:7.1.4-fpm-alpine
+FROM php:7.2-fpm-alpine
 
 RUN apk add --update \
     make \
     bash \
-    curl
+    curl \
+    libzip-dev
+
+RUN docker-php-ext-install zip pcntl
 
 RUN rm -rf /var/cache/apk/* && rm -rf /tmp/*
 

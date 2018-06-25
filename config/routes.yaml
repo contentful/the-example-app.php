@@ -1,46 +1,52 @@
 courses:
-    path:     /courses
-    defaults: { _controller: App\Controller\CoursesController, tab: courses }
+    path: /courses
+    controller: App\Controller\CoursesController
+    defaults: { tab: courses }
 
 categories:
-    path:     /courses/categories
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, permanent: true, route: courses }
+    path: /courses/categories
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults: { permanent: true, route: courses, keepQueryParams: true }
 
 category:
-    path:     /courses/categories/{categorySlug}
-    defaults: { _controller: App\Controller\CoursesController, tab: courses }
+    path: /courses/categories/{categorySlug}
+    controller: App\Controller\CoursesController
+    defaults: { tab: courses }
 
 course:
-    path:     /courses/{courseSlug}
-    defaults: { _controller: App\Controller\CourseController, tab: courses }
+    path: /courses/{courseSlug}
+    controller: App\Controller\CourseController
+    defaults: { tab: courses }
 
 lessons:
-    path:     /courses/{courseSlug}/lessons
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, permanent: true, route: course }
+    path: /courses/{courseSlug}/lessons
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults: { permanent: true, route: course, keepQueryParams: true }
 
 lesson:
-    path:     /courses/{courseSlug}/lessons/{lessonSlug}
-    defaults: { _controller: App\Controller\LessonController, tab: courses }
+    path: /courses/{courseSlug}/lessons/{lessonSlug}
+    controller: App\Controller\LessonController
+    defaults: { tab: courses }
 
 reset:
-    path:     /settings/reset
-    defaults: { _controller: App\Controller\ResetController }
-    methods:  [ POST ]
+    path: /settings/reset
+    controller: App\Controller\ResetController
+    methods: [ POST ]
 
 settings:
-    path:     /settings
-    defaults: { _controller: App\Controller\SettingsController }
+    path: /settings
+    controller: App\Controller\SettingsController
 
 imprint:
-    path:     /imprint
-    defaults: { _controller: App\Controller\ImprintController }
+    path: /imprint
+    controller: App\Controller\ImprintController
 
 landing_page:
-    path:     /
-    defaults: { _controller: App\Controller\LandingPageController, tab: home }
+    path: /
+    controller: App\Controller\LandingPageController
+    defaults: { tab: home }
 
 not_found:
-    path:     /{anything}
-    defaults: { _controller: App\Controller\NotFoundController }
-    requirements:
-        anything: ".+"
+    path: /{anything}
+    controller: App\Controller\NotFoundController
+    requirements: { anything: ".+" }
