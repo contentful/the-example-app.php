@@ -1,5 +1,6 @@
 /cypress/
 /tests-e2e/
+/logs/
 .php_cs.cache
 
 ###> symfony/framework-bundle ###
