@@ -39,6 +39,11 @@ abstract class AppWebTestCase extends WebTestCase
      */
     protected $request;
 
+    public function setUp()
+    {
+        $this->client = static::createClient();
+    }
+
     /**
      * @param string $method
      * @param string $url
@@ -46,8 +51,6 @@ abstract class AppWebTestCase extends WebTestCase
      */
     protected function visit(string $method, string $url, int $statusCode = 200)
     {
-        $this->client = static::createClient();
-
         $this->crawler = $this->client->request($method, $url);
         $this->request = $this->client->getRequest();
         $this->response = $this->client->getResponse();

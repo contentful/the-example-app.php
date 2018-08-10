@@ -11,7 +11,9 @@ declare(strict_types=1);
 
 namespace App\Tests\EventSubscriber;
 
+use App\Service\Contentful;
 use App\Tests\Controller\AppWebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DeepLinkSubscriberTest extends AppWebTestCase
@@ -79,5 +81,26 @@ class DeepLinkSubscriberTest extends AppWebTestCase
             'deliveryToken' => $credentials['delivery_token'],
             'previewToken' => $credentials['preview_token'],
         ]), $cookie->getValue());
+    }
+
+    public function testInvalidCookieDoesNotPreventDeepLinkSubscriber()
+    {
+        // This cookie contains faulty credentials;
+        // The should not interfere when injecting new, valid ones.
+        $cookie = new Cookie(
+            Contentful::COOKIE_SETTINGS_NAME,
+            '{"spaceId":"INVALID_SPACE_ID","deliveryToken":"INVALID_DELIVERY_TOKEN","previewToken":"INVALID_PREVIEW_TOKEN","editorialFeatures":true}'
+        );
+        $this->client->getCookieJar()->set($cookie);
+
+        $credentials = static::bootKernel()
+            ->getContainer()
+            ->getParameter('default_credentials');
+        $this->visit('GET', \sprintf(
+            '/?space_id=%s&delivery_token=%s&preview_token=%s&api=cpa',
+            $credentials['space_id'],
+            $credentials['delivery_token'],
+            $credentials['preview_token']
+        ), 302);
     }
 }
