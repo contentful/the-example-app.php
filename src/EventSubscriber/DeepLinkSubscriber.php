@@ -11,13 +11,13 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
-use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * DeepLinkSubscriber.
@@ -36,18 +36,18 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     private $responseFactory;
 
     /**
-     * @var Contentful
+     * @var UrlGeneratorInterface
      */
-    private $contentful;
+    private $urlGenerator;
 
     /**
-     * @param ResponseFactory $responseFactory
-     * @param Contentful      $contentful
+     * @param ResponseFactory       $responseFactory
+     * @param UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(ResponseFactory $responseFactory, Contentful $contentful)
+    public function __construct(ResponseFactory $responseFactory, UrlGeneratorInterface $urlGenerator)
     {
         $this->responseFactory = $responseFactory;
-        $this->contentful = $contentful;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -63,7 +63,9 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         $settings = $this->extractSettingsParameters($request);
         $request->getSession()->set(State::SESSION_SETTINGS_NAME, $settings);
 
-        $event->setResponse($this->responseFactory->createRoutedRedirectResponse('settings'));
+        $event->setResponse($this->responseFactory->createRedirectResponse(
+            $this->urlGenerator->generate('settings')
+        ));
     }
 
     /**

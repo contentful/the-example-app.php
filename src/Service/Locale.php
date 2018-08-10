@@ -9,7 +9,6 @@
 
 namespace App\Service;
 
-use Contentful\Delivery\Resource\Environment;
 use Contentful\Delivery\Resource\Locale as ContentfulLocale;
 
 /**
@@ -22,30 +21,28 @@ use Contentful\Delivery\Resource\Locale as ContentfulLocale;
 class Locale
 {
     /**
-     * @var State
+     * @var ContentfulLocale[]
      */
-    private $state;
+    private $contentfulLocales = [];
 
     /**
-     * @var Environment
+     * @var ContentfulLocale|null
      */
-    private $environment;
-
-    /**
-     * @var string[]
-     */
-    private $availableLocales;
+    private $current;
 
     /**
      * @param State      $state
      * @param Contentful $contentful
-     * @param string[]   $availableLocales
      */
-    public function __construct(State $state, Contentful $contentful, array $availableLocales)
+    public function __construct(State $state, Contentful $contentful)
     {
-        $this->state = $state;
-        $this->environment = $contentful->findEnvironment();
-        $this->availableLocales = $availableLocales;
+        try {
+            $environment = $contentful->findEnvironment();
+
+            $this->contentfulLocales = $environment->getLocales();
+            $this->current = $environment->getLocale($state->getLocale());
+        } catch (\Exception $exception) {
+        }
     }
 
     /**
@@ -53,7 +50,7 @@ class Locale
      */
     public function getAll(): array
     {
-        return $this->environment->getLocales();
+        return $this->contentfulLocales;
     }
 
     /**
@@ -61,18 +58,6 @@ class Locale
      */
     public function getCurrent(): ?ContentfulLocale
     {
-        try {
-            return $this->environment->getLocale($this->state->getLocale());
-        } catch (\InvalidArgumentException $exception) {
-            return null;
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAvailable(): array
-    {
-        return $this->availableLocales;
+        return $this->current;
     }
 }

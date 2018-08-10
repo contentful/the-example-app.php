@@ -123,7 +123,7 @@ class ResponseFactory
     }
 
     /**
-     * Applies stores cookies to the current Response object.
+     * Applies stored cookies to the current Response object.
      *
      * @param Response $response
      *

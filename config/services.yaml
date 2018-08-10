@@ -42,9 +42,6 @@ services:
         arguments:
             $deliveryApiUrl: "%env(CONTENTFUL_DELIVERY_URL)%"
             $previewApiUrl: "%env(CONTENTFUL_PREVIEW_URL)%"
-    App\Service\Locale:
-        arguments:
-            $availableLocales: "%available_locales%"
     App\Service\ResponseFactory:
         arguments:
             $cookieLifetime: "%cookie_lifetime%"
