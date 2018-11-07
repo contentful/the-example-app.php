@@ -4,7 +4,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "contentful/contentful": "^3.3",
+        "contentful/contentful": "^4.0",
         "league/commonmark": "^0.17",
         "symfony/asset": "^4.1",
         "symfony/console": "^4.1",
@@ -12,7 +12,6 @@
         "symfony/flex": "^1.0",
         "symfony/form": "^4.1",
         "symfony/framework-bundle": "^4.1",
-        "symfony/lts": "^4@dev",
         "symfony/translation": "^4.1",
         "symfony/twig-bundle": "^4.1",
         "symfony/validator": "^4.1",
@@ -64,7 +63,8 @@
     "extra": {
         "symfony": {
             "id": "01C0KWT5CW2K5P31TSSC3PMNBA",
-            "allow-contrib": false
+            "allow-contrib": false,
+            "require": "~4.1.0"
         }
     }
 }

@@ -17,6 +17,9 @@
     "contentful/core": {
         "version": "1.0.0"
     },
+    "contentful/rich-text": {
+        "version": "1.2.0"
+    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -29,11 +32,17 @@
     "guzzlehttp/psr7": {
         "version": "1.4.2"
     },
+    "jean85/pretty-package-versions": {
+        "version": "1.2"
+    },
     "league/commonmark": {
         "version": "0.16.0"
     },
     "nikic/php-parser": {
         "version": "v4.0.1"
+    },
+    "ocramius/package-versions": {
+        "version": "1.3.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -139,9 +148,6 @@
     },
     "symfony/intl": {
         "version": "v4.0.1"
-    },
-    "symfony/lts": {
-        "version": "4-dev"
     },
     "symfony/maker-bundle": {
         "version": "1.0",

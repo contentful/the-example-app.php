@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -79,10 +79,10 @@ class State
             'deliveryToken' => $credentials['delivery_token'],
             'previewToken' => $credentials['preview_token'],
             'locale' => $locale,
-            'editorialFeatures' => false,
+            'editorialFeatures' => \false,
             'api' => Contentful::API_DELIVERY,
             'queryString' => '',
-            'cookieCredentials' => false,
+            'cookieCredentials' => \false,
         ];
 
         // Request can be null when running the CLI.
@@ -110,7 +110,7 @@ class State
                 : Contentful::API_DELIVERY;
         }
         $settings['locale'] = $request->query->get('locale');
-        $settings['queryString'] = $this->extractQueryString($settings['api'] ?? null, $settings['locale']);
+        $settings['queryString'] = $this->extractQueryString($settings['api'] ?? \null, $settings['locale']);
 
         return \array_filter($settings);
     }
@@ -124,13 +124,13 @@ class State
     {
         $cookieSettings = (array) \json_decode(
             \stripslashes($request->cookies->get(Contentful::COOKIE_SETTINGS_NAME, '')),
-            true
+            \true
         );
 
         $settings = [];
 
         if ($cookieSettings) {
-            $settings['cookieCredentials'] = true;
+            $settings['cookieCredentials'] = \true;
             $settings['spaceId'] = $cookieSettings['spaceId'];
             $settings['deliveryToken'] = $cookieSettings['deliveryToken'];
             $settings['previewToken'] = $cookieSettings['previewToken'];

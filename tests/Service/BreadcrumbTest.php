@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -25,7 +25,7 @@ class BreadcrumbTest extends TestCase
         $breadcrumb = new Breadcrumb(
             new BreadcrumbTestTranslator(),
             new BreadcrumbTestUrlGenerator(),
-            new State(null, [
+            new State(\null, [
                 'space_id' => 'spaceId',
                 'delivery_token' => 'deliveryToken',
                 'preview_token' => 'previewToken',
@@ -33,7 +33,8 @@ class BreadcrumbTest extends TestCase
         );
 
         $breadcrumb->add('item1', 'route1', ['param1' => 'value1'])
-            ->add('item2', 'route2', [], false);
+            ->add('item2', 'route2', [], \false)
+        ;
 
         $this->assertSame([
             ['label' => 'item1-[]', 'url' => '/route1-{"param1":"value1"}'],
@@ -47,7 +48,7 @@ class BreadcrumbTestTranslator implements TranslatorInterface
     /**
      * {@inheritdoc}
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = \null, $locale = \null)
     {
         return $id.'-'.\json_encode($parameters);
     }
@@ -55,7 +56,7 @@ class BreadcrumbTestTranslator implements TranslatorInterface
     /**
      * {@inheritdoc}
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice($id, $number, array $parameters = [], $domain = \null, $locale = \null)
     {
         return $id.'-'.$number.'-'.\json_encode($parameters);
     }

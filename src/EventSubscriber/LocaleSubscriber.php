@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -109,18 +109,19 @@ class LocaleSubscriber implements EventSubscriberInterface
      */
     private function apiSupportsLocale(string $locale): bool
     {
-        if (\in_array($locale, $this->availableLocales, true)) {
-            return true;
+        if (\in_array($locale, $this->availableLocales, \true)) {
+            return \true;
         }
 
         try {
             $this->contentful
                 ->findEnvironment()
-                ->getLocale($locale);
+                ->getLocale($locale)
+            ;
 
-            return true;
+            return \true;
         } catch (\InvalidArgumentException $exception) {
-            return false;
+            return \false;
         }
     }
 

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -30,7 +30,7 @@ class LandingPageController extends AppController
     public function __invoke(): Response
     {
         $landingPage = $this->contentful->findLandingPage(self::HOME_SLUG);
-        if (null === $landingPage) {
+        if (\null === $landingPage) {
             throw new NotFoundHttpException($this->translator->trans('errorMessage404Route'));
         }
 

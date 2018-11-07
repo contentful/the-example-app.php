@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -91,8 +91,9 @@ class Contentful
         // the result of which will depend on the validity of the credentials.
         // If any error should arise, the call will throw an exception.
         $query = (new Query())
-            ->setLimit(1);
-        $this->clientFactory->createClient($api, $spaceId, $accessToken, false)->getContentTypes($query);
+            ->setLimit(1)
+        ;
+        $this->clientFactory->createClient($api, $spaceId, $accessToken, \false)->getContentTypes($query);
     }
 
     /**
@@ -125,7 +126,8 @@ class Contentful
         $query = (new Query())
             ->setContentType('category')
             ->orderBy('fields.title')
-            ->setLocale($this->state->getLocale());
+            ->setLocale($this->state->getLocale())
+        ;
 
         return $this->client->getEntries($query)->getItems();
     }
@@ -143,7 +145,8 @@ class Contentful
             ->setContentType('course')
             ->setLocale($this->state->getLocale())
             ->orderBy('-sys.createdAt')
-            ->setInclude(2);
+            ->setInclude(2)
+        ;
 
         if ($category) {
             $query->where('fields.categories.sys.id', $category->getId());
@@ -197,17 +200,17 @@ class Contentful
     {
         $course = $this->findEntry('course', $courseSlug, 3);
         if (!$course) {
-            return null;
+            return \null;
         }
 
         $lessons = $course->get('lessons');
         $lessonIndex = $this->findLessonIndex($lessons, $lessonSlug);
-        if (null === $lessonIndex) {
-            return null;
+        if (\null === $lessonIndex) {
+            return \null;
         }
 
         $course->lesson = $lessons[$lessonIndex];
-        $course->nextLesson = $lessons[$lessonIndex + 1] ?? null;
+        $course->nextLesson = $lessons[$lessonIndex + 1] ?? \null;
 
         if ($this->state->hasEditorialFeaturesLink()) {
             $course->lesson->children = $course->lesson->get('modules');
@@ -231,7 +234,7 @@ class Contentful
             }
         }
 
-        return null;
+        return \null;
     }
 
     /**
@@ -269,8 +272,9 @@ class Contentful
             ->setContentType($contentType)
             ->where('fields.slug', $slug)
             ->setInclude($include)
-            ->setLimit(1);
+            ->setLimit(1)
+        ;
 
-        return $this->client->getEntries($query)->getItems()[0] ?? null;
+        return $this->client->getEntries($query)->getItems()[0] ?? \null;
     }
 }
