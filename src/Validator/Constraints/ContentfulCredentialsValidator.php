@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -97,8 +97,8 @@ class ContentfulCredentialsValidator extends ConstraintValidator
      */
     private function validateCredentials(string $spaceId, string $accessToken, string $api): void
     {
-        $violation = null;
-        $path = null;
+        $violation = \null;
+        $path = \null;
         $apiLabel = Contentful::API_DELIVERY === $api ? 'delivery' : 'preview';
 
         try {
@@ -117,7 +117,8 @@ class ContentfulCredentialsValidator extends ConstraintValidator
         if ($violation) {
             $this->context->buildViolation($violation)
                 ->atPath($path)
-                ->addViolation();
+                ->addViolation()
+            ;
         }
     }
 }

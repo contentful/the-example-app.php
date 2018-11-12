@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -30,10 +30,8 @@ class AppCacheWarmer implements CacheWarmerInterface
      */
     public function __construct(ClientFactory $clientFactory, CacheItemPoolInterface $cacheItemPool)
     {
-        $this->cacheWarmer = new CacheWarmer(
-            $clientFactory->createClient(Contentful::API_DELIVERY, null, null, false),
-            $cacheItemPool
-        );
+        $client = $clientFactory->createClient(Contentful::API_DELIVERY, \null, \null, \false);
+        $this->cacheWarmer = new CacheWarmer($client, $client->getResourcePool(), $cacheItemPool);
     }
 
     /**
@@ -49,6 +47,6 @@ class AppCacheWarmer implements CacheWarmerInterface
      */
     public function isOptional()
     {
-        return true;
+        return \true;
     }
 }

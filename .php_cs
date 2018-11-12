@@ -1,48 +1,9 @@
 <?php
 
-$startYear = '2017';
-$year = date('Y');
+$config = require __DIR__.'/vendor/contentful/core/scripts/php-cs-fixer.php';
 
-$fileHeaderComment = <<<COMMENT
-This file is part of the contentful/the-example-app package.
-
-@copyright $startYear-$year Contentful GmbH
-@license   MIT
-COMMENT;
-
-$finder = PhpCsFixer\Finder::create()
-    ->in('config')
-    ->in('src')
-    ->in('public')
-    ->in('tests')
-;
-
-return PhpCsFixer\Config::create()
-    ->setFinder($finder)
-    ->setRiskyAllowed(true)
-    ->setCacheFile(__DIR__.'/.php_cs.cache')
-    ->setRules([
-        '@Symfony' => true,
-        '@Symfony:risky' => true,
-        'array_syntax' => ['syntax' => 'short'],
-        'header_comment' => [
-            'commentType' => 'PHPDoc',
-            'header' => $fileHeaderComment,
-            'separate' => 'both',
-            'location' => 'after_open',
-        ],
-        'linebreak_after_opening_tag' => true,
-        'mb_str_functions' => true,
-        'native_function_invocation' => true,
-        'no_php4_constructor' => true,
-        'no_unreachable_default_argument_value' => true,
-        'no_useless_else' => true,
-        'no_useless_return' => true,
-        'ordered_imports' => true,
-        'php_unit_strict' => true,
-        'phpdoc_order' => true,
-        'semicolon_after_instruction' => true,
-        'strict_comparison' => true,
-        'strict_param' => true,
-    ])
-;
+return $config(
+    'the-example-app',
+    true,
+    ['config', 'src', 'public', 'tests']
+);

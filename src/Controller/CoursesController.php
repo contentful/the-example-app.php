@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -35,10 +35,11 @@ class CoursesController extends AppController
         $courses = $this->contentful->findCourses($category);
 
         $this->breadcrumb->add('homeLabel', 'landing_page')
-            ->add('coursesLabel', 'courses');
+            ->add('coursesLabel', 'courses')
+        ;
 
         if ($category) {
-            $this->breadcrumb->add($category->get('title'), 'category', ['categorySlug' => $categorySlug], false);
+            $this->breadcrumb->add($category->get('title'), 'category', ['categorySlug' => $categorySlug], \false);
         }
 
         return $this->responseFactory->createResponse('courses.html.twig', [
@@ -62,6 +63,6 @@ class CoursesController extends AppController
             }
         }
 
-        return null;
+        return \null;
     }
 }

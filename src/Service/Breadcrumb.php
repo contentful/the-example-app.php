@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -63,7 +63,7 @@ class Breadcrumb
      *
      * @return self
      */
-    public function add(string $label, string $route, array $parameters = [], bool $translate = true): self
+    public function add(string $label, string $route, array $parameters = [], bool $translate = \true): self
     {
         $label = $translate ? $this->translator->trans($label) : $label;
         $url = $this->urlGenerator->generate($route, $parameters);

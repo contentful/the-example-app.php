@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -33,7 +33,8 @@ class ResponseFactoryTest extends TestCase
     {
         $this->twig = $this->createMock(Environment::class);
         $this->twig->method('render')
-            ->willReturn($this->html);
+            ->willReturn($this->html)
+        ;
     }
 
     public function testStandardResponse()

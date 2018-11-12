@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -62,7 +62,7 @@ abstract class AppWebTestCase extends WebTestCase
      * @param string      $selector
      * @param string|null $value
      */
-    protected function assertPageContains(string $selector, string $value = null)
+    protected function assertPageContains(string $selector, string $value = \null)
     {
         $selector .= $value ? ':contains("'.$value.'")' : '';
 
@@ -98,7 +98,7 @@ abstract class AppWebTestCase extends WebTestCase
      * @param int  $max
      * @param bool $includeBoundaries
      */
-    protected function assertBetween(int $min, int $value, int $max, bool $includeBoundaries = true)
+    protected function assertBetween(int $min, int $value, int $max, bool $includeBoundaries = \true)
     {
         $constraint = $includeBoundaries
             ? $this->logicalAnd(

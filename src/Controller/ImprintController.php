@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -26,7 +26,8 @@ class ImprintController extends AppController
     public function __invoke(): Response
     {
         $this->breadcrumb->add('homeLabel', 'landing_page')
-            ->add('imprintLabel', 'imprint');
+            ->add('imprintLabel', 'imprint')
+        ;
 
         return $this->responseFactory->createResponse('imprint.html.twig');
     }

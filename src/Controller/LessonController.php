@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -61,11 +61,12 @@ class LessonController extends AppController
     {
         $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('coursesLabel', 'courses')
-            ->add($course->get('title'), 'course', ['courseSlug' => $course->get('slug')], false)
+            ->add($course->get('title'), 'course', ['courseSlug' => $course->get('slug')], \false)
             ->add('lessonsLabel', 'course', ['courseSlug' => $course->get('slug')])
             ->add($lesson->get('title'), 'lesson', [
                 'courseSlug' => $course->get('slug'),
                 'lessonSlug' => $lesson->get('slug'),
-            ], false);
+            ], \false)
+        ;
     }
 }

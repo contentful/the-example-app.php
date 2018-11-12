@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -46,13 +46,15 @@ class SettingsController extends AppController
             // if we're not redirecting the user.
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'changesSavedLabel');
+                ->add('success', 'changesSavedLabel')
+            ;
 
             return $this->responseFactory->createRoutedRedirectResponse('settings');
         }
 
         $this->breadcrumb->add('homeLabel', 'landing_page')
-            ->add('settingsLabel', 'settings');
+            ->add('settingsLabel', 'settings')
+        ;
 
         return $this->responseFactory->createResponse('settings.html.twig', [
             'form' => $form->createView(),
@@ -75,7 +77,7 @@ class SettingsController extends AppController
         if (!$settings) {
             $form->handleRequest($request);
 
-            return null;
+            return \null;
         }
 
         $request->getSession()->remove(State::SESSION_SETTINGS_NAME);
@@ -102,7 +104,7 @@ class SettingsController extends AppController
                 'spaceId' => $settings['spaceId'],
                 'deliveryToken' => $settings['deliveryToken'],
                 'previewToken' => $settings['previewToken'],
-                'editorialFeatures' => (bool) ($settings['editorialFeatures'] ?? false),
+                'editorialFeatures' => (bool) ($settings['editorialFeatures'] ?? \false),
             ]
         );
     }

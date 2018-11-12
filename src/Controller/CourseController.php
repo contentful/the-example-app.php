@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -35,18 +35,19 @@ class CourseController extends AppController
             throw new NotFoundHttpException($this->translator->trans('errorMessage404Course'));
         }
         $lessons = $course->get('lessons');
-        $nextLesson = $lessons[0] ?? null;
+        $nextLesson = $lessons[0] ?? \null;
 
         // Manage state of viewed lessons
         $visitedLessons = $this->responseFactory->updateVisitedLessonCookie($request, $course->getId());
 
         $this->breadcrumb->add('homeLabel', 'landing_page')
             ->add('coursesLabel', 'courses')
-            ->add($course->get('title'), 'course', ['courseSlug' => $course->get('slug')], false);
+            ->add($course->get('title'), 'course', ['courseSlug' => $course->get('slug')], \false)
+        ;
 
         return $this->responseFactory->createResponse('course.html.twig', [
             'course' => $course,
-            'lesson' => null,
+            'lesson' => \null,
             'lessons' => $lessons,
             'nextLesson' => $nextLesson,
             'visitedLessons' => $visitedLessons,

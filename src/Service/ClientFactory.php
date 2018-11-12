@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2017-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -13,6 +13,7 @@ namespace App\Service;
 
 use App\Kernel;
 use Contentful\Delivery\Client;
+use Contentful\Delivery\ClientOptions;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -67,7 +68,7 @@ class ClientFactory
      *
      * @return Client
      */
-    public function createClient(string $api, string $spaceId = null, string $accessToken = null, bool $useCache = true): Client
+    public function createClient(string $api, string $spaceId = \null, string $accessToken = \null, bool $useCache = \true): Client
     {
         if (Contentful::API_DELIVERY !== $api && Contentful::API_PREVIEW !== $api) {
             throw new \InvalidArgumentException(\sprintf(
@@ -87,28 +88,25 @@ class ClientFactory
         // This is not needed during normal use.
         // URLs are determined automatically from the Client,
         // but here we need to make them configurable for internal purposes.
-        // Overall, you might need the `uriOverride` option (for instance)
+        // Overall, you might need the `withHost` option (for instance)
         // for setting up a custom proxy, but for most cases this is not something
         // you should care about too much.
         // This means that in normal use, we wouldn't have environment variables
         // for defining these URLs, and they wouldn't be injected in this factory.
-        $uri = Contentful::API_DELIVERY === $api
+        $host = Contentful::API_DELIVERY === $api
             ? $this->deliveryApiUrl
             : $this->previewApiUrl;
 
-        $options = ['baseUri' => $uri];
+        $options = (new ClientOptions())
+            ->withHost($host)
+            ->withDefaultLocale($this->state->getLocale())
+        ;
+
         if ($useCache) {
-            $options['cache'] = $this->cacheItemPool;
+            $options->withCache($this->cacheItemPool);
         }
 
-        $client = new Client(
-            $accessToken,
-            $spaceId,
-            'master',
-            Contentful::API_PREVIEW === $api,
-            $this->state->getLocale(),
-            $options
-        );
+        $client = new Client($accessToken, $spaceId, 'master', $options);
         $client->setApplication(Kernel::APP_NAME, Kernel::APP_VERSION);
 
         return $client;
