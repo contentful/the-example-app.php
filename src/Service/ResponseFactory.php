@@ -50,7 +50,7 @@ class ResponseFactory
     /**
      * @var bool
      */
-    private $clearSettingsCookie = \false;
+    private $clearSettingsCookie = false;
 
     /**
      * @param Environment           $twig
@@ -82,7 +82,7 @@ class ResponseFactory
      */
     public function clearSettingsCookie(): void
     {
-        $this->clearSettingsCookie = \true;
+        $this->clearSettingsCookie = true;
     }
 
     /**
@@ -151,7 +151,7 @@ class ResponseFactory
     public function updateVisitedLessonCookie(Request $request, string $entryId): array
     {
         $cookie = $request->cookies->get('visitedLessons');
-        $visitedLessons = $cookie ? \json_decode($cookie, \true) : [];
+        $visitedLessons = $cookie ? \json_decode($cookie, true) : [];
         $visitedLessons[] = $entryId;
 
         $this->addCookie('visitedLessons', \array_unique($visitedLessons));

@@ -77,7 +77,7 @@ class DeepLinkSubscriberTest extends AppWebTestCase
             ->getParameter('default_credentials')
         ;
         $this->assertJsonStringEqualsJsonString(\json_encode([
-            'editorialFeatures' => \true,
+            'editorialFeatures' => true,
             'spaceId' => $credentials['space_id'],
             'deliveryToken' => $credentials['delivery_token'],
             'previewToken' => $credentials['preview_token'],

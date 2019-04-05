@@ -26,18 +26,18 @@ class SettingsType extends AbstractType
         $builder
             ->add('spaceId', TextType::class, [
                 'constraints' => new NotBlank(['message' => 'fieldIsRequiredLabel']),
-                'required' => \true,
+                'required' => true,
             ])
             ->add('deliveryToken', TextType::class, [
                 'constraints' => new NotBlank(['message' => 'fieldIsRequiredLabel']),
-                'required' => \true,
+                'required' => true,
             ])
             ->add('previewToken', TextType::class, [
                 'constraints' => new NotBlank(['message' => 'fieldIsRequiredLabel']),
-                'required' => \true,
+                'required' => true,
             ])
             ->add('editorialFeatures', CheckboxType::class, [
-                'required' => \false,
+                'required' => false,
             ])
         ;
     }

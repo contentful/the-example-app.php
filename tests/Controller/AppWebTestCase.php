@@ -62,7 +62,7 @@ abstract class AppWebTestCase extends WebTestCase
      * @param string      $selector
      * @param string|null $value
      */
-    protected function assertPageContains(string $selector, string $value = \null)
+    protected function assertPageContains(string $selector, string $value = null)
     {
         $selector .= $value ? ':contains("'.$value.'")' : '';
 
@@ -98,7 +98,7 @@ abstract class AppWebTestCase extends WebTestCase
      * @param int  $max
      * @param bool $includeBoundaries
      */
-    protected function assertBetween(int $min, int $value, int $max, bool $includeBoundaries = \true)
+    protected function assertBetween(int $min, int $value, int $max, bool $includeBoundaries = true)
     {
         $constraint = $includeBoundaries
             ? $this->logicalAnd(

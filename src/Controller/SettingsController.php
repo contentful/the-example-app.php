@@ -77,7 +77,7 @@ class SettingsController extends AppController
         if (!$settings) {
             $form->handleRequest($request);
 
-            return \null;
+            return null;
         }
 
         $request->getSession()->remove(State::SESSION_SETTINGS_NAME);
@@ -104,7 +104,7 @@ class SettingsController extends AppController
                 'spaceId' => $settings['spaceId'],
                 'deliveryToken' => $settings['deliveryToken'],
                 'previewToken' => $settings['previewToken'],
-                'editorialFeatures' => (bool) ($settings['editorialFeatures'] ?? \false),
+                'editorialFeatures' => (bool) ($settings['editorialFeatures'] ?? false),
             ]
         );
     }

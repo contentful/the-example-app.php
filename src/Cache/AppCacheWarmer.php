@@ -30,7 +30,7 @@ class AppCacheWarmer implements CacheWarmerInterface
      */
     public function __construct(ClientFactory $clientFactory, CacheItemPoolInterface $cacheItemPool)
     {
-        $client = $clientFactory->createClient(Contentful::API_DELIVERY, \null, \null, \false);
+        $client = $clientFactory->createClient(Contentful::API_DELIVERY, null, null, false);
         $this->cacheWarmer = new CacheWarmer($client, $client->getResourcePool(), $cacheItemPool);
     }
 
@@ -47,6 +47,6 @@ class AppCacheWarmer implements CacheWarmerInterface
      */
     public function isOptional()
     {
-        return \true;
+        return true;
     }
 }

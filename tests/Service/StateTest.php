@@ -19,7 +19,7 @@ class StateTest extends TestCase
 {
     public function testGettersWithoutCookieAndQueryParameters()
     {
-        $state = new State(\null, [
+        $state = new State(null, [
             'space_id' => 'defaultSpaceId',
             'delivery_token' => 'defaultDeliveryToken',
             'preview_token' => 'defaultPreviewToken',
@@ -29,7 +29,7 @@ class StateTest extends TestCase
             'spaceId' => 'defaultSpaceId',
             'deliveryToken' => 'defaultDeliveryToken',
             'previewToken' => 'defaultPreviewToken',
-            'editorialFeatures' => \false,
+            'editorialFeatures' => false,
         ], $state->getSettings());
         $this->assertSame('defaultSpaceId', $state->getSpaceId());
         $this->assertSame('defaultDeliveryToken', $state->getDeliveryToken());
@@ -63,7 +63,7 @@ class StateTest extends TestCase
             'spaceId' => 'cookieSpaceId',
             'deliveryToken' => 'cookieDeliveryToken',
             'previewToken' => 'cookiePreviewToken',
-            'editorialFeatures' => \true,
+            'editorialFeatures' => true,
         ], $state->getSettings());
         $this->assertSame('cookieSpaceId', $state->getSpaceId());
         $this->assertSame('cookieDeliveryToken', $state->getDeliveryToken());
