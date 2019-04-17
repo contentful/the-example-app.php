@@ -93,7 +93,7 @@ class Contentful
         $query = (new Query())
             ->setLimit(1)
         ;
-        $this->clientFactory->createClient($api, $spaceId, $accessToken, \false)->getContentTypes($query);
+        $this->clientFactory->createClient($api, $spaceId, $accessToken, false)->getContentTypes($query);
     }
 
     /**
@@ -200,17 +200,17 @@ class Contentful
     {
         $course = $this->findEntry('course', $courseSlug, 3);
         if (!$course) {
-            return \null;
+            return null;
         }
 
         $lessons = $course->get('lessons');
         $lessonIndex = $this->findLessonIndex($lessons, $lessonSlug);
-        if (\null === $lessonIndex) {
-            return \null;
+        if (null === $lessonIndex) {
+            return null;
         }
 
         $course->lesson = $lessons[$lessonIndex];
-        $course->nextLesson = $lessons[$lessonIndex + 1] ?? \null;
+        $course->nextLesson = $lessons[$lessonIndex + 1] ?? null;
 
         if ($this->state->hasEditorialFeaturesLink()) {
             $course->lesson->children = $course->lesson->get('modules');
@@ -234,7 +234,7 @@ class Contentful
             }
         }
 
-        return \null;
+        return null;
     }
 
     /**
@@ -275,6 +275,6 @@ class Contentful
             ->setLimit(1)
         ;
 
-        return $this->client->getEntries($query)->getItems()[0] ?? \null;
+        return $this->client->getEntries($query)->getItems()[0] ?? null;
     }
 }

@@ -97,8 +97,8 @@ class ContentfulCredentialsValidator extends ConstraintValidator
      */
     private function validateCredentials(string $spaceId, string $accessToken, string $api): void
     {
-        $violation = \null;
-        $path = \null;
+        $violation = null;
+        $path = null;
         $apiLabel = Contentful::API_DELIVERY === $api ? 'delivery' : 'preview';
 
         try {

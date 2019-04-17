@@ -68,7 +68,7 @@ class ClientFactory
      *
      * @return Client
      */
-    public function createClient(string $api, string $spaceId = \null, string $accessToken = \null, bool $useCache = \true): Client
+    public function createClient(string $api, string $spaceId = null, string $accessToken = null, bool $useCache = true): Client
     {
         if (Contentful::API_DELIVERY !== $api && Contentful::API_PREVIEW !== $api) {
             throw new \InvalidArgumentException(\sprintf(

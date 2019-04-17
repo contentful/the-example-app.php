@@ -109,8 +109,8 @@ class LocaleSubscriber implements EventSubscriberInterface
      */
     private function apiSupportsLocale(string $locale): bool
     {
-        if (\in_array($locale, $this->availableLocales, \true)) {
-            return \true;
+        if (\in_array($locale, $this->availableLocales, true)) {
+            return true;
         }
 
         try {
@@ -119,9 +119,9 @@ class LocaleSubscriber implements EventSubscriberInterface
                 ->getLocale($locale)
             ;
 
-            return \true;
+            return true;
         } catch (\InvalidArgumentException $exception) {
-            return \false;
+            return false;
         }
     }
 

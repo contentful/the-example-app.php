@@ -39,7 +39,7 @@ class CoursesController extends AppController
         ;
 
         if ($category) {
-            $this->breadcrumb->add($category->get('title'), 'category', ['categorySlug' => $categorySlug], \false);
+            $this->breadcrumb->add($category->get('title'), 'category', ['categorySlug' => $categorySlug], false);
         }
 
         return $this->responseFactory->createResponse('courses.html.twig', [
@@ -63,6 +63,6 @@ class CoursesController extends AppController
             }
         }
 
-        return \null;
+        return null;
     }
 }

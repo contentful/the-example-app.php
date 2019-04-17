@@ -150,23 +150,23 @@ class EntryStateChecker
     private function compare(Entry $previewEntry, array $deliveryEntries): array
     {
         $state = [
-            'draft' => \false,
-            'pendingChanges' => \false,
+            'draft' => false,
+            'pendingChanges' => false,
         ];
 
-        $deliveryEntry = $deliveryEntries[$previewEntry->getId()] ?? \null;
+        $deliveryEntry = $deliveryEntries[$previewEntry->getId()] ?? null;
 
         // If no entry is found, it means it's hasn't been published yet.
         if (!$deliveryEntry) {
-            $state['draft'] = \true;
+            $state['draft'] = true;
         }
 
         // Different updatedAt values mean the entry has been updated since its last publishing.
         // We format the values to remove milliseconds in order to ignore slight discrepancies.
         $previewUpdatedAt = $previewEntry->getSystemProperties()->getUpdatedAt()->format('Y-m-d H:i:s');
-        $deliveryUpdatedAt = $deliveryEntry ? $deliveryEntry->getSystemProperties()->getUpdatedAt()->format('Y-m-d H:i:s') : \null;
+        $deliveryUpdatedAt = $deliveryEntry ? $deliveryEntry->getSystemProperties()->getUpdatedAt()->format('Y-m-d H:i:s') : null;
         if ($deliveryEntry && $previewUpdatedAt !== $deliveryUpdatedAt) {
-            $state['pendingChanges'] = \true;
+            $state['pendingChanges'] = true;
         }
 
         return $state;

@@ -30,7 +30,7 @@ class LandingPageController extends AppController
     public function __invoke(): Response
     {
         $landingPage = $this->contentful->findLandingPage(self::HOME_SLUG);
-        if (\null === $landingPage) {
+        if (null === $landingPage) {
             throw new NotFoundHttpException($this->translator->trans('errorMessage404Route'));
         }
 

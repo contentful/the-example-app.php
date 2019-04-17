@@ -63,7 +63,7 @@ class Breadcrumb
      *
      * @return self
      */
-    public function add(string $label, string $route, array $parameters = [], bool $translate = \true): self
+    public function add(string $label, string $route, array $parameters = [], bool $translate = true): self
     {
         $label = $translate ? $this->translator->trans($label) : $label;
         $url = $this->urlGenerator->generate($route, $parameters);
