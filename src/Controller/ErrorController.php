@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -19,11 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ErrorController extends AppController
 {
-    /**
-     * @param FlattenException $exception
-     *
-     * @return Response
-     */
     public function __invoke(FlattenException $exception): Response
     {
         return $this->responseFactory->createResponse('error.html.twig', [

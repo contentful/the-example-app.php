@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -61,11 +61,6 @@ class Contentful
      */
     private $clientFactory;
 
-    /**
-     * @param State             $state
-     * @param ClientFactory     $clientFactory
-     * @param EntryStateChecker $entryStateChecker
-     */
     public function __construct(State $state, ClientFactory $clientFactory, EntryStateChecker $entryStateChecker)
     {
         $this->state = $state;
@@ -78,10 +73,6 @@ class Contentful
 
     /**
      * Validates the given credentials by trying to make an API call.
-     *
-     * @param string $spaceId
-     * @param string $accessToken
-     * @param string $api
      *
      * @throws Exception if the credentials are not valid and an error response is returned from Contentful
      */
@@ -98,8 +89,6 @@ class Contentful
 
     /**
      * Finds the space object currently in use.
-     *
-     * @return Space
      */
     public function findSpace(): Space
     {
@@ -108,8 +97,6 @@ class Contentful
 
     /**
      * Finds the environment object currently in use.
-     *
-     * @return Environment
      */
     public function findEnvironment(): Environment
     {
@@ -134,8 +121,6 @@ class Contentful
 
     /**
      * Finds the available courses, sorted by creation date.
-     *
-     * @param Entry|null $category
      *
      * @return Entry[]
      */
@@ -167,10 +152,6 @@ class Contentful
      * by using the include parameter.
      * Depending on the page, we can choose whether we can go as deep as
      * the lesson modules when working out the entry state.
-     *
-     * @param string $courseSlug
-     *
-     * @return Entry|null
      */
     public function findCourse(string $courseSlug): ?Entry
     {
@@ -190,11 +171,6 @@ class Contentful
      * some data from the next lesson, too.
      * In order to simplify access, we attach the lesson and nextLesson objects
      * to the main course one.
-     *
-     * @param string $courseSlug
-     * @param string $lessonSlug
-     *
-     * @return Entry|null
      */
     public function findCourseByLesson(string $courseSlug, string $lessonSlug): ?Entry
     {
@@ -222,9 +198,6 @@ class Contentful
 
     /**
      * @param Entry[] $lessons
-     * @param string  $lessonSlug
-     *
-     * @return int|null
      */
     private function findLessonIndex(array $lessons, string $lessonSlug): ?int
     {
@@ -241,10 +214,6 @@ class Contentful
      * Finds a landing page using its slug.
      * We use the collection endpoint, so we can prefetch linked entries
      * by using the include parameter.
-     *
-     * @param string $slug
-     *
-     * @return Entry|null
      */
     public function findLandingPage(string $slug): ?Entry
     {
@@ -258,13 +227,6 @@ class Contentful
         return $landingPage;
     }
 
-    /**
-     * @param string $contentType
-     * @param string $slug
-     * @param int    $include
-     *
-     * @return Entry|null
-     */
     private function findEntry(string $contentType, string $slug, int $include = 1): ?Entry
     {
         $query = (new Query())

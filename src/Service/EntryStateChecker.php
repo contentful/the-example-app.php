@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -30,9 +30,6 @@ class EntryStateChecker
      */
     private $client;
 
-    /**
-     * @param ClientFactory $clientFactory
-     */
     public function __construct(ClientFactory $clientFactory)
     {
         $this->client = $clientFactory->createClient(Contentful::API_DELIVERY);
@@ -115,7 +112,6 @@ class EntryStateChecker
      * - pendingChanges: whether the entry has already been published,
      *     but some changes have been made in the meanwhile.
      *
-     * @param Entry   $previewEntry
      * @param Entry[] $deliveryEntries An array where the entry ID is used as key
      */
     private function attachEntryState(Entry $previewEntry, array $deliveryEntries): void
@@ -141,9 +137,6 @@ class EntryStateChecker
     /**
      * Compares a preview entry with the one found in a list of given delivery entries,
      * and returns an array with the resulting state.
-     *
-     * @param Entry $previewEntry
-     * @param array $deliveryEntries
      *
      * @return bool[]
      */

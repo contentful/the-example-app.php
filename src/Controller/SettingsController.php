@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -24,12 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SettingsController extends AppController
 {
-    /**
-     * @param Request              $request
-     * @param FormFactoryInterface $formFactory
-     *
-     * @return Response
-     */
     public function __invoke(Request $request, FormFactoryInterface $formFactory): Response
     {
         $form = $formFactory->create(SettingsType::class, $this->state->getSettings());
@@ -65,11 +59,6 @@ class SettingsController extends AppController
     /**
      * Submits the form taking care to use either actual form data,
      * or data stored in session by the DeepLinkSubscriber.
-     *
-     * @param FormInterface $form
-     * @param Request       $request
-     *
-     * @return string|null
      */
     private function handleSubmit(FormInterface $form, Request $request): ?string
     {

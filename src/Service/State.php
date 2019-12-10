@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -68,9 +68,7 @@ class State
     private $cookieCredentials;
 
     /**
-     * @param Request|null $request
-     * @param string[]     $credentials
-     * @param string       $locale
+     * @param string[] $credentials
      */
     public function __construct(?Request $request, array $credentials, string $locale)
     {
@@ -95,11 +93,6 @@ class State
         }
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
     private function extractValues(Request $request): array
     {
         $settings = $this->extractCookieSettings($request);
@@ -115,11 +108,6 @@ class State
         return \array_filter($settings);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
     private function extractCookieSettings(Request $request): array
     {
         $cookieSettings = (array) \json_decode(
@@ -140,12 +128,6 @@ class State
         return $settings;
     }
 
-    /**
-     * @param string|null $api
-     * @param string|null $locale
-     *
-     * @return string
-     */
     private function extractQueryString(?string $api, ?string $locale): string
     {
         // http_build_query will automatically skip null values.
@@ -172,49 +154,31 @@ class State
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getSpaceId(): string
     {
         return $this->spaceId;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryToken(): string
     {
         return $this->deliveryToken;
     }
 
-    /**
-     * @return string
-     */
     public function getPreviewToken(): string
     {
         return $this->previewToken;
     }
 
-    /**
-     * @return bool
-     */
     public function usesCookieCredentials(): bool
     {
         return $this->cookieCredentials;
     }
 
-    /**
-     * @return string
-     */
     public function getApi(): string
     {
         return $this->api;
     }
 
-    /**
-     * @return string
-     */
     public function getApiLabel(): string
     {
         return $this->isDeliveryApi()
@@ -222,49 +186,31 @@ class State
             : 'Content Preview API';
     }
 
-    /**
-     * @return bool
-     */
     public function isDeliveryApi(): bool
     {
         return Contentful::API_DELIVERY === $this->api;
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @return bool
-     */
     public function hasEditorialFeaturesEnabled(): bool
     {
         return $this->editorialFeatures;
     }
 
-    /**
-     * @return string
-     */
     public function getQueryString(): string
     {
         return $this->queryString;
     }
 
-    /**
-     * @return bool
-     */
     public function hasEditorialFeaturesLink(): bool
     {
         return $this->editorialFeatures && Contentful::API_PREVIEW === $this->api;
     }
 
-    /**
-     * @return string
-     */
     public function getShareableLinkQuery(): string
     {
         return '?'.\http_build_query([

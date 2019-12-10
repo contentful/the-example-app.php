@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -40,19 +40,12 @@ class DeepLinkSubscriber implements EventSubscriberInterface
      */
     private $urlGenerator;
 
-    /**
-     * @param ResponseFactory       $responseFactory
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(ResponseFactory $responseFactory, UrlGeneratorInterface $urlGenerator)
     {
         $this->responseFactory = $responseFactory;
         $this->urlGenerator = $urlGenerator;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
@@ -69,8 +62,6 @@ class DeepLinkSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return string[]
      */
     private function extractSettingsParameters(Request $request): array
@@ -103,21 +94,11 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         return $settings;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
     private function hasParameters(Request $request): bool
     {
         return $this->hasCredentials($request) || $this->hasEditorialFeatures($request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
     private function hasCredentials(Request $request): bool
     {
         return $request->query->has('space_id')
@@ -125,11 +106,6 @@ class DeepLinkSubscriber implements EventSubscriberInterface
             && $request->query->has('delivery_token');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
     private function hasEditorialFeatures(Request $request): bool
     {
         return $request->query->has('editorial_features');

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -44,11 +44,6 @@ abstract class AppWebTestCase extends WebTestCase
         $this->client = static::createClient();
     }
 
-    /**
-     * @param string $method
-     * @param string $url
-     * @param int    $statusCode
-     */
     protected function visit(string $method, string $url, int $statusCode = 200)
     {
         $this->crawler = $this->client->request($method, $url);
@@ -58,10 +53,6 @@ abstract class AppWebTestCase extends WebTestCase
         $this->assertSame($statusCode, $this->response->getStatusCode());
     }
 
-    /**
-     * @param string      $selector
-     * @param string|null $value
-     */
     protected function assertPageContains(string $selector, string $value = null)
     {
         $selector .= $value ? ':contains("'.$value.'")' : '';
@@ -69,11 +60,6 @@ abstract class AppWebTestCase extends WebTestCase
         return $this->assertGreaterThan(0, $this->crawler->filter($selector)->count());
     }
 
-    /**
-     * @param string $selector
-     * @param string $attr
-     * @param string $expected
-     */
     protected function assertPageContainsAttr(string $selector, string $attr, string $expected)
     {
         return $this->assertSame($expected, $this->crawler->filter($selector)->attr($attr));
@@ -92,12 +78,6 @@ abstract class AppWebTestCase extends WebTestCase
         });
     }
 
-    /**
-     * @param int  $min
-     * @param int  $value
-     * @param int  $max
-     * @param bool $includeBoundaries
-     */
     protected function assertBetween(int $min, int $value, int $max, bool $includeBoundaries = true)
     {
         $constraint = $includeBoundaries

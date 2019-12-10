@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -52,11 +52,6 @@ class ResponseFactory
      */
     private $clearSettingsCookie = false;
 
-    /**
-     * @param Environment           $twig
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param int                   $cookieLifetime
-     */
     public function __construct(Environment $twig, UrlGeneratorInterface $urlGenerator, int $cookieLifetime)
     {
         $this->twig = $twig;
@@ -65,8 +60,7 @@ class ResponseFactory
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function addCookie(string $name, $value): void
     {
@@ -85,13 +79,6 @@ class ResponseFactory
         $this->clearSettingsCookie = true;
     }
 
-    /**
-     * @param string $template
-     * @param array  $parameters
-     * @param int    $statusCode
-     *
-     * @return Response
-     */
     public function createResponse(string $template, array $parameters = [], int $statusCode = 200): Response
     {
         $body = $this->twig->render($template, $parameters);
@@ -99,22 +86,11 @@ class ResponseFactory
         return $this->applyCookies(new Response($body, $statusCode));
     }
 
-    /**
-     * @param string $url
-     *
-     * @return RedirectResponse
-     */
     public function createRedirectResponse(string $url): RedirectResponse
     {
         return $this->applyCookies(new RedirectResponse($url));
     }
 
-    /**
-     * @param string $route
-     * @param array  $parameters
-     *
-     * @return RedirectResponse
-     */
     public function createRoutedRedirectResponse(string $route, array $parameters = []): RedirectResponse
     {
         $url = $this->urlGenerator->generate($route, $parameters);
@@ -124,10 +100,6 @@ class ResponseFactory
 
     /**
      * Applies stored cookies to the current Response object.
-     *
-     * @param Response $response
-     *
-     * @return Response
      */
     private function applyCookies(Response $response): Response
     {
@@ -142,12 +114,6 @@ class ResponseFactory
         return $response;
     }
 
-    /**
-     * @param Request $request
-     * @param string  $entryId
-     *
-     * @return array
-     */
     public function updateVisitedLessonCookie(Request $request, string $entryId): array
     {
         $cookie = $request->cookies->get('visitedLessons');

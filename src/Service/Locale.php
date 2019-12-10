@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -32,10 +32,6 @@ class Locale
      */
     private $current;
 
-    /**
-     * @param State      $state
-     * @param Contentful $contentful
-     */
     public function __construct(State $state, Contentful $contentful)
     {
         try {
@@ -55,9 +51,6 @@ class Locale
         return $this->contentfulLocales;
     }
 
-    /**
-     * @return ContentfulLocale|null
-     */
     public function getCurrent(): ?ContentfulLocale
     {
         return $this->current;
