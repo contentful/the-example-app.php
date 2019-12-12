@@ -46,6 +46,7 @@ abstract class AppWebTestCase extends WebTestCase
 
     protected function visit(string $method, string $url, int $statusCode = 200)
     {
+        $this->client->catchExceptions(false);
         $this->crawler = $this->client->request($method, $url);
         $this->request = $this->client->getRequest();
         $this->response = $this->client->getResponse();

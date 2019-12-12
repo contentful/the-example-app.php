@@ -54,6 +54,9 @@ class CoursesControllerTest extends AppWebTestCase
         $this->assertPageContains('.sidebar-menu__link.active', 'Getting started');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testCategory404Page()
     {
         $this->visit('GET', '/courses/categories/wrong-category', 404);

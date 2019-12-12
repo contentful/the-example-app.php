@@ -29,6 +29,9 @@ class LandingPageControllerTest extends AppWebTestCase
         $this->assertPageContains('.module-highlighted-course__link-wrapper', 'Kurs ansehen');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function test404Page()
     {
         $this->visit('GET', '/wrong-page', 404);

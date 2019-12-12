@@ -46,6 +46,9 @@ class LessonControllerTest extends AppWebTestCase
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testLesson404Page()
     {
         $this->visit('GET', '/courses/hello-contentful/lessons/wrong-lesson', 404);
@@ -80,6 +83,9 @@ class LessonControllerTest extends AppWebTestCase
         $this->assertBetween($requestTime + 172800, $visitedLessonsCookie->getExpiresTime(), \time() + 172800);
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testLessonNotFound()
     {
         $this->visit('GET', '/courses/hello-contentful/lessons/not-found', 404);

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+
 class CourseControllerTest extends AppWebTestCase
 {
     public function testCoursePage()
@@ -29,6 +30,9 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContains('.table-of-contents__link.active', 'Course overview');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testCourse404Page()
     {
         $this->visit('GET', '/courses/wrong-course', 404);
@@ -57,6 +61,9 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContains('.table-of-contents__link.active', 'Kurs Übersicht');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testCourseNotFound()
     {
         $this->visit('GET', '/courses/not-found', 404);
