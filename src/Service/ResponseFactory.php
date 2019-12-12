@@ -67,7 +67,13 @@ class ResponseFactory
         $this->cookies[] = new Cookie(
             $name,
             \json_encode($value),
-            \time() + $this->cookieLifetime
+            \time() + $this->cookieLifetime,
+            '/',
+            null,
+            false,
+            true,
+            false,
+            null
         );
     }
 
