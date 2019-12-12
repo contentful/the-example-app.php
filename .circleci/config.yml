@@ -28,19 +28,11 @@ jobs:
       - run:
           name: Clone E2E tests
           command: git clone https://github.com/contentful/the-example-app-e2e-tests.git ./tests-e2e
-      - restore_cache:
-          keys:
-            - tea-e2e-tests-{{ checksum "./tests-e2e/package.json" }}
-            - tea-e2e-tests
       - run:
           name: Install E2E tests dependencies
           command: |
             cd tests-e2e
             npm install
-      - save_cache:
-          key: tea-e2e-tests-{{ checksum "./tests-e2e/package.json" }}
-          paths:
-            - ./tests-e2e/node_modules
       - run:
           name: Run E2E tests
           command: |
