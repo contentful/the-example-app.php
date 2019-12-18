@@ -16,6 +16,11 @@ jobs:
             sudo docker-php-ext-install zip pcntl
             wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
       - run:
+          name: Set up Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
           name: Install Composer dependencies
           command: |
             sudo composer self-update
