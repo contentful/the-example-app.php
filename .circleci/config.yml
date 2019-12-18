@@ -2,6 +2,8 @@ version: 2
 
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: dc5114f2dbc5335725be25c9fe4cf7d915085910dea37581b1fc92176ffdf2b1
     docker:
       - image: circleci/php:7.2-cli-node-browsers
 
@@ -24,7 +26,12 @@ jobs:
           command: php php-cs-fixer fix --dry-run
       - run:
           name: Run unit tests
-          command: php bin/phpunit
+          command: |
+            sudo docker-php-ext-enable xdebug
+            ./cc-test-reporter before-build
+            php bin/phpunit
+            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+
       - run:
           name: Clone E2E tests
           command: git clone https://github.com/contentful/the-example-app-e2e-tests.git ./tests-e2e
