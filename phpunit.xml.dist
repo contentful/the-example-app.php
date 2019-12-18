@@ -32,4 +32,12 @@
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
+
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">tests</directory>
+        </whitelist>
+    </filter>
+
 </phpunit>

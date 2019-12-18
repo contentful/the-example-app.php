@@ -34,7 +34,7 @@ jobs:
           command: |
             sudo docker-php-ext-enable xdebug
             ./cc-test-reporter before-build
-            php bin/phpunit
+            php bin/phpunit --stop-on-error --stop-on-failure -v --coverage-clover clover.xml
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
 
       - run:
