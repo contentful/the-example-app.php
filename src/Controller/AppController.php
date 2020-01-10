@@ -62,5 +62,7 @@ abstract class AppController
         $this->breadcrumb = $breadcrumb;
         $this->contentful = $contentful;
         $this->translator = $translator;
+
+        $this->translator->setLocale($this->state->getLocale());
     }
 }
