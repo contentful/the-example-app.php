@@ -44,6 +44,9 @@
     "ocramius/package-versions": {
         "version": "1.3.0"
     },
+    "php": {
+        "version": "7.2"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -110,6 +113,9 @@
     "symfony/dotenv": {
         "version": "v4.0.1"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.2"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.0.1"
     },
@@ -164,6 +170,9 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mime": {
+        "version": "v4.4.2"
+    },
     "symfony/options-resolver": {
         "version": "v4.0.1"
     },
@@ -182,11 +191,17 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.13.1"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
     },
     "symfony/polyfill-php72": {
         "version": "v1.6.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.13.1"
     },
     "symfony/process": {
         "version": "v4.0.1"
