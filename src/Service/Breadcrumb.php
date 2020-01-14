@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Breadcrumb.
