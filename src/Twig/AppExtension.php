@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -40,10 +40,6 @@ class AppExtension extends AbstractExtension
 
     /**
      * Converts Markdown text to HTML.
-     *
-     * @param string $markdown
-     *
-     * @return string
      */
     public function convertToHtml(string $markdown): string
     {

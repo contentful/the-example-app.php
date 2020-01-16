@@ -2,6 +2,8 @@ version: 2
 
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: dc5114f2dbc5335725be25c9fe4cf7d915085910dea37581b1fc92176ffdf2b1
     docker:
       - image: circleci/php:7.2-cli-node-browsers
 
@@ -14,6 +16,11 @@ jobs:
             sudo docker-php-ext-install zip pcntl
             wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
       - run:
+          name: Set up Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
           name: Install Composer dependencies
           command: |
             sudo composer self-update
@@ -24,23 +31,20 @@ jobs:
           command: php php-cs-fixer fix --dry-run
       - run:
           name: Run unit tests
-          command: php bin/phpunit
+          command: |
+            sudo docker-php-ext-enable xdebug
+            ./cc-test-reporter before-build
+            php bin/phpunit --stop-on-error --stop-on-failure -v --coverage-clover clover.xml
+            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+
       - run:
           name: Clone E2E tests
           command: git clone https://github.com/contentful/the-example-app-e2e-tests.git ./tests-e2e
-      - restore_cache:
-          keys:
-            - tea-e2e-tests-{{ checksum "./tests-e2e/package.json" }}
-            - tea-e2e-tests
       - run:
           name: Install E2E tests dependencies
           command: |
             cd tests-e2e
             npm install
-      - save_cache:
-          key: tea-e2e-tests-{{ checksum "./tests-e2e/package.json" }}
-          paths:
-            - ./tests-e2e/node_modules
       - run:
           name: Run E2E tests
           command: |

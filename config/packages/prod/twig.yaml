@@ -2,7 +2,7 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    exception_controller: App\Controller\ErrorController
+    exception_controller: null
     globals:
         state: "@App\\Service\\State"
         breadcrumb: "@App\\Service\\Breadcrumb"

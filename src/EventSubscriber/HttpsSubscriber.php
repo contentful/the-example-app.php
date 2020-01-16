@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -35,17 +35,11 @@ class HttpsSubscriber implements EventSubscriberInterface
      */
     private $responseFactory;
 
-    /**
-     * @param ResponseFactory $responseFactory
-     */
     public function __construct(ResponseFactory $responseFactory)
     {
         $this->responseFactory = $responseFactory;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();

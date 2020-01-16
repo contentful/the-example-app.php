@@ -1,6 +1,8 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
+    error_controller: App\Controller\ErrorController
+
     session:
        # With this config, PHP's native session handling is used
        handler_id: ~

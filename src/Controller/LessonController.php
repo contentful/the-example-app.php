@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -23,12 +23,6 @@ class LessonController extends AppController
 {
     /**
      * Renders a lesson when `/courses/{courseSlug}/lesson/{lessonSlug}` is requested.
-     *
-     * @param Request $request
-     * @param string  $courseSlug
-     * @param string  $lessonSlug
-     *
-     * @return Response
      */
     public function __invoke(Request $request, string $courseSlug, string $lessonSlug): Response
     {
@@ -53,10 +47,6 @@ class LessonController extends AppController
         ]);
     }
 
-    /**
-     * @param Entry $course
-     * @param Entry $lesson
-     */
     private function setBreadcrumb(Entry $course, Entry $lesson): void
     {
         $this->breadcrumb->add('homeLabel', 'landing_page')

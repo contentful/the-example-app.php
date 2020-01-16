@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -50,13 +50,6 @@ abstract class AppController
      */
     protected $translator;
 
-    /**
-     * @param ResponseFactory     $responseFactory
-     * @param State               $state
-     * @param Breadcrumb          $breadcrumb
-     * @param Contentful          $contentful
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         ResponseFactory $responseFactory,
         State $state,
@@ -69,5 +62,7 @@ abstract class AppController
         $this->breadcrumb = $breadcrumb;
         $this->contentful = $contentful;
         $this->translator = $translator;
+
+        $this->translator->setLocale($this->state->getLocale());
     }
 }

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -20,11 +20,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CoursesController extends AppController
 {
-    /**
-     * @param string|null $categorySlug
-     *
-     * @return Response
-     */
     public function __invoke(?string $categorySlug): Response
     {
         $categories = $this->contentful->findCategories();
@@ -50,10 +45,7 @@ class CoursesController extends AppController
     }
 
     /**
-     * @param Entry[]     $categories
-     * @param string|null $categorySlug
-     *
-     * @return Entry|null
+     * @param Entry[] $categories
      */
     private function findCategory(array $categories, ?string $categorySlug): ?Entry
     {

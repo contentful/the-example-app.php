@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -29,6 +29,9 @@ class LandingPageControllerTest extends AppWebTestCase
         $this->assertPageContains('.module-highlighted-course__link-wrapper', 'Kurs ansehen');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function test404Page()
     {
         $this->visit('GET', '/wrong-page', 404);

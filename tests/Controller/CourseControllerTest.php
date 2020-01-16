@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -29,6 +29,9 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContains('.table-of-contents__link.active', 'Course overview');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testCourse404Page()
     {
         $this->visit('GET', '/courses/wrong-course', 404);
@@ -57,6 +60,9 @@ class CourseControllerTest extends AppWebTestCase
         $this->assertPageContains('.table-of-contents__link.active', 'Kurs Übersicht');
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function testCourseNotFound()
     {
         $this->visit('GET', '/courses/not-found', 404);

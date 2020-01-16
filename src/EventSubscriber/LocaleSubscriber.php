@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -50,10 +50,7 @@ class LocaleSubscriber implements EventSubscriberInterface
     private $availableLocales;
 
     /**
-     * @param State           $state
-     * @param ResponseFactory $responseFactory
-     * @param Contentful      $contentful
-     * @param string[]        $availableLocales
+     * @param string[] $availableLocales
      */
     public function __construct(State $state, ResponseFactory $responseFactory, Contentful $contentful, array $availableLocales)
     {
@@ -63,9 +60,6 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->availableLocales = $availableLocales;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
@@ -102,10 +96,6 @@ class LocaleSubscriber implements EventSubscriberInterface
      * The space result is actually cached, so if the query succeeds
      * and the locale is indeed supported in the Contentful space,
      * there is no performance penalty, as it is always retrieved from the SDK anyway.
-     *
-     * @param string $locale
-     *
-     * @return bool
      */
     private function apiSupportsLocale(string $locale): bool
     {

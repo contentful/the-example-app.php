@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -43,10 +43,6 @@ class ContentfulCredentialsValidator extends ConstraintValidator
      */
     private $state;
 
-    /**
-     * @param Contentful $contentful
-     * @param State      $state
-     */
     public function __construct(Contentful $contentful, State $state)
     {
         $this->contentful = $contentful;
@@ -54,8 +50,7 @@ class ContentfulCredentialsValidator extends ConstraintValidator
     }
 
     /**
-     * @param string[]   $values
-     * @param Constraint $constraint
+     * @param string[] $values
      */
     public function validate($values, Constraint $constraint)
     {
@@ -80,8 +75,6 @@ class ContentfulCredentialsValidator extends ConstraintValidator
      * those currently in use, which are guaranteed to be correct.
      *
      * @param string[] $values
-     *
-     * @return bool
      */
     private function equalsStateCredentials(array $values): bool
     {
@@ -91,9 +84,7 @@ class ContentfulCredentialsValidator extends ConstraintValidator
     }
 
     /**
-     * @param string $spaceId
-     * @param string $accessToken
-     * @param string $api         Either "delivery" or "preview"
+     * @param string $api Either "delivery" or "preview"
      */
     private function validateCredentials(string $spaceId, string $accessToken, string $api): void
     {

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -24,9 +24,6 @@ class LandingPageController extends AppController
      */
     const HOME_SLUG = 'home';
 
-    /**
-     * @return Response
-     */
     public function __invoke(): Response
     {
         $landingPage = $this->contentful->findLandingPage(self::HOME_SLUG);

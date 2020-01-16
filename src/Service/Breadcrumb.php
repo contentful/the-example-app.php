@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Breadcrumb.
@@ -43,11 +43,6 @@ class Breadcrumb
      */
     private $items = [];
 
-    /**
-     * @param TranslatorInterface   $translator
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param State                 $state
-     */
     public function __construct(TranslatorInterface $translator, UrlGeneratorInterface $urlGenerator, State $state)
     {
         $this->translator = $translator;
@@ -55,14 +50,6 @@ class Breadcrumb
         $this->state = $state;
     }
 
-    /**
-     * @param string $label
-     * @param string $route
-     * @param array  $parameters
-     * @param bool   $translate
-     *
-     * @return self
-     */
     public function add(string $label, string $route, array $parameters = [], bool $translate = true): self
     {
         $label = $translate ? $this->translator->trans($label) : $label;

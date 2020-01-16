@@ -14,6 +14,7 @@
         <env name="APP_DEBUG" value="1" />
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
 
         <env name="CONTENTFUL_SPACE_ID" value="qz0n5cdakyl9" />
         <env name="CONTENTFUL_DELIVERY_TOKEN" value="580d5944194846b690dd89b630a1cb98a0eef6a19b860ef71efc37ee8076ddb8" />
@@ -32,4 +33,12 @@
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
+
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">tests</directory>
+        </whitelist>
+    </filter>
+
 </phpunit>

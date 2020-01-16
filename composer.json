@@ -64,7 +64,7 @@
         "symfony": {
             "id": "01C0KWT5CW2K5P31TSSC3PMNBA",
             "allow-contrib": false,
-            "require": "~4.1.0"
+            "require": "4.4.*"
         }
     }
 }

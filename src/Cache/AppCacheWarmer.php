@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -24,10 +24,6 @@ class AppCacheWarmer implements CacheWarmerInterface
      */
     private $cacheWarmer;
 
-    /**
-     * @param ClientFactory          $clientFactory
-     * @param CacheItemPoolInterface $cacheItemPool
-     */
     public function __construct(ClientFactory $clientFactory, CacheItemPoolInterface $cacheItemPool)
     {
         $client = $clientFactory->createClient(Contentful::API_DELIVERY, null, null, false);

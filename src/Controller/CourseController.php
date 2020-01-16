@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -22,11 +22,6 @@ class CourseController extends AppController
 {
     /**
      * Renders a course when `/courses/{courseSlug}` is requested.
-     *
-     * @param Request $request
-     * @param string  $courseSlug
-     *
-     * @return Response
      */
     public function __invoke(Request $request, string $courseSlug): Response
     {

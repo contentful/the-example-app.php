@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/the-example-app package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -43,12 +43,6 @@ class ClientFactory
      */
     private $previewApiUrl;
 
-    /**
-     * @param State                  $state
-     * @param CacheItemPoolInterface $cacheItemPool
-     * @param string                 $deliveryApiUrl
-     * @param string                 $previewApiUrl
-     */
     public function __construct(State $state, CacheItemPoolInterface $cacheItemPool, string $deliveryApiUrl, string $previewApiUrl)
     {
         $this->state = $state;
@@ -60,21 +54,11 @@ class ClientFactory
     /**
      * Creates a token for the given API.
      * If now $spaceId and $accessToken are given, the default ones will be used.
-     *
-     * @param string      $api
-     * @param string|null $spaceId
-     * @param string|null $accessToken
-     * @param bool        $useCache
-     *
-     * @return Client
      */
     public function createClient(string $api, string $spaceId = null, string $accessToken = null, bool $useCache = true): Client
     {
         if (Contentful::API_DELIVERY !== $api && Contentful::API_PREVIEW !== $api) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Trying to instantiate a client for unknown API: %s.',
-                $api
-            ));
+            throw new \InvalidArgumentException(\sprintf('Trying to instantiate a client for unknown API: %s.', $api));
         }
 
         $spaceId = $spaceId ?: $this->state->getSpaceId();
