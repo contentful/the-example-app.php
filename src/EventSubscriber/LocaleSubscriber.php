@@ -15,7 +15,7 @@ use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -60,7 +60,7 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->availableLocales = $availableLocales;
     }
 
-    public function onKernelRequest(GetResponseEvent $event): void
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
         $locale = $this->state->getLocale();

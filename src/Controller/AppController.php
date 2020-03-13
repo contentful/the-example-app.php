@@ -15,7 +15,7 @@ use App\Service\Breadcrumb;
 use App\Service\Contentful;
 use App\Service\ResponseFactory;
 use App\Service\State;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * AppController class.
