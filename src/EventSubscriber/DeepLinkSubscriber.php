@@ -15,7 +15,7 @@ use App\Service\ResponseFactory;
 use App\Service\State;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -46,7 +46,7 @@ class DeepLinkSubscriber implements EventSubscriberInterface
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function onKernelRequest(GetResponseEvent $event): void
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
         if ($request->isMethod('POST') || !$this->hasParameters($request)) {

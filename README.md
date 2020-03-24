@@ -19,7 +19,7 @@ You can see a hosted version of `The PHP example app` on <a href="https://the-ex
 
 ## Requirements
 
-* PHP 7.1
+* PHP 7.2
 * Git
 * Contentful CLI (only for write access)
 

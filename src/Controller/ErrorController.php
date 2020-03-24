@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -19,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ErrorController extends AppController
 {
-    public function __invoke(FlattenException $exception): Response
+    public function __invoke(\Exception $exception): Response
     {
         return $this->responseFactory->createResponse('error.html.twig', [
             'exception' => $exception,
