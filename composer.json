@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "contentful/contentful": "^6.0",
         "cweagans/composer-patches": "^1.6",
         "league/commonmark": "^1.3",
